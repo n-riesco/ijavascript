@@ -17,7 +17,6 @@
         "type": "git",
         "url": "https://github.com/n-riesco/ijavascript.git"
     },
-    "private": true,
     "bin": {
         "ijs": "bin/ijavascript.js"
     },

@@ -1,6 +1,6 @@
 {
     "name": "ijavascript",
-    "version": "4.1.0",
+    "version": "4.1.1",
     "description": "IJavascript is a javascript kernel for IPython's graphical notebook",
     "keywords": [
         "javascript",
@@ -20,7 +20,7 @@
     "bin": {
         "ijs": "bin/ijavascript.js"
     },
-    "license": "BSD-2-Clause",
+    "license": "BSD-3-Clause",
     "dependencies": {
         "node-uuid": "^1.4.2",
         "zmq": "^2.10.0"

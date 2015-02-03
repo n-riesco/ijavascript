@@ -13,7 +13,7 @@ protocol](http://ipython.org/ipython-doc/stable/development/messaging.html).
 There are kernels available for [Python](http://ipython.org/notebook.html),
 [Julia](https://github.com/JuliaLang/IJulia.jl),
 [Ruby](https://github.com/minad/iruby),
-[Haskell](https://github.com/gibiansky/IHaskell) and now Javascript.
+[Haskell](https://github.com/gibiansky/IHaskell) and many others.
 
 IJavascript implements the latest stable specification of the protocol, [version
 4.1](http://ipython.org/ipython-doc/stable/development/messaging.html).  This
@@ -26,23 +26,62 @@ A repository of IPython notebooks can be found
 
 ## Prerequisites
 
-The installation instructions of the prerequisites vary from platform to
-platform. In the Debian and Ubuntu distributions, it's enough to run the
-following command:
+The prerequisites vary from platform to platform.
+
+### Debian and Ubuntu
+In recent Debian and Ubuntu distributions, it's enough to run the following
+command:
 
 ```sh
-sudo apt-get install npm ipython ipython-notebook
+sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq-dev
 ```
 
+#### Ubuntu 12.04
+
+In Ubuntu 12.04, both `node.js` and `ipython` need upgrading to a recent
+version:
+
+```sh
+sudo apt-get install libzmq-dev python-dev python-pip g++ curl
+curl -sL https://deb.nodesource.com/setup | sudo bash -
+sudo apt-get install -y nodejs
+sudo pip install --upgrade ipython jinja2 tornado jsonschema pyzmq
+```
+
+The instructions for upgrading `node.js` have been adapted from those found
+[here](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#debian-and-ubuntu-based-linux-distributions).
+
+### Other Platforms
+
 For other platforms, instructions may be found at
-[nodejs.org/download](http://nodejs.org/download/) and
-[ipython.org/install](http://ipython.org/install.html).
+[nodejs.org/download](http://nodejs.org/download/),
+[ipython.org/install](http://ipython.org/install.html) and
+[zeromq.org/intro:get-the-software](http://zeromq.org/intro:get-the-software).
 
 ## Installation
+
+To install IJavascript globally (i.e. for all users in the system), run:
+
+```sh
+sudo npm install -g ijavascript
+```
+
+To install locally, run:
 
 ```sh
 npm install ijavascript
 ```
+
+In Debian and Ubuntu distributions, the above command will install the
+executable `ijs` in the folder `~/node_modules/.bin/`. You may want to add this
+folder to your PATH:
+
+```sh
+echo \"PATH=\"\$HOME/node_modules/.bin\" >> ~/.profile
+```
+
+Note that the above change won't take effect until you log out of the current
+session.
 
 ## Usage
 

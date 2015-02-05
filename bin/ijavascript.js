@@ -54,7 +54,7 @@ process.argv.slice(2).forEach(function(e) {
     if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
         console.warn(util.format("Warning: Flag '%s' skipped", e));
     } else if (e === "--ijs-enable-global") {
-        config.kernelArgs.push("--enable-global");
+        console.warn(util.format("Warning: Flag '%s' deprecated", e));
     } else {
         config.ipythonArgs.push(e);
     }

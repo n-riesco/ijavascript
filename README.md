@@ -4,7 +4,7 @@ IJavascript is an [`npm` package](https://www.npmjs.com/) that implements a
 Javasript kernel for [IPython's graphical
 notebook](http://ipython.org/notebook.html) (also known as
 [Jupyter](http://jupyter.org/)). An IPython notebook combines the creation of
-rich-text documents (including mathematics, plots and videos) with the execution
+rich-text documents (including equations, plots and videos) with the execution
 of code in a number of programming languages.
 
 The execution of code is carried out by means of a kernel that implements the
@@ -13,7 +13,8 @@ protocol](http://ipython.org/ipython-doc/stable/development/messaging.html).
 There are kernels available for [Python](http://ipython.org/notebook.html),
 [Julia](https://github.com/JuliaLang/IJulia.jl),
 [Ruby](https://github.com/minad/iruby),
-[Haskell](https://github.com/gibiansky/IHaskell) and many others.
+[Haskell](https://github.com/gibiansky/IHaskell) and [many
+others](https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages).
 
 IJavascript implements the latest stable specification of the protocol, [version
 4.1](http://ipython.org/ipython-doc/stable/development/messaging.html).  This
@@ -97,8 +98,8 @@ browser:
 ![Screenshot: IPython Notebook Dashboard](res/screenshot-dashboard-home.png)
 
 By default, the dashboard opens the notebooks in the current working folder. The
-command flag `--notebook-dir=path/to/another/folder` can be used to open the
-dashboard at a different folder:
+flag `--notebook-dir=path/to/another/folder` can be used to open the dashboard
+at a different folder:
 
 ```sh
 ijs --notebook-dir=path/to/another/folder
@@ -110,24 +111,12 @@ Here's a sample notebook that makes use of the Javascript kernel:
 
 ![Screenshot: Notebook Hello Sample](res/screenshot-notebook-hello.png)
 
-By default, the Javascript kernel doesn't define `global`. If security is not a
-concern `global` can be enabled by passing the following command flag:
-
-```sh
-ijs --ijs-enable-global
-```
-
-![Screenshot: Notebook `global` Sample](res/screenshot-notebook-global.png)
-
-To obtain documentation for other command flags, run:
+Documentation on other flags, can be found using IPython's notebook help:
 
 ```sh
 ipython notebook help
 ```
 
 ## TO DO
-
-- Capture `stdout` and `stdin` of each Javascript session (this may require
-  replacing vm with vm2).
 
 - Complete the implementation of IPython's messaging protocol.

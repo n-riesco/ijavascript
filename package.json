@@ -24,5 +24,13 @@
     "dependencies": {
         "node-uuid": "^1.4.2",
         "zmq": "^2.10.0"
+    },
+    "devDependencies": {
+        "jsdoc": "latest",
+        "jshint": "latest"
+    },
+    "scripts": {
+        "jsdoc": "jsdoc -R doc/jsdoc/README.md -d doc/jsdoc lib",
+        "lint": "jshint bin lib"
     }
 }

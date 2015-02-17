@@ -38,9 +38,9 @@
     <div class="container-overview">
     
         
-            <div class="description">Module sm provides a Javascript session manager. A Javascript
-session can be used to run Javascript code within node.js, pass the result to
-a callback function and even capture its stdout and stderr streams.</div>
+            <div class="description">Module `sm` provides a Javascript session manager. A Javascript
+session can be used to run Javascript code within `node.js`, pass the result
+to a callback function and even capture its `stdout` and `stderr` streams.</div>
         
 
         
@@ -123,7 +123,7 @@ a callback function and even capture its stdout and stderr streams.</div>
 
  // Callback called before running the Javascript code.
  var beforeRun = function (session) {
-     console.log(session.executionCount);
+     session.executionCount++;
  };
  // Callback called after running the Javascript code.
  var afterRun = function (session) {
@@ -140,9 +140,7 @@ a callback function and even capture its stdout and stderr streams.</div>
 
  // Session "session 1"
  // Output:
- // 0
  // undefined
- // 1
  // 1
  // `Hello, World!`
  // 2
@@ -155,7 +153,6 @@ a callback function and even capture its stdout and stderr streams.</div>
 
  // Session "session 2"
  // Output:
- // 0
  // ReferenceError: msg is not defined
  //     at evalmachine.&lt;anonymous>:1:1
  //     at onMessage ([eval]:47:28)
@@ -325,7 +322,8 @@ a callback function and even capture its stdout and stderr streams.</div>
 
             
 
-            <td class="description last">Defined only for successful runs
+            <td class="description last">Defined only for successful "run"
+                                       actions
                 <h6>Properties</h6>
 
 <table class="props">
@@ -422,7 +420,7 @@ a callback function and even capture its stdout and stderr streams.</div>
 
             
 
-            <td class="description last">Defined only for failed runs
+            <td class="description last">Defined only for failed "run" actions
                 <h6>Properties</h6>
 
 <table class="props">
@@ -520,6 +518,40 @@ a callback function and even capture its stdout and stderr streams.</div>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>names</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Defined only for "getAllPropertyNames"
+                                       actions. It contains an array with all
+                                       the property names of the result of
+                                       evaluating a piece of code.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -555,7 +587,7 @@ a callback function and even capture its stdout and stderr streams.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line206">line 206</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line209">line 209</a>
     </li></ul></dd>
     
 
@@ -676,7 +708,7 @@ a callback function and even capture its stdout and stderr streams.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line145">line 145</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line203">line 203</a>
     </li></ul></dd>
     
 
@@ -748,6 +780,40 @@ associated callbacks.
 
         <tr>
             
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Type of task:
+                                            "run" to evaluate a piece of code
+                                            and return the result;
+                                            "getAllPropertyNames" to evaluate
+                                            a piece of code and return all
+                                            the property names of the result;</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>code</code></td>
             
 
@@ -770,7 +836,7 @@ associated callbacks.
 
             
 
-            <td class="description last">Code to run</td>
+            <td class="description last">Code to evaluate</td>
         </tr>
 
     
@@ -929,7 +995,7 @@ associated callbacks.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line193">line 193</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line184">line 184</a>
     </li></ul></dd>
     
 
@@ -965,7 +1031,7 @@ associated callbacks.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Wed Feb 11 2015 18:49:25 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Tue Feb 17 2015 17:36:24 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -119,4 +119,8 @@ ipython notebook help
 
 ## TO DO
 
-- Complete the implementation of IPython's messaging protocol.
+- Implement `kernel_shutdown`
+- Implement `object_info_request`
+- Add tests
+- Complete the implementation of IPython's messaging protocol v4.1
+- Implement Jupyter's messaging protocol v5.0

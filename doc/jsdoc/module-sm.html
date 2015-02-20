@@ -181,7 +181,373 @@ to a callback function and even capture its `stdout` and `stderr` streams.</div>
 
         
                 
-<h4 class="name" id="~result">result</h4>
+
+    
+
+    <h4 class="name" id="~KillCB"><span class="type-signature"></span>KillCB<span class="signature">(code<span class="signature-attributes">nullable</span>, signal<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Callback run after the session server has been killed
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>code</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Exit code from session server if exited normally</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>signal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Signal passed to kill the session server</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line314">line 314</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-sm-Session.html#kill">module:sm~Session#kill</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    <h4 class="name" id="~RestartCB"><span class="type-signature"></span>RestartCB<span class="signature">(code<span class="signature-attributes">nullable</span>, signal<span class="signature-attributes">nullable</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Callback run after restart
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>code</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Exit code from old session if exited normally</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>signal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Signal passed to kill the old session</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line338">line 338</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-sm-Session.html#restart">module:sm~Session#restart</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="~Result">Result</h4>
 
 
 
@@ -570,12 +936,19 @@ to a callback function and even capture its `stdout` and `stderr` streams.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line174">line 174</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line195">line 195</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-sm-Session.html#result">module:sm~Session#result</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -591,7 +964,7 @@ to a callback function and even capture its `stdout` and `stderr` streams.</div>
 
     
 
-    <h4 class="name" id="~sessionCB"><span class="type-signature"></span>sessionCB<span class="signature">(session)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="~RunCB"><span class="type-signature"></span>RunCB<span class="signature">(session)</span><span class="type-signature"></span></h4>
 
     
 
@@ -691,12 +1064,19 @@ to a callback function and even capture its `stdout` and `stderr` streams.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line168">line 168</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line188">line 188</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-sm.html#~Task">module:sm~Task</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -719,7 +1099,7 @@ to a callback function and even capture its `stdout` and `stderr` streams.</div>
 
             
                 
-<h4 class="name" id="~task">task</h4>
+<h4 class="name" id="~Task">Task</h4>
 
 
 
@@ -832,7 +1212,7 @@ associated callbacks.
             <td class="type">
             
                 
-<span class="param-type"><a href="module-sm.html#~sessionCB">module:sm~sessionCB</a></span>
+<span class="param-type"><a href="module-sm.html#~RunCB">module:sm~RunCB</a></span>
 
 
             
@@ -863,7 +1243,7 @@ associated callbacks.
             <td class="type">
             
                 
-<span class="param-type"><a href="module-sm.html#~sessionCB">module:sm~sessionCB</a></span>
+<span class="param-type"><a href="module-sm.html#~RunCB">module:sm~RunCB</a></span>
 
 
             
@@ -894,7 +1274,7 @@ associated callbacks.
             <td class="type">
             
                 
-<span class="param-type"><a href="module-sm.html#~sessionCB">module:sm~sessionCB</a></span>
+<span class="param-type"><a href="module-sm.html#~RunCB">module:sm~RunCB</a></span>
 
 
             
@@ -923,7 +1303,7 @@ associated callbacks.
             <td class="type">
             
                 
-<span class="param-type"><a href="module-sm.html#~sessionCB">module:sm~sessionCB</a></span>
+<span class="param-type"><a href="module-sm.html#~RunCB">module:sm~RunCB</a></span>
 
 
             
@@ -978,12 +1358,19 @@ associated callbacks.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line149">line 149</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line167">line 167</a>
     </li></ul></dd>
     
 
     
 
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-sm-Session.html#run">module:sm~Session#run</a></li>
+        </ul>
+    </dd>
     
 
     
@@ -1014,7 +1401,7 @@ associated callbacks.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Thu Feb 19 2015 17:56:40 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Fri Feb 20 2015 18:59:12 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

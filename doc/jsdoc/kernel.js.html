@@ -114,45 +114,82 @@ function Kernel(ipythonConfig) {
     this.shellSocket = zmq.createSocket("router");
 
     /**
+     * Control socket
+     * @member {module:zmq~Socket}
+     */
+    this.controlSocket = zmq.createSocket("router");
+
+    /**
      * Javascript session
      * @member {module:sm~Session}
      */
     this.sm = new sm.Session();
 
-    /**
-     * Callback listening on the Shell socket
-     */
-    function _onMessage() {
-        var msg = new Message(
-            arguments,
-            this.config.signature_scheme.slice("hmac-".length),
-            this.config.key
-        );
-
-        if (!msg.signatureOK) return;
-
-        var msg_type = msg.header.msg_type;
-        var prototype = Object.getPrototypeOf(this);
-        if (msg_type in prototype) {
-            prototype[msg_type].call(this, msg);
-        } else {
-            // Ignore unimplemented msg_type requests
-            console.warn("Unhandled message type:", msg_type);
-        }
-    }
-
     var address = "tcp://" + this.config.ip + ":";
 
-    this.shellSocket.bind(address + this.config.shell_port);
-    this.shellSocket.on("message", _onMessage.bind(this));
+    this.hbSocket.bind(address + this.config.hb_port);
+    this.hbSocket.on("message", Kernel._onHBMessage.bind(this));
 
     this.iopubSocket.bind(address + this.config.iopub_port);
 
-    this.hbSocket.bind(address + this.config.hb_port);
-    this.hbSocket.on("message", function(message) {
-        this.hbSocket.send(message);
-    });
+    this.shellSocket.bind(address + this.config.shell_port);
+    this.shellSocket.on("message", Kernel._onShellMessage.bind(this));
+
+    this.controlSocket.bind(address + this.config.control_port);
+    this.controlSocket.on("message", Kernel._onControlMessage.bind(this));
 }
+
+/**
+ * Callback listening on the {@link Kernel#shellSocket Shell socket}
+ * @private
+ */
+Kernel._onShellMessage = function() {
+    var msg = new Message(
+        arguments,
+        this.config.signature_scheme.slice("hmac-".length),
+        this.config.key
+    );
+
+    if (!msg.signatureOK) return;
+
+    var msg_type = msg.header.msg_type;
+    var prototype = Object.getPrototypeOf(this);
+    if (msg_type in prototype) {
+        prototype[msg_type].call(this, msg);
+    } else {
+        // Ignore unimplemented msg_type requests
+        console.warn("SHELL_SOCKET: Unhandled message type:", msg_type);
+    }
+};
+
+/**
+ * Callback listening on the {@link Kernel#controlSocket Control socket}
+ * @private
+ */
+Kernel._onControlMessage = function() {
+    var msg = new Message(
+        arguments,
+        this.config.signature_scheme.slice("hmac-".length),
+        this.config.key
+    );
+
+    if (!msg.signatureOK) return;
+
+    if (msg.header.msg_type === "shutdown_request") {
+        Kernel.prototype.shutdown_request.call(this, msg);
+    } else {
+        // Ignore unimplemented msg_type requests
+        console.warn("CONTROL: Unhandled message type:", msg_type);
+    }
+};
+
+/**
+ * Callback listening on the {@link Kernel#hbSocket HeartBeat socket}
+ * @private
+ */
+Kernel._onHBMessage = function(message) {
+    this.hbSocket.send(message);
+};
 
 /**
  * Kernel info request
@@ -482,11 +519,44 @@ Kernel.prototype.complete_request = function(request) {
 };
 
 /**
+ * Shutdown request
+ *
+ * @param {Message} request Request message
+ */
+Kernel.prototype.shutdown_request = function(request) {
+    // TODO(NR) Handle socket `this.stdin` once it is implemented
+
+    if (request.content.restart) {
+        this.sm.restart("SIGTERM", (function(code, signal) {
+            request.respond(
+                this.controlSocket, "shutdown_reply", request.content
+            );
+        }).bind(this));
+        return;
+    }
+
+    this.controlSocket.removeAllListeners();
+    this.shellSocket.removeAllListeners();
+    this.iopubSocket.removeAllListeners();
+    this.hbSocket.removeAllListeners();
+
+    this.sm.kill("SIGTERM", function(code, signal) {
+        // TODO(NR) Is this reply necessary?
+        request.respond(this.controlSocket, "shutdown_reply", request.content);
+
+        this.controlSocket.close();
+        this.shellSocket.close();
+        this.iopubSocket.close();
+        this.hbSocket.close();
+    }.bind(this));
+};
+
+/**
  * @class
- * @classdesc Implements an IPython message.
+ * @classdesc Implements an IPython message
  *
  * @param {argsArray} [requestArguments] argsArray of the callback listening on
- * the {@link Kernel#shellSocket Shell socket}. See {@link Kernel~_onMessage}.
+ * the {@link Kernel#shellSocket Shell socket}
  * @param {string}    [scheme=sha256]    Hashing scheme
  * @param {string}    [key=""]           Hashing key
  */
@@ -513,7 +583,7 @@ function Message(requestArguments, scheme, key) {
  * Parse a request
  *
  * @param {argsArray} requestArguments argsArray of the callback listening on
- * the {@link Kernel#shellSocket Shell socket}. See {@link Kernel~_onMessage}.
+ * the {@link Kernel#shellSocket Shell socket}
  */
 Message.prototype.parse = function(requestArguments) {
     var hmac = crypto.createHmac(this.scheme, this.key);
@@ -630,7 +700,7 @@ new Kernel(ipythonConfig);
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Thu Feb 19 2015 17:56:40 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Fri Feb 20 2015 18:59:12 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

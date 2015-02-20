@@ -95,7 +95,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line111">line 111</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -193,7 +193,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line137">line 137</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line103">line 103</a>
     </li></ul></dd>
     
 
@@ -211,7 +211,7 @@
 
         
             
-<h4 class="name" id="result"><span class="type-signature"></span>result<span class="type-signature"> :<a href="module-sm.html#~result">module:sm~result</a></span></h4>
+<h4 class="name" id="result"><span class="type-signature"></span>result<span class="type-signature"> :<a href="module-sm.html#~Result">module:sm~Result</a></span></h4>
 
 
 
@@ -226,7 +226,7 @@
     <ul>
         <li>
             
-<span class="param-type"><a href="module-sm.html#~result">module:sm~result</a></span>
+<span class="param-type"><a href="module-sm.html#~Result">module:sm~Result</a></span>
 
 
         </li>
@@ -265,7 +265,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line143">line 143</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line109">line 109</a>
     </li></ul></dd>
     
 
@@ -286,6 +286,390 @@
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="kill"><span class="type-signature"></span>kill<span class="signature">(signal<span class="signature-attributes">opt, nullable</span>, killCB<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Kill session
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>signal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "SIGTERM"
+                
+                </td>
+            
+
+            <td class="description last">Signal passed to kill the
+                                                session server</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>killCB</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-sm.html#~KillCB">module:sm~KillCB</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Callback run after the
+                                                session server has been
+                                                killed</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line303">line 303</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="restart"><span class="type-signature"></span>restart<span class="signature">(signal<span class="signature-attributes">opt, nullable</span>, restartCB<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Restart session
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>signal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    "SIGTERM"
+                
+                </td>
+            
+
+            <td class="description last">Signal passed to kill the old
+                                                session</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>restartCB</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-sm.html#~RestartCB">module:sm~RestartCB</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Callback run after restart</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line329">line 329</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
@@ -341,7 +725,7 @@
             <td class="type">
             
                 
-<span class="param-type"><a href="module-sm.html#~task">module:sm~task</a></span>
+<span class="param-type"><a href="module-sm.html#~Task">module:sm~Task</a></span>
 
 
             
@@ -392,7 +776,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line234">line 234</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -440,7 +824,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Thu Feb 19 2015 17:56:40 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Fri Feb 20 2015 18:59:12 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

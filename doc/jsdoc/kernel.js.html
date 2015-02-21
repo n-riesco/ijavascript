@@ -65,13 +65,11 @@
 var DEBUG = false;
 
 var console = require("console");
-var crypto = require("crypto");
 var fs = require("fs");
-var util = require("util");
-var uuid = require("node-uuid");
 var zmq = require("zmq");
 
-var sm = require("./sm.js");
+var sm = require("./sm.js"); // Javascript sessions
+var Message = require("./jp.js").Message; // IPython/Jupyter protocol
 
 var protocolVersion = [4, 1];
 // node_version can be left as str in protocol v5
@@ -194,7 +192,7 @@ Kernel._onHBMessage = function(message) {
 /**
  * Kernel info request
  *
- * @param {Message} request Request message
+ * @param {module:jp~Message} request Request message
  */
 Kernel.prototype.kernel_info_request = function(request) {
     request.respond(
@@ -209,7 +207,7 @@ Kernel.prototype.kernel_info_request = function(request) {
 /**
  * Execute request
  *
- * @param {Message} request Request message
+ * @param {module:jp~Message} request Request message
  */
 Kernel.prototype.execute_request = function(request) {
     function beforeRun(session) {
@@ -323,7 +321,7 @@ Kernel._complexIdentifier = /[_$a-zA-Z][_$a-zA-Z0-9]*(?:[_$a-zA-Z][_$a-zA-Z0-9]*
 /**
  * Complete request
  *
- * @param {Message} request Request message
+ * @param {module:jp~Message} request Request message
  */
 Kernel.prototype.complete_request = function(request) {
     /**
@@ -521,7 +519,7 @@ Kernel.prototype.complete_request = function(request) {
 /**
  * Shutdown request
  *
- * @param {Message} request Request message
+ * @param {module:jp~Message} request Request message
  */
 Kernel.prototype.shutdown_request = function(request) {
     // TODO(NR) Handle socket `this.stdin` once it is implemented
@@ -551,125 +549,6 @@ Kernel.prototype.shutdown_request = function(request) {
     }.bind(this));
 };
 
-/**
- * @class
- * @classdesc Implements an IPython message
- *
- * @param {argsArray} [requestArguments] argsArray of the callback listening on
- * the {@link Kernel#shellSocket Shell socket}
- * @param {string}    [scheme=sha256]    Hashing scheme
- * @param {string}    [key=""]           Hashing key
- */
-function Message(requestArguments, scheme, key) {
-    this.idents = undefined;
-    this.delimiter = undefined;
-    this.signature = undefined;
-    this.header = undefined;
-    this.parentHeader = undefined;
-    this.metadata = undefined;
-    this.content = undefined;
-    this.blob = undefined;
-
-    this.scheme = scheme || "sha256";
-    this.key = key || "";
-    this.signatureOK = undefined;
-
-    if (requestArguments !== undefined) {
-        this.parse(requestArguments);
-    }
-}
-
-/**
- * Parse a request
- *
- * @param {argsArray} requestArguments argsArray of the callback listening on
- * the {@link Kernel#shellSocket Shell socket}
- */
-Message.prototype.parse = function(requestArguments) {
-    var hmac = crypto.createHmac(this.scheme, this.key);
-    hmac.update(requestArguments[3]);
-    hmac.update(requestArguments[4]);
-    hmac.update(requestArguments[5]);
-    hmac.update(requestArguments[6]);
-    this.signature = requestArguments[2].toString();
-    this.signatureOK = (this.signature === hmac.digest("hex"));
-
-    if (!this.signatureOK) return;
-
-    function toString(value) {
-        if (value === undefined || value === null) {
-            return value;
-        }
-        return value.toString();
-    }
-
-    function toJSON(value) {
-        if (value === undefined || value === null) {
-            return value;
-        }
-        return JSON.parse(value.toString());
-    }
-
-    this.idents = toString(requestArguments[0]);
-    this.delimiter = toString(requestArguments[1]);
-
-    this.header = toJSON(requestArguments[3]);
-    this.parentHeader = toJSON(requestArguments[4]);
-    this.metadata = toString(requestArguments[5]);
-    this.content = toJSON(requestArguments[6]);
-    this.blob = toString(requestArguments[7]);
-
-    if (DEBUG) console.log("REQUEST:", this);
-};
-
-/**
- * Send a response
- *
- * @param {module:zmq~Socket} socket Socket over which the response is sent
- * @param {string} messageType Type of message as specified by IPython protocol
- * @param {object} content     Response content as specified by IPython protocol
- */
-Message.prototype.respond = function(socket, messageType, content) {
-    var idents = this.idents;
-    var delimiter = this.delimiter;
-    var header = JSON.stringify({
-        msg_id: uuid.v4(),
-        username: this.header.username,
-        session: this.header.session,
-        msg_type: messageType,
-    });
-    var parentHeader = JSON.stringify(this.header);
-    var metadata = JSON.stringify({});
-    content = JSON.stringify(content);
-
-    var hmac = crypto.createHmac(this.scheme, this.key);
-    hmac.update(header);
-    hmac.update(parentHeader);
-    hmac.update(metadata);
-    hmac.update(content);
-    var signature = hmac.digest("hex");
-
-    if (DEBUG) console.log("RESPONSE:", [
-        idents, // idents
-        delimiter, // delimiter
-        signature, // HMAC signature
-        header, // header
-        parentHeader, // parent header
-        metadata, // metadata
-        content, // content
-    ]);
-
-    socket.send([
-        idents, // idents
-        delimiter, // delimiter
-        signature, // HMAC signature
-        header, // header
-        parentHeader, // parent header
-        metadata, // metadata
-        content, // content
-    ]);
-};
-
 // Parse command arguments
 var ipythonConfig;
 process.argv.slice(2).forEach(function(arg) {
@@ -694,13 +573,13 @@ new Kernel(ipythonConfig);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-sm.html">sm</a></li></ul><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li><li><a href="Message.html">Message</a></li><li><a href="module-sm-Session.html">Session</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-jp.html">jp</a></li><li><a href="module-sm.html">sm</a></li></ul><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li><li><a href="module-jp-Message.html">Message</a></li><li><a href="module-sm-Session.html">Session</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Fri Feb 20 2015 18:59:12 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Sat Feb 21 2015 10:12:06 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

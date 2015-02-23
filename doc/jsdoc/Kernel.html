@@ -32,10 +32,7 @@
         Kernel
         </h2>
         
-            <div class="class-description">Implements a Javascript kernel for an IPython notebook.
-
-The methods defined in the [[prototype]] of this class implement the
-response to the corresponding message in the IPython protocol.</div>
+            <div class="class-description">Implements a Javascript kernel for an IPython notebook.</div>
         
     
 </header>
@@ -145,7 +142,7 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line61">line 61</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -243,7 +240,7 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line66">line 66</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -315,12 +312,92 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line90">line 90</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line86">line 86</a>
     </li></ul></dd>
     
 
     
 
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="handlers"><span class="type-signature"></span>handlers<span class="type-signature"> :Object.&lt;String, function()></span></h4>
+
+
+
+
+<div class="description">
+    Collection of message handlers that links a message type with the method
+handling the response
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object.&lt;String, function()></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>module:handler_v4</li>
+        </ul>
+    </dd>
     
 
     
@@ -387,7 +464,7 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line72">line 72</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line68">line 68</a>
     </li></ul></dd>
     
 
@@ -459,7 +536,7 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line78">line 78</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line74">line 74</a>
     </li></ul></dd>
     
 
@@ -531,7 +608,7 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line84">line 84</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line80">line 80</a>
     </li></ul></dd>
     
 
@@ -603,7 +680,7 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line96">line 96</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line92">line 92</a>
     </li></ul></dd>
     
 
@@ -630,7 +707,7 @@ response to the corresponding message in the IPython protocol.</div>
 
     
 
-    <h4 class="name" id=".destroy"><span class="type-signature">(static) </span>destroy<span class="signature">(destroyCB<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="destroy"><span class="type-signature"></span>destroy<span class="signature">(destroyCB<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -743,7 +820,7 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line118">line 118</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line161">line 161</a>
     </li></ul></dd>
     
 
@@ -774,7 +851,7 @@ response to the corresponding message in the IPython protocol.</div>
 
     
 
-    <h4 class="name" id=".restart"><span class="type-signature">(static) </span>restart<span class="signature">(restartCB<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="restart"><span class="type-signature"></span>restart<span class="signature">(restartCB<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -887,531 +964,7 @@ response to the corresponding message in the IPython protocol.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line154">line 154</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="complete_request"><span class="type-signature"></span>complete_request<span class="signature">(request)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Complete request
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>request</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="module-jp-Message.html">module:jp~Message</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Request message</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line354">line 354</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="execute_request"><span class="type-signature"></span>execute_request<span class="signature">(request)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Execute request
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>request</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="module-jp-Message.html">module:jp~Message</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Request message</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line240">line 240</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="kernel_info_request"><span class="type-signature"></span>kernel_info_request<span class="signature">(request)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Kernel info request
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>request</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="module-jp-Message.html">module:jp~Message</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Request message</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line225">line 225</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="shutdown_request"><span class="type-signature"></span>shutdown_request<span class="signature">(request)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Shutdown request
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>request</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="module-jp-Message.html">module:jp~Message</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Request message</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line552">line 552</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line197">line 197</a>
     </li></ul></dd>
     
 
@@ -1453,13 +1006,13 @@ response to the corresponding message in the IPython protocol.</div>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-jp.html">jp</a></li><li><a href="module-sm.html">sm</a></li></ul><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li><li><a href="module-jp-Message.html">Message</a></li><li><a href="module-sm-Session.html">Session</a></li></ul><h3><a href="global.html">Global</a></h3>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-jp.html">jp</a></li><li><a href="module-sm.html">sm</a></li></ul><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li><li><a href="module-jp-Message.html">Message</a></li><li><a href="module-sm-Session.html">Session</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Sun Feb 22 2015 22:21:47 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Mon Feb 23 2015 23:29:39 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

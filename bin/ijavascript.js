@@ -49,6 +49,7 @@ var usage = (
     "\n" +
     "The recognised options are:\n" +
     "\n" +
+    "    --ijs-debug             enable debug log level\n" +
     "    --ijs-help              show this help\n" +
     "    --ijs-working-dir=path  set working directory for Javascript sessions\n" +
     "                            (default = current working directory)\n" +
@@ -73,6 +74,8 @@ config.ipythonArgs = ["notebook"];
 process.argv.slice(2).forEach(function(e) {
     if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
         console.warn(util.format("Warning: Flag '%s' skipped", e));
+    } else if (e.lastIndexOf("--ijs-debug", 0) === 0) {
+        config.kernelArgs.push("--debug");
     } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
         config.cwd = fs.realpathSync(e.slice(18));
     } else if (e.lastIndexOf("--ijs-help", 0) === 0) {

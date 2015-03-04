@@ -40,6 +40,26 @@ var path = require("path");
 var spawn = require("child_process").spawn;
 var util = require("util");
 
+var usage = (
+    "iJavascript Notebook\n" +
+    "\n" +
+    "Usage:\n" +
+    "\n" +
+    "    ijs <options>\n" +
+    "\n" +
+    "The recognised options are:\n" +
+    "\n" +
+    "    --ijs-help              show this help\n" +
+    "    --ijs-working-dir=path  set working directory for Javascript sessions\n" +
+    "                            (default = current working directory)\n" +
+    "\n" +
+    "and any other options recognised by the IPython notebook; run:\n" +
+    "\n" +
+    "    ipython notebook --help\n" +
+    "\n" +
+    "for a full list.\n"
+);
+
 var config = {
     nodePath: process.argv[0],
     ijsPath: fs.realpathSync(process.argv[1]),
@@ -53,13 +73,23 @@ config.ipythonArgs = ["notebook"];
 process.argv.slice(2).forEach(function(e) {
     if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
         console.warn(util.format("Warning: Flag '%s' skipped", e));
-    } else if (e === "--ijs-enable-global") {
-        console.warn(util.format("Warning: Flag '%s' deprecated", e));
+    } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
+        config.cwd = fs.realpathSync(e.slice(18));
+    } else if (e.lastIndexOf("--ijs-help", 0) === 0) {
+        console.warn(usage);
+        process.exit(0);
+    } else if (e.lastIndexOf("--ijs-", 0) === 0) {
+        console.warn(util.format("Error: Unrecognised flag '%s'\n", e));
+        console.warn(usage);
+        process.exit(1);
     } else {
         config.ipythonArgs.push(e);
     }
 });
 
+config.cwd = config.cwd || process.cwd();
+
+config.kernelArgs.push(config.cwd);
 config.kernelArgs.push("{connection_file}");
 
 config.ipythonArgs.push(util.format(

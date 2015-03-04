@@ -94,9 +94,10 @@
  * }).bind(this));
  *
  */
-module.exports.Message = Message;
+module.exports = Message;
 
-var DEBUG = false;
+var DEBUG = global.DEBUG || false;
+var DELIMITER = '&lt;IDS|MSG>';
 
 var console = require("console");
 var crypto = require("crypto");
@@ -113,20 +114,25 @@ var uuid = require("node-uuid");
  */
 function Message(requestArguments, scheme, key) {
     this.idents = undefined;
-    this.delimiter = undefined;
     this.signature = undefined;
     this.header = undefined;
     this.parentHeader = undefined;
     this.metadata = undefined;
     this.content = undefined;
-    this.blob = undefined;
+    this.blobs = undefined;
 
     this.scheme = scheme || "sha256";
     this.key = key || "";
     this.signatureOK = undefined;
 
     if (requestArguments !== undefined) {
-        this.parse(requestArguments);
+        try {
+            this.parse(requestArguments);
+        } catch (e) {
+            console.error(
+                "JP: REQUEST: Failed to parse msg", requestArguments, e.stack
+            );
+        }
     }
 }
 
@@ -137,38 +143,48 @@ function Message(requestArguments, scheme, key) {
  * the {@link Kernel#shellSocket Shell socket}
  */
 Message.prototype.parse = function(requestArguments) {
-    var hmac = crypto.createHmac(this.scheme, this.key);
-    hmac.update(requestArguments[3]);
-    hmac.update(requestArguments[4]);
-    hmac.update(requestArguments[5]);
-    hmac.update(requestArguments[6]);
-    this.signature = requestArguments[2].toString();
-    this.signatureOK = (this.signature === hmac.digest("hex"));
+    var i = 0;
+    this.idents = [];
+    for (i = 0; i &lt; requestArguments.length; i++) {
+        var part = requestArguments[i];
+        if (part.toString() === DELIMITER) {
+            break;
+        }
+        this.idents.push(part);
+    }
+    if (requestArguments.length - i &lt; 5) {
+        console.warn("JP: REQUEST: Not enough msg parts", requestArguments);
+        return;
+    }
+    if (requestArguments[i].toString() !== DELIMITER) {
+        console.warn("JP: REQUEST: Invalid msg", requestArguments);
+        return;
+    }
+
+    if (this.key === '') {
+        // no key, messages aren't signed
+        this.signatureOK = (this.signature === '');
+    } else {
+        this.signature = requestArguments[i + 1].toString();
+        var hmac = crypto.createHmac(this.scheme, this.key);
+        hmac.update(requestArguments[i + 2]);
+        hmac.update(requestArguments[i + 3]);
+        hmac.update(requestArguments[i + 4]);
+        hmac.update(requestArguments[i + 5]);
+        this.signatureOK = (this.signature === hmac.digest("hex"));
+    }
 
     if (!this.signatureOK) return;
 
-    function toString(value) {
-        if (value === undefined || value === null) {
-            return value;
-        }
-        return value.toString();
-    }
-
     function toJSON(value) {
-        if (value === undefined || value === null) {
-            return value;
-        }
         return JSON.parse(value.toString());
     }
 
-    this.idents = toString(requestArguments[0]);
-    this.delimiter = toString(requestArguments[1]);
-
-    this.header = toJSON(requestArguments[3]);
-    this.parentHeader = toJSON(requestArguments[4]);
-    this.metadata = toString(requestArguments[5]);
-    this.content = toJSON(requestArguments[6]);
-    this.blob = toString(requestArguments[7]);
+    this.header = toJSON(requestArguments[i + 2]);
+    this.parentHeader = toJSON(requestArguments[i + 3]);
+    this.metadata = toJSON(requestArguments[i + 4]);
+    this.content = toJSON(requestArguments[i + 5]);
+    this.blobs = Array.prototype.slice.apply(requestArguments, [i + 6]);
 
     if (DEBUG) console.log("JP: REQUEST:", this);
 };
@@ -182,7 +198,6 @@ Message.prototype.parse = function(requestArguments) {
  */
 Message.prototype.respond = function(socket, messageType, content) {
     var idents = this.idents;
-    var delimiter = this.delimiter;
     var header = JSON.stringify({
         msg_id: uuid.v4(),
         username: this.header.username,
@@ -192,17 +207,18 @@ Message.prototype.respond = function(socket, messageType, content) {
     var parentHeader = JSON.stringify(this.header);
     var metadata = JSON.stringify({});
     content = JSON.stringify(content);
+    var signature = '';
+    if (this.key !== '') {
+        var hmac = crypto.createHmac(this.scheme, this.key);
+        hmac.update(header);
+        hmac.update(parentHeader);
+        hmac.update(metadata);
+        hmac.update(content);
+        signature = hmac.digest("hex");
+    }
 
-    var hmac = crypto.createHmac(this.scheme, this.key);
-    hmac.update(header);
-    hmac.update(parentHeader);
-    hmac.update(metadata);
-    hmac.update(content);
-    var signature = hmac.digest("hex");
-
-    if (DEBUG) console.log("JP: RESPONSE:", [
-        idents, // idents
-        delimiter, // delimiter
+    var response = idents.concat([ // idents
+        DELIMITER, // delimiter
         signature, // HMAC signature
         header, // header
         parentHeader, // parent header
@@ -210,15 +226,9 @@ Message.prototype.respond = function(socket, messageType, content) {
         content, // content
     ]);
 
-    socket.send([
-        idents, // idents
-        delimiter, // delimiter
-        signature, // HMAC signature
-        header, // header
-        parentHeader, // parent header
-        metadata, // metadata
-        content, // content
-    ]);
+    if (DEBUG) console.log("JP: RESPONSE:", response);
+
+    socket.send(response);
 };
 </code></pre>
         </article>
@@ -236,7 +246,7 @@ Message.prototype.respond = function(socket, messageType, content) {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Mon Feb 23 2015 23:29:39 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Wed Mar 04 2015 17:46:48 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

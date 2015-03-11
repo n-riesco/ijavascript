@@ -1,7 +1,7 @@
 # IJavascript: A Javascript Kernel for IPython's Graphical Notebook
 
 IJavascript is an [`npm` package](https://www.npmjs.com/) that implements a
-Javasript kernel for [IPython's graphical
+Javascript kernel for [IPython's graphical
 notebook](http://ipython.org/notebook.html) (also known as
 [Jupyter](http://jupyter.org/)). An IPython notebook combines the creation of
 rich-text documents (including equations, plots and videos) with the execution
@@ -119,7 +119,6 @@ ipython notebook help
 
 ## TO DO
 
-- Implement `object_info_request`
 - Add tests
 - Complete the implementation of IPython's messaging protocol v4.1
 - Implement Jupyter's messaging protocol v5.0

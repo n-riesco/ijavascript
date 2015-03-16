@@ -122,3 +122,4 @@ ipython notebook help
 - Add tests
 - Complete the implementation of IPython's messaging protocol v4.1
 - Implement Jupyter's messaging protocol v5.0
+- Provide graphical output

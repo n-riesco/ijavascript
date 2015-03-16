@@ -130,23 +130,124 @@ var afterRun = function (session) {
 };
 // Callback called only if no errors occurred.
 var onSuccess = function (session) {
-    console.log(session.result.mime["text/plain"]);
+    console.log(session.result);
 };
 // Callback called only if errors occurred.
 var onError = function (session) {
-    console.log(session.result.error.traceback]);
+    console.log(session.result);
 };
 
+var task = {
+    action: "run",
+    code: "var msg = `Hello, World!`;",
+    beforeRun: beforeRun,
+    afterRun: afterRun,
+    onSuccess: onSuccess,
+    onError: onError,
+};
+session.run(task);
 // Output:
-// undefined
+// { mime:
+//    { 'text/plain': 'undefined',
+//      'text/html': '&lt;pre>undefined&lt;/pre>' },
+//   stdout: null,
+//   stderr: null }
 // 1
-// `Hello, World!`
-// 2
-var code = "var msg=`Hello, World!`;";
-session.run(code, beforeRun, afterRun, onSuccess, onError);
 
-code = "msg;";
-session.run(code, beforeRun, afterRun, onSuccess, onError);</code></pre>
+task.code = "msg;";
+session.run(task);
+// Output:
+// { mime:
+//    { 'text/plain': '\'Hello, World!\'',
+//      'text/html': '&lt;pre>&amp;#39;Hello, World!&amp;#39;&lt;/pre>' },
+//   stdout: null,
+//   stderr: null }
+// 2
+
+task.code = "console.log(msg);";
+session.run(task);
+// Output:
+// { mime:
+//    { 'text/plain': 'undefined',
+//      'text/html': '&lt;pre>undefined&lt;/pre>' },
+//   stdout: 'Hello, World!\n',
+//   stderr: null }
+// 3
+
+task.code = "console.warn(msg);";
+session.run(task);
+// Output:
+// { mime:
+//    { 'text/plain': 'undefined',
+//      'text/html': '&lt;pre>undefined&lt;/pre>' },
+//   stdout: null,
+//   stderr: 'Hello, World!\n' }
+// 4
+
+task.code = "throw new Error('This is a test!');";
+session.run(task);
+// Output:
+// { error:
+//    { ename: 'Error',
+//      evalue: 'This is a test!',
+//      traceback:
+//       [ 'Error: This is a test!',
+//         '    at evalmachine.&lt;anonymous>:1:7',
+//         '    at run ([eval]:116:19)',
+//         '    at onMessage ([eval]:63:41)',
+//         '    at process.EventEmitter.emit (events.js:98:17)',
+//         '    at handleMessage (child_process.js:318:10)',
+//         '    at Pipe.channel.onread (child_process.js:345:11)' ] },
+//   stdout: null,
+//   stderr: null }
+// 5
+
+task.action = "inspect";
+task.code = "msg";
+task.beforeRun = undefined;
+task.afterRun = undefined;
+session.run(task);
+// Output:
+// { string: 'Hello, World!',
+//   type: 'String',
+//   constructorList: [ 'String', 'Object' ],
+//   length: 13,
+//   stdout: null,
+//   stderr: null }
+
+task.action = "run";
+task.code = "var obj = {};";
+task.beforeRun = beforeRun;
+task.afterRun = afterRun;
+session.run(task);
+// Output:
+// { mime:
+//    { 'text/plain': 'undefined',
+//      'text/html': '&lt;pre>undefined&lt;/pre>' },
+//   stdout: null,
+//   stderr: null }
+// 6
+
+task.action = "getAllPropertyNames";
+task.code = "obj";
+task.beforeRun = undefined;
+task.afterRun = undefined;
+session.run(task);
+// Output:
+// { names:
+//    [ '__defineGetter__',
+//      '__defineSetter__',
+//      '__lookupGetter__',
+//      '__lookupSetter__',
+//      'constructor',
+//      'hasOwnProperty',
+//      'isPrototypeOf',
+//      'propertyIsEnumerable',
+//      'toLocaleString',
+//      'toString',
+//      'valueOf' ],
+//   stdout: null,
+//   stderr: null }</code></pre>
 
 
 
@@ -276,7 +377,7 @@ session.run(code, beforeRun, afterRun, onSuccess, onError);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line95">line 95</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line196">line 196</a>
     </li></ul></dd>
     
 
@@ -449,7 +550,7 @@ session.run(code, beforeRun, afterRun, onSuccess, onError);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line325">line 325</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line428">line 428</a>
     </li></ul></dd>
     
 
@@ -632,7 +733,7 @@ session.run(code, beforeRun, afterRun, onSuccess, onError);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line349">line 349</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line452">line 452</a>
     </li></ul></dd>
     
 
@@ -1056,7 +1157,7 @@ session.run(code, beforeRun, afterRun, onSuccess, onError);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line206">line 206</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line309">line 309</a>
     </li></ul></dd>
     
 
@@ -1184,7 +1285,7 @@ session.run(code, beforeRun, afterRun, onSuccess, onError);</code></pre>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line199">line 199</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line302">line 302</a>
     </li></ul></dd>
     
 
@@ -1290,7 +1391,11 @@ associated callbacks.
                                             and return the result;
                                             "getAllPropertyNames" to evaluate
                                             a piece of code and return all
-                                            the property names of the result;</td>
+                                            the property names of the result;
+                                            "inspect" to inspect an object
+                                            and return information such as
+                                            constructor, parentConstructor,
+                                            string representation, length...</td>
         </tr>
 
     
@@ -1478,7 +1583,7 @@ associated callbacks.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line178">line 178</a>
+        <a href="sm.js.html">sm.js</a>, <a href="sm.js.html#line277">line 277</a>
     </li></ul></dd>
     
 
@@ -1515,13 +1620,13 @@ associated callbacks.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-jp.html">jp</a></li><li><a href="module-sm.html">sm</a></li></ul><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li><li><a href="module-jp-Message.html">Message</a></li><li><a href="module-sm-Session.html">Session</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-jp.html">jp</a></li><li><a href="module-sm.html">sm</a></li></ul><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li><li><a href="module-jp-Message.html">Message</a></li><li><a href="module-sm-Session.html">Session</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#object_info_request">object_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Wed Mar 04 2015 17:46:48 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Mon Mar 16 2015 13:22:38 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

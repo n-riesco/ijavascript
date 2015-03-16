@@ -66,12 +66,15 @@ module.exports = {
     kernel_info_request: kernel_info_request,
     execute_request: execute_request,
     complete_request: complete_request,
+    object_info_request: object_info_request,
     shutdown_request: shutdown_request,
 };
 
 var DEBUG = global.DEBUG || false;
 
 var console = require("console");
+
+var doc = require("./mdn.js"); // Documentation for Javascript builtins
 
 /**
  * IPython protocol version
@@ -221,108 +224,143 @@ var simpleIdentifierRE = /[_$a-zA-Z][_$a-zA-Z0-9]*$/;
 var complexIdentifierRE = /[_$a-zA-Z][_$a-zA-Z0-9]*(?:[_$a-zA-Z][_$a-zA-Z0-9]*|\.[_$a-zA-Z][_$a-zA-Z0-9]*|\[".*"\]|\['.*'\])*$/;
 
 /**
+ * Parse a Javascript expression
+ *
+ * @param {String} line       Javascript code
+ * @param {Number} cursorPos  Cursor position within `line`
+ *
+ * @returns          expression             Parsed expression
+ * @returns {String} expression.matchedText Matched expression, e.g. `foo["bar`
+ * @returns {String} expression.scope       Scope of the property being matched,
+ *                                          e.g. `foo`
+ * @returns {String} expression.leftOp      Left-hand-side selector operator,
+ *                                          e.g. `["`
+ * @returns {String} expression.selector    Stem of the property being matched,
+ *                                          e.g. `bar`
+ * @returns {String} expression.rightOp     Right-hand-side selector operator,
+ *                                          e.g. `"]`
+ *
+ * @todo Parse expressions with parenthesis
+ * @private
+ */
+function parseExpression(line, cursorPos) {
+    var expression = line.slice(0, cursorPos);
+    if (!expression ||
+        whitespaceRE.test(expression[expression.length - 1])) {
+        return {
+            matchedText: "",
+            scope: "",
+            leftOp: "",
+            selector: "",
+            rightOp: "",
+        };
+    }
+
+    var selector;
+    var re = simpleIdentifierRE.exec(expression);
+    if (re === null) {
+        selector = "";
+    } else {
+        selector = re[0];
+        expression = expression.slice(0, re.index);
+    }
+
+    var leftOp;
+    var rightOp;
+    if (expression[expression.length - 1] === '.') {
+        leftOp = ".";
+        rightOp = "";
+        expression = expression.slice(0, expression.length - 1);
+    } else if (
+        (expression[expression.length - 2] === '[') &amp;&amp;
+        (expression[expression.length - 1] === '"')
+    ) {
+        leftOp = "[\"";
+        rightOp = "\"]";
+        expression = expression.slice(0, expression.length - 2);
+    } else if (
+        (expression[expression.length - 2] === '[') &amp;&amp;
+        (expression[expression.length - 1] === '\'')
+    ) {
+        leftOp = "['";
+        rightOp = "']";
+        expression = expression.slice(0, expression.length - 2);
+    } else {
+        return {
+            matchedText: line.slice(expression.length, cursorPos),
+            scope: "",
+            leftOp: "",
+            selector: selector,
+            rightOp: "",
+        };
+    }
+
+    var scope;
+    re = complexIdentifierRE.exec(expression);
+    if (re) {
+        scope = re[0];
+        return {
+            matchedText: line.slice(re.index, cursorPos),
+            scope: scope,
+            leftOp: leftOp,
+            selector: selector,
+            rightOp: rightOp,
+        };
+    } else if (!leftOp) {
+        scope = "";
+        return {
+            matchedText: line.slice(expression.length, cursorPos),
+            scope: scope,
+            leftOp: leftOp,
+            selector: selector,
+            rightOp: rightOp,
+        };
+    }
+
+    // Not implemented
+    return null;
+}
+
+/**
  * Handler for `complete_request` messages
  *
  * @param {module:jp~Message} request Request message
  * @this Kernel
  */
 function complete_request(request) {
-    /**
-     * Parse a Javascript expression
-     *
-     * @param {String} line       Javascript code
-     * @param {Number} cursorPos  Cursor position within `line`
-     *
-     * @returns          expression             Parsed expression
-     * @returns {String} expression.matchedText Matched expression, e.g.
-     *                                          `foo["bar`
-     * @returns {String} expression.scope       Scope of the property being
-     *                                          matched, e.g. `foo`
-     * @returns {String} expression.leftOp      Left-hand-side selector
-     *                                          operator, e.g. `["`
-     * @returns {String} expression.selector    Stem of the property being
-     *                                          matched, e.g. `bar`
-     * @returns {String} expression.rightOp     Right-hand-side selector
-     *                                          operator, e.g. `"]`
-     *
-     * @todo Parse expressions with parenthesis
-     */
-    function parseExpression(line, cursorPos) {
-        var expression = line.slice(0, cursorPos);
-        if (!expression ||
-            whitespaceRE.test(expression[expression.length - 1])) {
-            return {
-                matchedText: "",
-                scope: "",
-                leftOp: "",
-                selector: "",
-                rightOp: "",
-            };
+    function onSuccess(matches) {
+        // filter matches
+        if (expression.selector) {
+            matches = matches.filter(function(elt) {
+                return elt.lastIndexOf(expression.selector, 0) === 0;
+            });
         }
 
-        var selector;
-        var re = simpleIdentifierRE.exec(expression);
-        if (re === null) {
-            selector = "";
-        } else {
-            selector = re[0];
-            expression = expression.slice(0, re.index);
+        // append expression.rightOp to each match
+        var left = expression.scope + expression.leftOp;
+        var right = expression.rightOp;
+        if (left || right) {
+            matches = matches.map(function(elt) {
+                return left + elt + right;
+            });
         }
 
-        var leftOp;
-        var rightOp;
-        if (expression[expression.length - 1] === '.') {
-            leftOp = ".";
-            rightOp = "";
-            expression = expression.slice(0, expression.length - 1);
-        } else if (
-            (expression[expression.length - 2] === '[') &amp;&amp;
-            (expression[expression.length - 1] === '"')
-        ) {
-            leftOp = "[\"";
-            rightOp = "\"]";
-            expression = expression.slice(0, expression.length - 2);
-        } else if (
-            (expression[expression.length - 2] === '[') &amp;&amp;
-            (expression[expression.length - 1] === '\'')
-        ) {
-            leftOp = "['";
-            rightOp = "']";
-            expression = expression.slice(0, expression.length - 2);
-        } else {
-            return {
-                matchedText: line.slice(expression.length, cursorPos),
-                scope: "",
-                leftOp: "",
-                selector: selector,
-                rightOp: "",
-            };
-        }
+        // send response
+        var content = {
+            matches: matches,
+            matched_text: expression.matchedText,
+            status: "ok",
+        };
+        request.respond(this.shellSocket, "complete_reply", content);
+    }
 
-        var scope;
-        re = complexIdentifierRE.exec(expression);
-        if (re) {
-            scope = re[0];
-            return {
-                matchedText: line.slice(re.index, cursorPos),
-                scope: scope,
-                leftOp: leftOp,
-                selector: selector,
-                rightOp: rightOp,
-            };
-        } else if (!leftOp) {
-            scope = "";
-            return {
-                matchedText: line.slice(expression.length, cursorPos),
-                scope: scope,
-                leftOp: leftOp,
-                selector: selector,
-                rightOp: rightOp,
-            };
-        }
-
-        // Not implemented
-        return null;
+    function onError() {
+        var content = {
+            matches: [],
+            matched_text: request.content.text,
+            status: "ok",
+        };
+        request.respond(this.shellSocket, "complete_reply", content);
     }
 
     // parse expression
@@ -383,39 +421,151 @@ function complete_request(request) {
     }
     this.sm.run(task);
     return;
+}
 
-    function onSuccess(matches) {
-        // filter matches
-        if (expression.selector) {
-            matches = matches.filter(function(elt) {
-                return elt.lastIndexOf(expression.selector, 0) === 0;
-            });
-        }
+/**
+ * Handler for `object_info_request` messages
+ *
+ * @param {module:jp~Message} request Request message
+ * @this Kernel
+ */
+function object_info_request(request) {
+    var name = request.content.oname;
 
-        // append expression.rightOp to each match
-        var left = expression.scope + expression.leftOp;
-        var right = expression.rightOp;
-        if (left || right) {
-            matches = matches.map(function(elt) {
-                return left + elt + right;
-            });
-        }
-
-        var content = {
-            matches: matches,
-            matched_text: expression.matchedText,
-            status: "ok",
-        };
-        request.respond(this.shellSocket, "complete_reply", content);
+    // Is a builtin object?
+    var content = getBuiltinDoc(name);
+    if (content !== null) {
+        if (DEBUG) console.log("KERNEL: INSPECT: builtin object", name);
+        respond.call(this, content);
+        return;
     }
 
-    function onError() {
-        var content = {
-            matches: [],
-            matched_text: request.content.text,
-            status: "ok",
+    // Is a builtin property?
+    // To answer this question, parse expression and inspect scope
+    var expression = parseExpression(name, name.length);
+    if (DEBUG) console.log("KERNEL: INSPECT: PARSE:", expression);
+
+    // If there is no scope, inspect object instead
+    if (!expression.scope) {
+        inspectObject.call(this);
+        return;
+    }
+
+    // Build task to inspect the scope
+    var task = {
+        action: "inspect",
+        code: expression.scope,
+        onSuccess: (function(session) {
+            for (var i in session.result.constructorList) {
+                var constructorName = session.result.constructorList[i];
+                var content = getBuiltinDoc(
+                    constructorName +
+                    ".prototype." +
+                    expression.selector
+                );
+                if (content !== null) {
+                    respond.call(this, content);
+                    return;
+                }
+            }
+
+            // No builtin found, inspect object instead
+            inspectObject.call(this);
+            return;
+        }).bind(this),
+        onError: inspectObject.bind(this),
+    };
+    this.sm.run(task);
+
+    return;
+
+    function inspectObject() {
+        var task = {
+            action: "inspect",
+            code: name,
+            onSuccess: (function(session) {
+                var content = {
+                    string_name: session.result.string,
+                };
+
+                if (session.result.constructorList.length >= 1) {
+                    content.type_name = session.result.constructorList[0];
+                } else {
+                    content.type_name = session.result.type;
+                }
+
+                if (session.result.constructorList.length >= 2) {
+                    content.base_name = session.result.constructorList[1];
+                }
+
+                if (session.result.length) {
+                    content.length = session.result.length;
+                }
+
+                content.docstring = (
+                    session.result.type + ": " + session.result.string
+                );
+
+                respond.call(this, content);
+            }).bind(this),
+            onError: (function(session) {
+                var content = {
+                    oname: name,
+                    found: false,
+                };
+                request.respond(this.shellSocket, "object_info_reply", content);
+            }).bind(this)
         };
-        request.respond(this.shellSocket, "complete_reply", content);
+        this.sm.run(task);
+
+        return;
+    }
+
+    function getBuiltinName(name) {
+        var builtinName = name;
+        if (builtinName in doc) {
+            return builtinName;
+        }
+
+        builtinName = name.replace(/^[a-zA-Z]+Error./, "Error.");
+        if (builtinName in doc) {
+            return builtinName;
+        }
+
+        builtinName = name.replace(/^[a-zA-Z]+Array./, "TypedArray.");
+        if (builtinName in doc) {
+            return builtinName;
+        }
+
+        return null;
+    }
+
+    function getBuiltinDoc(name) {
+        var builtinName = getBuiltinName(name);
+        if (builtinName === null) {
+            return null;
+        }
+
+        var builtinDoc = doc[builtinName];
+
+        var content = {
+            namespace: "builtin",
+            docstring: builtinDoc.description,
+        };
+
+        if (builtinDoc.usage) {
+            content.definition = builtinDoc.usage;
+        }
+
+        return content;
+    }
+
+    function respond(content) {
+        content.oname = name;
+        content.found = true;
+        content.ismagic = false;
+        content.isalias = false;
+        request.respond(this.shellSocket, "object_info_reply", content);
     }
 }
 
@@ -448,13 +598,13 @@ function shutdown_request(request) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-jp.html">jp</a></li><li><a href="module-sm.html">sm</a></li></ul><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li><li><a href="module-jp-Message.html">Message</a></li><li><a href="module-sm-Session.html">Session</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-jp.html">jp</a></li><li><a href="module-sm.html">sm</a></li></ul><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li><li><a href="module-jp-Message.html">Message</a></li><li><a href="module-sm-Session.html">Session</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#object_info_request">object_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Wed Mar 04 2015 17:46:48 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-beta1</a> on Mon Mar 16 2015 13:22:38 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

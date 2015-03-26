@@ -35,6 +35,7 @@
  */
 
 var console = require("console");
+var exec = require("child_process").exec;
 var fs = require("fs");
 var path = require("path");
 var spawn = require("child_process").spawn;
@@ -100,13 +101,68 @@ config.ipythonArgs.push(util.format(
     config.kernelArgs.join("', '")
 ));
 
-// Run IPython notebook
-var ipython = spawn("ipython", config.ipythonArgs, {
-    stdio: "inherit"
-});
+// Determine IPython version and start the IPython notebook accordingly
+exec("ipython --version && ipython locate", function(error, stdout, stderr) {
+    var lines = stdout.toString().split("\n", 2);
 
-// Relay SIGINT onto ipython
-var signal = "SIGINT";
-process.on(signal, function() {
-    ipython.emit(signal);
+    config.ipythonVersion = lines[0].split(".").map(function(e) {
+        return parseInt(e);
+    });
+
+    if (isNaN(config.ipythonVersion[0]) || lines.length != 2) {
+        console.warn("Error running `ipython --version && ipython locate`");
+        process.exit(1);
+    }
+
+    config.ipythonConfigDir = lines[1];
+    config.ipythonKernelsDir = path.join(config.ipythonConfigDir, "kernels");
+    config.ijsKernelSpecDir = path.join(
+        config.ipythonKernelsDir, "javascript"
+    );
+    config.ijsKernelSpecFile = path.join(
+        config.ijsKernelSpecDir, "kernel.json"
+    );
+
+    var ipython;
+    if (config.ipythonVersion[0] < 3) {
+        // Start the IPython notebook
+        ipython = spawn("ipython", config.ipythonArgs, {
+            stdio: "inherit"
+        });
+    } else {
+        // Create the spec for a Javascript kernel
+        try {
+            fs.mkdirSync(config.ipythonKernelsDir);
+        } catch (e) {
+            if (e.code != 'EEXIST') {
+                throw e;
+            }
+        }
+
+        try {
+            fs.mkdirSync(config.ijsKernelSpecDir);
+        } catch (e) {
+            if (e.code != 'EEXIST') {
+                throw e;
+            }
+        }
+
+        var ijsSpec = {
+            argv: config.kernelArgs,
+            display_name: "Javascript (Node.js)",
+            language: "javascript",
+        };
+        fs.writeFileSync(config.ijsKernelSpecFile, JSON.stringify(ijsSpec));
+
+        // Start the IPython notebook with the default profile
+        ipython = spawn("ipython", ["notebook"], {
+            stdio: "inherit"
+        });
+    }
+
+    // Relay SIGINT onto ipython
+    var signal = "SIGINT";
+    process.on(signal, function() {
+        ipython.emit(signal);
+    });
 });

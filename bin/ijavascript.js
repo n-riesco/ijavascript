@@ -96,11 +96,6 @@ config.cwd = config.cwd || process.cwd();
 config.kernelArgs.push(config.cwd);
 config.kernelArgs.push("{connection_file}");
 
-config.ipythonArgs.push(util.format(
-    "--KernelManager.kernel_cmd=['%s']",
-    config.kernelArgs.join("', '")
-));
-
 // Determine IPython version and start the IPython notebook accordingly
 exec("ipython --version && ipython locate", function(error, stdout, stderr) {
     var lines = stdout.toString().split("\n", 2);
@@ -123,14 +118,14 @@ exec("ipython --version && ipython locate", function(error, stdout, stderr) {
         config.ijsKernelSpecDir, "kernel.json"
     );
 
-    var ipython;
     if (config.ipythonVersion[0] < 3) {
-        // Start the IPython notebook
-        ipython = spawn("ipython", config.ipythonArgs, {
-            stdio: "inherit"
-        });
+        // Set IPython arguments to use the IJavascript kernel
+        config.ipythonArgs.push(util.format(
+            "--KernelManager.kernel_cmd=['%s']",
+            config.kernelArgs.join("', '")
+        ));
     } else {
-        // Create the spec for a Javascript kernel
+        // Create a spec for the IJavascript kernel
         try {
             fs.mkdirSync(config.ipythonKernelsDir);
         } catch (e) {
@@ -153,12 +148,12 @@ exec("ipython --version && ipython locate", function(error, stdout, stderr) {
             language: "javascript",
         };
         fs.writeFileSync(config.ijsKernelSpecFile, JSON.stringify(ijsSpec));
-
-        // Start the IPython notebook with the default profile
-        ipython = spawn("ipython", ["notebook"], {
-            stdio: "inherit"
-        });
     }
+
+    // Start the IPython notebook with the default profile
+    var ipython = spawn("ipython", config.ipythonArgs, {
+        stdio: "inherit"
+    });
 
     // Relay SIGINT onto ipython
     var signal = "SIGINT";

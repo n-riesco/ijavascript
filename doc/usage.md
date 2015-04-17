@@ -43,5 +43,5 @@ Here's a sample notebook that makes use of the Javascript kernel:
 
 ![Screenshot: Notebook Hello Sample](../res/screenshot-notebook-hello.png)
 
-Also, please, see [graphics.md](../res/graphics.md) for some examples exercising
+Also, please, see [graphics.md](../doc/graphics.md) for some examples exercising
 the graphical capabilities provided by IJavascript.

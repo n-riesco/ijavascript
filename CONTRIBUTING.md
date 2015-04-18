@@ -33,7 +33,7 @@ ipython --version
 - Operating system. In most modern linux distributions, it is enough to run:
 
 ```sh
-lsb_realease -sd
+lsb_release -sd
 ```
 
 ## Code contributions

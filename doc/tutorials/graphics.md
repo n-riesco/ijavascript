@@ -15,7 +15,7 @@ To output `HTML` simply assign a string with the HTML to the global variable
 $$html$$ = "<div style='background-color:olive;width:50px;height:50px'></div>"
 ```
 
-![Screenshot: HTML output](../res/screenshot-notebook-html.png)
+![Screenshot: HTML output](./Images/screenshot-notebook-html.png)
 
 ### `$$svg$$`
 
@@ -26,7 +26,7 @@ variable `$$svg$$`:
 $$svg$$ = "<svg><rect width=80 height=80 style='fill: orange;'/></svg>"
 ```
 
-![Screenshot: SVG output](../res/screenshot-notebook-svg.png)
+![Screenshot: SVG output](./Images/screenshot-notebook-svg.png)
 
 ## Binary formats
 
@@ -43,7 +43,7 @@ assigned to the global variable `$$png$$`:
 $$png$$ = fs.readFileSync("image.png").toString("base64");
 ```
 
-![Screenshot: PNG output](../res/screenshot-notebook-png.png)
+![Screenshot: PNG output](./Images/screenshot-notebook-png.png)
 
 ### `$$jpeg$$`
 
@@ -53,7 +53,7 @@ Similarly with `JPEG` files and the global variable `$$jpeg$$`:
 $$jpeg$$ = fs.readFileSync("image.jpg").toString("base64");
 ```
 
-![Screenshot: JPEG output](../res/screenshot-notebook-jpeg.png)
+![Screenshot: JPEG output](./Images/screenshot-notebook-jpeg.png)
 
 ## MIME output
 
@@ -67,4 +67,4 @@ to the property `"text/html"`:
 $$mime$$ = {"text/html": "<div style='background-color:olive;width:50px;height:50px'></div>"};
 ```
 
-![Screenshot: MIME output](../res/screenshot-notebook-mime.png)
+![Screenshot: MIME output](./Images/screenshot-notebook-mime.png)

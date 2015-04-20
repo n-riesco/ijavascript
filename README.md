@@ -49,11 +49,11 @@ ijs
 This command should open the IPython notebook dashboard in your default web
 browser:
 
-![Screenshot: IPython Notebook Dashboard](doc/Images/screenshot-dashboard-home.png)
+![Screenshot: IPython Notebook Dashboard](doc/images/screenshot-dashboard-home.png)
 
 Here's a sample notebook that makes use of the IJavascript kernel:
 
-![Screenshot: Notebook Hello Sample](doc/Images/screenshot-notebook-hello.png)
+![Screenshot: Notebook Hello Sample](doc/images/screenshot-notebook-hello.png)
 
 Please, refer to the [usage notes](http://n-riesco.github.io/ijavascript/tutorial-usage.html) for further details.
 

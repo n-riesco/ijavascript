@@ -19,11 +19,11 @@ other languages](https://github.com/ipython/ipython/wiki/IPython-kernels-for-oth
 ## Main Features
 
 - Run Javascript code within a `node.js` session
-- [Autocompletion](doc/complete.md): press `TAB` to complete keywords and object
+- [Autocompletion](doc/tutorials/complete.md): press `TAB` to complete keywords and object
   properties
-- [Object inspection](doc/inspect.md): press `Shift-TAB` to inspect an object
+- [Object inspection](doc/tutorials/inspect.md): press `Shift-TAB` to inspect an object
   and show its content or, if available, its documentation
-- [Graphical output](doc/graphics.md) for `HTML`, `PNG`, ...
+- [Graphical output](doc/ipynb/graphics.ipynb) for `HTML`, `PNG`, ...
 
 ## Installation
 
@@ -36,7 +36,7 @@ sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq-dev
 sudo npm install -g ijavascript
 ```
 
-For other platforms, please, refer to the [installation notes](doc/install.md).
+For other platforms, please, refer to the [installation notes](doc/tutorials/install.md).
 
 ## Usage
 
@@ -55,7 +55,15 @@ Here's a sample notebook that makes use of the IJavascript kernel:
 
 ![Screenshot: Notebook Hello Sample](res/screenshot-notebook-hello.png)
 
-Please, refer to the [usage notes](doc/usage.md) for further details.
+Please, refer to the [usage notes](doc/tutorials/usage.md) for further details.
+
+## Documentation
+
+You can build the documentation for this package with the command `make jsdoc`.
+To run this command you'll need to install ipython on your system as it uses
+nb convert to convert ipython notebooks to html files.
+
+
 
 # Contributions
 

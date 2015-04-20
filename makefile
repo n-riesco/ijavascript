@@ -9,7 +9,7 @@ help:
 jsdoc:
 	ipython nbconvert 'doc/ipynb/*.ipynb' --FilesWriter.build_directory='doc/tutorials';
 	npm run doc;
-	cp -r doc/Images/ doc/output/
+	cp -r doc/images/ doc/output/
 	@echo
 	@echo "Build finished. The Documentation is in doc/output."
 	@echo "Cleaning up"
@@ -21,4 +21,3 @@ publish-doc: jsdoc
 	@echo
 	@echo "Build finished. The Documentation is in doc/output."
 	@echo "Cleaning up"
-	

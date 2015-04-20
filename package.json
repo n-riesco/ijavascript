@@ -30,7 +30,7 @@
         "jshint": "latest"
     },
     "scripts": {
-        "doc": "jsdoc -R doc/jsdoc/README.md -d doc/jsdoc lib",
+        "doc": "jsdoc -R doc/README.md -d doc/jsdoc lib",
         "lint": "jshint bin lib"
     }
 }

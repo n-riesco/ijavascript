@@ -7,13 +7,12 @@ help:
 	@echo " publish-doc  	            publish doc to gh-pages"
 
 jsdoc:
-	ipython nbconvert 'doc/ipynb/*.ipynb' --FilesWriter.build_directory='doc/tutorials';
+	ipython nbconvert 'doc/tutorials/*.ipynb' --FilesWriter.build_directory='doc/tutorials';
 	npm run doc;
 	cp -r doc/images/ doc/output/
 	@echo
 	@echo "Build finished. The Documentation is in doc/output."
 	@echo "Cleaning up"
-	rm doc/tutorials/*.html;
 
 publish-doc: jsdoc
 	ghp-import doc/output

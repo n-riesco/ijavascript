@@ -3,13 +3,4 @@ doc/
 *.swp
 misc/
 node_modules/
-res/.ipynb_checkpoints/
-res/test.ipynb
-res/test-complete.ipynb
-res/test-graphics.ipynb
-res/test-inspect.ipynb
-res/test-mime-global.ipynb
-res/test-mime-property.ipynb
-res/image.jpg
-res/image.png
-res/image.svg
+.ipynb_checkpoints/

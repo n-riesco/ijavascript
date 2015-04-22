@@ -59,16 +59,13 @@ Please, refer to the [usage notes](http://n-riesco.github.io/ijavascript/tutoria
 
 ## Documentation
 
-You can build the documentation for this package with the command `make jsdoc`.
+The ijavscript code is documented using [jsdoc](http://usejsdoc.org/).
+You can build the documentation for this package with the command `npm run doc`.
 To run this command you'll need to install ipython on your system as it uses
 nb convert to convert ipython notebooks to html files.
 
 Currently, the documentation is hosted on the gh-pages branch on github, you can
-view it here: <http://n-riesco.github.io/ijavascript/tutorial-graphics.html>
-
-To publish the doc you'll need the python tool [ghp-import](https://pypi.python.org/pypi/ghp-import/0.4.1),
-and type `make publish-doc`
-
+view it here: <http://n-riesco.github.io/ijavascript/>
 
 # Contributions
 

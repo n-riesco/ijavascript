@@ -3,3 +3,4 @@ misc/
 node_modules/
 .ipynb_checkpoints/
 doc/output/
+doc/tutorials/*.html

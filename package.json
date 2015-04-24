@@ -26,6 +26,7 @@
         "zmq": "^2.10.0"
     },
     "devDependencies": {
+        "ink-docstrap": "latest",
         "jsdoc": "latest",
         "jshint": "latest"
     },

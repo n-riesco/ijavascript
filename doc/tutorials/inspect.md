@@ -7,9 +7,9 @@ To show the content of a variable, move the cursor to the end of that variable
 and press `Shift-TAB`:
 
 ![Screenshot: Shift-Tab inspect
-(value)](../res/screenshot-notebook-inspect-value.png)
+(value)](./images/screenshot-notebook-inspect-value.png)
 
 When available, IJavascript will show the associated documentation instead:
 
 ![Screenshot: Shift-Tab inspect
-(doc)](../res/screenshot-notebook-inspect-doc.png)
+(doc)](./images/screenshot-notebook-inspect-doc.png)

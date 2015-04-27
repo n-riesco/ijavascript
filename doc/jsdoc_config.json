@@ -1,0 +1,37 @@
+{
+    "source": {
+        "include": [ "lib" ],
+        "includePattern": ".+\\.js(doc)?$"
+    },
+    "opts": {
+        "template": "node_modules/ink-docstrap/template",
+        "readme": "doc/README.md",
+        "destination": "doc/output",
+        "tutorials": "doc/tutorials"
+    },
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "plugins": ["plugins/markdown"],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false,
+        "dateFormat": "ddd MMM Do YYYY",
+        "outputSourceFiles": true,
+        "outputSourcePath": true,
+        "systemName": "ijavascript",
+        "footer": "",
+        "copyright": "ijavascript Copyright © 2015, Nicolas Riesco and others as credited <a href='https://github.com/n-riesco/ijavascript/blob/master/AUTHORS'>here</a>.",
+        "navType": "inline",
+        "theme": "cosmo",
+        "linenums": true,
+        "collapseSymbols": false,
+        "inverseNav": true,
+        "highlightTutorialCode": false,
+        "protocol": "html://"
+    },
+    "markdown": {
+        "parser": "gfm",
+        "hardwrap": true
+    }
+    }

@@ -31,8 +31,8 @@
     },
     "scripts": {
         "doc": "npm run doc:nb && npm run doc:jsdoc && npm run doc:images",
-        "doc:nb": "ipython nbconvert 'doc/tutorials/*.ipynb' --FilesWriter.build_directory='doc/tutorials'",
-        "doc:jsdoc": "jsdoc -R doc/README.md -u doc/tutorials -d doc/output lib",
+        "doc:nb": "ipython nbconvert --template 'doc/ipython' 'doc/tutorials/ipynb/*.ipynb' --FilesWriter.build_directory='doc/output'",
+        "doc:jsdoc": "jsdoc -c ./doc/jsdoc_config.json",
         "doc:images": "node script/doc-images.js",
         "doc:publish": "node script/doc-publish.js doc/output https://github.com/n-riesco/ijavascript",
         "lint": "jshint bin lib"

@@ -1,0 +1,13 @@
+{
+  "source": {
+    "include": ["lib"],
+    "includePattern": ".+\\.js(doc)?$"
+  },
+  "opts": {
+    "readme": "doc/README.md",
+    "destination": "doc/output/jsdoc"
+  },
+  "tags": {
+    "allowUnknownTags": true
+  }
+}

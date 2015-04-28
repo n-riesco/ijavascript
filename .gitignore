@@ -1,6 +1,7 @@
 *.swp
 misc/
 node_modules/
+npm-debug.log
 .ipynb_checkpoints/
 doc/output/
 doc/tutorials/*.html

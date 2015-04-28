@@ -1,4 +1,4 @@
-<!--  Modified from full.tpl to remove twitter bootstrap -->
+<!--  Modified from full.tpl to add navbar -->
 {%- extends 'basic.tpl' -%}
 {% from 'mathjax.tpl' import mathjax %}
 
@@ -9,20 +9,20 @@
 <head>
 
 <meta charset="utf-8" />
-<title>{{resources['metadata']['name']}}</title>
-<!--
+<title>ijavascript</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
--->
 
-<!-- Get own version of resources.inlining.css -->
-<style type="text/css">
-/* IPython notebook */
-{{ resources.inlining.css[0].split('\n')[-5] }}
-/* IPython notebook webapp*/
-{{ resources.inlining.css[0].split('\n')[-1] }}
-{{ resources.inlining.css[1] }}
-</style>
+<!-- Old compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+{% for css in resources.inlining.css -%}
+    <style type="text/css">
+    {{ css }}
+    </style>
+{% endfor %}
+
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
 body {
@@ -62,6 +62,10 @@ div#notebook {
 
 {% block body %}
 <body>
+
+  <!-- Custom navbar -->
+  {% include './doc/templates/_navbar.tpl' %}
+
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 {{ super() }}

@@ -27,11 +27,13 @@
     },
     "devDependencies": {
         "jsdoc": "latest",
-        "jshint": "latest"
+        "jshint": "latest",
+        "marked": "latest"
     },
     "scripts": {
-        "doc": "npm run doc:nb && npm run doc:jsdoc && npm run doc:images",
+        "doc": "npm run doc:nb && npm run doc:md && npm run doc:jsdoc && npm run doc:images",
         "doc:nb": "ipython nbconvert --template 'doc/templates/ipython' 'doc/tutorials/ipynb/*.ipynb' --FilesWriter.build_directory='doc/output'",
+        "doc:md": "node script/doc-md.js",
         "doc:jsdoc": "jsdoc -c ./doc/jsdoc_config.json",
         "doc:images": "node script/doc-images.js",
         "doc:publish": "node script/doc-publish.js doc/output https://github.com/n-riesco/ijavascript",

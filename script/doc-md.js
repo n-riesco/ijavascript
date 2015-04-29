@@ -41,26 +41,45 @@ var exec = require('child_process').exec;
 
 var projectPath = path.join(path.dirname(__dirname));
 var docPath = path.join(projectPath, 'doc');
-var mdFile = path.join(projectPath, 'README.md');
-var outFile = path.join(docPath, 'output', 'index.html');
+var mdPath = path.join(docPath, 'tutorials', 'md');
+var outPath = path.join(docPath, 'output');
 
-// Create the index.html file from the readme.md file of github repository using nb convert and marked
+var files = [[path.join(projectPath, 'README.md'), 'index.html'],
+             [path.join(mdPath, 'complete.md'), 'complete.html'],
+             [path.join(mdPath, 'inspect.md'), 'inspect.html'],
+             [path.join(mdPath, 'install.md'), 'install.html'],
+             [path.join(mdPath, 'usage.md'), 'usage.html']];
+
+function md2html (mdFile, htmlFile) {
+// Create the html file from a md file using nb convert and marked
+console.log('Converting to html: ' + mdFile);
 fs.readFile(mdFile, 'utf8', function(err, md) {
   if (err) {
     return console.log(err);
   };
   // Create the empty html template with nbconvert from empty notebook
   var nbConvertCmd = "ipython nbconvert --template 'doc/templates/ipython' 'doc/templates/empty_md.ipynb' --stdout"
+  // Updating html template with nbconvert 
+  // TODO this could be done once per build
   exec(nbConvertCmd,
     function(error, stdout, stderr) {
-      console.log('Updating html template with nbconvert: ');
       if (error !== null) {
         console.log('exec error: ' + error);
       }
-      // Paste the html content created with marked inside the html template and write to index.html
+      // Paste the html content created with marked inside the html template and write to doc/output
       var result = stdout.replace(/MARKDOWN_GOES_HERE/g, marked(md));
-      fs.writeFile(outFile, result, 'utf8', function(err) {
+      htmlFile = path.join(outPath, htmlFile)
+      fs.writeFile(htmlFile, result, 'utf8', function(err) {
         if (err) return console.log(err);
       });
     });
 });
+}
+
+for (var i = 0; i < files.length; i++) {
+    md2html(files[i][0], files[i][1]);
+}
+
+
+
+

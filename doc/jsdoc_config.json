@@ -5,7 +5,8 @@
   },
   "opts": {
     "readme": "doc/README.md",
-    "destination": "doc/output/jsdoc"
+    "destination": "doc/output/jsdoc",
+    "template": "doc/templates/jsdoc_templates"
   },
   "tags": {
     "allowUnknownTags": true

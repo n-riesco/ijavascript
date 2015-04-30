@@ -66,32 +66,32 @@ function addMdFiles(filename) {
 
 fs.readdirSync(mdPath).forEach(addMdFiles);
 
-function md2html(mdFile, htmlFile) {
-  // Create the html file from a md file using nb convert and marked
+// Create the empty html template with nbconvert from empty notebook
+var nbConvertCmd = "ipython nbconvert --template 'doc/templates/ipython' 'doc/templates/empty_md.ipynb' --stdout"
+  // Updating html template with nbconvert
+exec(nbConvertCmd,
+  function(error, stdout, stderr) {
+    if (error !== null) {
+      console.log('exec error: ' + error);
+    }
+    for (var i = 0; i < files.length; i++) {
+      md2html(files[i][0], files[i][1], stdout);
+    }
+  });
+
+function md2html(mdFile, htmlFile, htmlTemplate) {
+  // Paste the html code created from a md file using marked in the empty
+  // template created by nbconvert
   console.log('Converting to html: ' + mdFile);
   fs.readFile(mdFile, 'utf8', function(err, md) {
     if (err) {
       return console.log(err);
     };
-    // Create the empty html template with nbconvert from empty notebook
-    var nbConvertCmd = "ipython nbconvert --template 'doc/templates/ipython' 'doc/templates/empty_md.ipynb' --stdout"
-      // Updating html template with nbconvert
-      // TODO this could be done once per build
-    exec(nbConvertCmd,
-      function(error, stdout, stderr) {
-        if (error !== null) {
-          console.log('exec error: ' + error);
-        }
-        // Paste the html content created with marked inside the html template and write to doc/output
-        var result = stdout.replace(/MARKDOWN_GOES_HERE/g, marked(md));
-        htmlFile = path.join(outPath, htmlFile)
-        fs.writeFile(htmlFile, result, 'utf8', function(err) {
-          if (err) return console.log(err);
-        });
-      });
+    // Paste the html content created with marked inside the html template and write to doc/output
+    var result = htmlTemplate.replace(/MARKDOWN_GOES_HERE/g, marked(md));
+    htmlFile = path.join(outPath, htmlFile)
+    fs.writeFile(htmlFile, result, 'utf8', function(err) {
+      if (err) return console.log(err);
+    });
   });
-}
-
-for (var i = 0; i < files.length; i++) {
-  md2html(files[i][0], files[i][1]);
 }

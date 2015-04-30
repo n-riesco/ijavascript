@@ -98,7 +98,7 @@ section
     font-weight: lighter;
 }
 
-nav
+nav.jsdoc.jsdoc
 {
     display: block;
     float: right;
@@ -109,7 +109,7 @@ nav
     padding-left: 16px;
 }
 
-nav ul {
+nav.jsdoc ul {
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
     font-size: 100%;
     line-height: 17px;
@@ -118,17 +118,17 @@ nav ul {
     list-style-type: none;
 }
 
-nav ul a, nav ul a:visited, nav ul a:active {
+nav.jsdoc ul a, nav.jsdoc ul a:visited, nav.jsdoc ul a:active {
     font-family: Consolas, Monaco, 'Andale Mono', monospace;
     line-height: 18px;
     color: #4D4E53;
 }
 
-nav h3 {
+nav.jsdoc h3 {
     margin-top: 12px;
 }
 
-nav li {
+nav.jsdoc li {
     margin-top: 6px;
 }
 

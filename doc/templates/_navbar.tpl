@@ -34,6 +34,7 @@
         <li><a href="jsdoc/index.html">API doc</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a href="contributing.html">Get involved</a></li>
         <li><a href="https://www.npmjs.com/package/ijavascript">npm</a></li>
         <li><a href="https://github.com/n-riesco/ijavascript">Github</a></li>
       </ul>

@@ -44,42 +44,54 @@ var docPath = path.join(projectPath, 'doc');
 var mdPath = path.join(docPath, 'tutorials', 'md');
 var outPath = path.join(docPath, 'output');
 
-var files = [[path.join(projectPath, 'README.md'), 'index.html'],
-             [path.join(mdPath, 'complete.md'), 'complete.html'],
-             [path.join(mdPath, 'inspect.md'), 'inspect.html'],
-             [path.join(mdPath, 'install.md'), 'install.html'],
-             [path.join(mdPath, 'usage.md'), 'usage.html']];
+/*
+ * Collecting files to convert from md to html
+ */
+// à la main
+var files = [
+  [path.join(projectPath, 'README.md'), 'index.html'],
+  [path.join(projectPath, 'CONTRIBUTING.md'), 'contributing.html']
+];
 
-function md2html (mdFile, htmlFile) {
-// Create the html file from a md file using nb convert and marked
-console.log('Converting to html: ' + mdFile);
-fs.readFile(mdFile, 'utf8', function(err, md) {
-  if (err) {
-    return console.log(err);
-  };
-  // Create the empty html template with nbconvert from empty notebook
-  var nbConvertCmd = "ipython nbconvert --template 'doc/templates/ipython' 'doc/templates/empty_md.ipynb' --stdout"
-  // Updating html template with nbconvert 
-  // TODO this could be done once per build
-  exec(nbConvertCmd,
-    function(error, stdout, stderr) {
-      if (error !== null) {
-        console.log('exec error: ' + error);
-      }
-      // Paste the html content created with marked inside the html template and write to doc/output
-      var result = stdout.replace(/MARKDOWN_GOES_HERE/g, marked(md));
-      htmlFile = path.join(outPath, htmlFile)
-      fs.writeFile(htmlFile, result, 'utf8', function(err) {
-        if (err) return console.log(err);
+// add all md files from mdPath
+function addMdFiles(filename) {
+  ext = filename.split('.').pop();
+  if (ext === 'md') {
+    name = filename.split('.')[0]
+    files.push([path.join(mdPath, name + '.md'), name + '.html']);
+  } else {
+    return Boolean(false)
+  }
+}
+
+fs.readdirSync(mdPath).forEach(addMdFiles);
+
+function md2html(mdFile, htmlFile) {
+  // Create the html file from a md file using nb convert and marked
+  console.log('Converting to html: ' + mdFile);
+  fs.readFile(mdFile, 'utf8', function(err, md) {
+    if (err) {
+      return console.log(err);
+    };
+    // Create the empty html template with nbconvert from empty notebook
+    var nbConvertCmd = "ipython nbconvert --template 'doc/templates/ipython' 'doc/templates/empty_md.ipynb' --stdout"
+      // Updating html template with nbconvert
+      // TODO this could be done once per build
+    exec(nbConvertCmd,
+      function(error, stdout, stderr) {
+        if (error !== null) {
+          console.log('exec error: ' + error);
+        }
+        // Paste the html content created with marked inside the html template and write to doc/output
+        var result = stdout.replace(/MARKDOWN_GOES_HERE/g, marked(md));
+        htmlFile = path.join(outPath, htmlFile)
+        fs.writeFile(htmlFile, result, 'utf8', function(err) {
+          if (err) return console.log(err);
+        });
       });
-    });
-});
+  });
 }
 
 for (var i = 0; i < files.length; i++) {
-    md2html(files[i][0], files[i][1]);
+  md2html(files[i][0], files[i][1]);
 }
-
-
-
-

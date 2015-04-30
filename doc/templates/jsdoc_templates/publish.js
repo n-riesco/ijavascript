@@ -211,7 +211,8 @@ function generate(title, docs, filename, resolveLinks) {
 
     var docData = {
         title: title,
-        docs: docs
+        docs: docs,
+        navbar: fs.readFileSync(path.join(path.dirname(__dirname), '_navbar.tpl'))
     };
 
     var outpath = path.join(outdir, filename),

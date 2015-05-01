@@ -19,11 +19,11 @@ other languages](https://github.com/ipython/ipython/wiki/IPython-kernels-for-oth
 ## Main Features
 
 - Run Javascript code within a `node.js` session
-- [Autocompletion](http://n-riesco.github.io/ijavascript/tutorial-complete.html): press `TAB` to complete keywords and object
+- [Autocompletion](http://n-riesco.github.io/ijavascript/complete.html): press `TAB` to complete keywords and object
   properties
-- [Object inspection](http://n-riesco.github.io/ijavascript/tutorial-inspect.html): press `Shift-TAB` to inspect an object
+- [Object inspection](http://n-riesco.github.io/ijavascript/inspect.html): press `Shift-TAB` to inspect an object
   and show its content or, if available, its documentation
-- [Graphical output](http://n-riesco.github.io/ijavascript/tutorial-graphics.html) for `HTML`, `PNG`, ...
+- [Graphical output](http://n-riesco.github.io/ijavascript/graphics.html) for `HTML`, `PNG`, ...
 
 ## Installation
 
@@ -36,7 +36,7 @@ sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq-dev
 sudo npm install -g ijavascript
 ```
 
-For other platforms, please, refer to the [installation notes](http://n-riesco.github.io/ijavascript/tutorial-install.html).
+For other platforms, please, refer to the [installation notes](http://n-riesco.github.io/ijavascript/install.html).
 
 ## Usage
 
@@ -55,7 +55,7 @@ Here's a sample notebook that makes use of the IJavascript kernel:
 
 ![Screenshot: Notebook Hello Sample](doc/images/screenshot-notebook-hello.png)
 
-Please, refer to the [usage notes](http://n-riesco.github.io/ijavascript/tutorial-usage.html) for further details.
+Please, refer to the [usage notes](http://n-riesco.github.io/ijavascript/usage.html) for further details.
 
 ## Documentation
 

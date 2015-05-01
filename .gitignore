@@ -4,4 +4,5 @@ node_modules/
 npm-debug.log
 .ipynb_checkpoints/
 doc/output/
-doc/tutorials/*.html
+doc/templates/jsdoc_templates/static/styles/ipython_style.css
+

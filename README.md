@@ -70,7 +70,7 @@ To run this command you'll need to install `ipython` on your system as it uses
 # Contributions
 
 First of all, thank you for taking the time to contribute. Please, read
-[CONTRIBUTING.md](CONTRIBUTING.md) and use the
+[CONTRIBUTING](http://n-riesco.github.io/ijavascript/contributing.html) and use the
 [issue tracker](https://github.com/n-riesco/ijavascript/issues) for any
 contributions: support requests, bug reports, enhancement requests, pull
 requests, ...

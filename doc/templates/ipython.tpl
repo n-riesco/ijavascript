@@ -1,4 +1,6 @@
-<!--  Modified from full.tpl to add navbar -->
+<!--  Modified from full.tpl which is part of ipython package to add a navbar -->
+{# Copyright (c) IPython Development Team.
+   Distributed under the terms of the Modified BSD License. #}
 {%- extends 'basic.tpl' -%}
 {% from 'mathjax.tpl' import mathjax %}
 

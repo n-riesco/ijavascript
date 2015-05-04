@@ -64,4 +64,4 @@ lsb_release -sd
 
 - The source code in IJavascript is annotated using
   [JSDoc](https://github.com/jsdoc3/jsdoc). The generated documentation can be
-  found [here](https://github.com/n-riesco/ijavascript/tree/master/doc/jsdoc).
+  found [here](http://n-riesco.github.io/ijavascript).

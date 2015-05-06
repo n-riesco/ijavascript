@@ -52,6 +52,7 @@ var usage = (
     "\n" +
     "    --ijs-debug             enable debug log level\n" +
     "    --ijs-help              show this help\n" +
+    "    --ijs-install-kernel    install IJavascript kernel and exit\n" +
     "    --ijs-working-dir=path  set working directory for Javascript sessions\n" +
     "                            (default = current working directory)\n" +
     "\n" +
@@ -70,6 +71,7 @@ config.rootPath = path.dirname(path.dirname(config.ijsPath));
 config.kernelPath = path.join(config.rootPath, "lib", "kernel.js");
 config.kernelArgs = [config.nodePath, config.kernelPath];
 config.ipythonArgs = ["notebook"];
+config.runIPython = true;
 
 // Parse command arguments
 process.argv.slice(2).forEach(function(e) {
@@ -79,6 +81,8 @@ process.argv.slice(2).forEach(function(e) {
         config.kernelArgs.push("--debug");
     } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
         config.cwd = fs.realpathSync(e.slice(18));
+    } else if (e.lastIndexOf("--ijs-install-kernel", 0) === 0) {
+        config.runIPython = false;
     } else if (e.lastIndexOf("--ijs-help", 0) === 0) {
         console.warn(usage);
         process.exit(0);
@@ -154,14 +158,16 @@ exec("ipython --version && ipython locate", function(error, stdout, stderr) {
         fs.writeFileSync(config.ijsKernelSpecFile, JSON.stringify(ijsSpec));
     }
 
-    // Start the IPython notebook with the default profile
-    var ipython = spawn("ipython", config.ipythonArgs, {
-        stdio: "inherit"
-    });
+    if (config.runIPython) {
+        // Start the IPython notebook with the default profile
+        var ipython = spawn("ipython", config.ipythonArgs, {
+            stdio: "inherit"
+        });
 
-    // Relay SIGINT onto ipython
-    var signal = "SIGINT";
-    process.on(signal, function() {
-        ipython.emit(signal);
-    });
+        // Relay SIGINT onto ipython
+        var signal = "SIGINT";
+        process.on(signal, function() {
+            ipython.emit(signal);
+        });
+    }
 });

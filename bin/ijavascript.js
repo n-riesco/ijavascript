@@ -119,12 +119,16 @@ exec("ipython --version && ipython locate", function(error, stdout, stderr) {
     );
 
     if (config.ipythonVersion[0] < 3) {
+        config.kernelArgs.push("--protocol=4.1");
+
         // Set IPython arguments to use the IJavascript kernel
         config.ipythonArgs.push(util.format(
             "--KernelManager.kernel_cmd=['%s']",
             config.kernelArgs.join("', '")
         ));
     } else {
+        config.kernelArgs.push("--protocol=5.0");
+
         // Create a spec for the IJavascript kernel
         try {
             fs.mkdirSync(config.ipythonKernelsDir);

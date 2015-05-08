@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="512"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="logo.svg">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3757">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3759" />
+      <stop
+         style="stop-color:#7f7f7f;stop-opacity:1;"
+         offset="1"
+         id="stop3761" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3757"
+       id="linearGradient3763"
+       x1="51.141732"
+       y1="202"
+       x2="358.85827"
+       y2="202"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3757-2"
+       id="linearGradient3763-7"
+       x1="51.141731"
+       y1="202"
+       x2="358.85828"
+       y2="202"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
+    <linearGradient
+       id="linearGradient3757-2">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop3759-5" />
+      <stop
+         style="stop-color:#7f7f7f;stop-opacity:1;"
+         offset="1"
+         id="stop3761-9" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3757-2"
+       id="linearGradient4041"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,-88.74667)"
+       x1="51.141731"
+       y1="202"
+       x2="358.85828"
+       y2="202" />
+    <filter
+       inkscape:collect="always"
+       id="filter4195">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.1450001"
+         id="feGaussianBlur4197" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3757"
+       id="linearGradient3069"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)"
+       x1="51.141732"
+       y1="202"
+       x2="358.85827"
+       y2="202" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3757"
+       id="linearGradient3074"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)"
+       x1="51.141732"
+       y1="202"
+       x2="358.85827"
+       y2="202" />
+    <filter
+       inkscape:collect="always"
+       id="filter3869">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.145"
+         id="feGaussianBlur3871" />
+    </filter>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask3901">
+      <text
+         xml:space="preserve"
+         style="font-size:386.49728394px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         x="13.874403"
+         y="782.44421"
+         id="text3903"
+         sodipodi:linespacing="125%"
+         transform="scale(0.85100096,1.1750868)"><tspan
+           sodipodi:role="line"
+           id="tspan3905"
+           x="13.874403"
+           y="782.44421"
+           style="font-size:386.49728394px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;font-family:Sans;-inkscape-font-specification:Sans Bold">IJS</tspan></text>
+    </mask>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.5"
+     inkscape:cx="164.16762"
+     inkscape:cy="255.439"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1438"
+     inkscape:window-height="1028"
+     inkscape:window-x="142"
+     inkscape:window-y="24"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       dotted="true"
+       color="#ff0000"
+       opacity="0.1254902" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="IJavascript"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-540.36218)"
+     style="display:inline">
+    <g
+       id="g3894"
+       mask="url(#mask3901)">
+      <rect
+         y="540.36218"
+         x="0"
+         height="512"
+         width="512"
+         id="rect2987"
+         style="fill:url(#linearGradient3074);fill-opacity:1;stroke:none" />
+      <text
+         transform="scale(0.85100095,1.1750868)"
+         sodipodi:linespacing="125%"
+         id="text3076"
+         y="782.44427"
+         x="13.874402"
+         style="font-size:386.49728393999998843px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:none;fill-opacity:1;stroke:#000000;font-family:Sans;stroke-opacity:1;filter:url(#filter3869);stroke-width:2.00000002;stroke-miterlimit:4;stroke-dasharray:none"
+         xml:space="preserve"><tspan
+           style="font-size:386.49728393999998843px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans Bold;fill:none;stroke:#000000;stroke-opacity:1;stroke-width:2.00000002;stroke-miterlimit:4;stroke-dasharray:none"
+           y="782.44427"
+           x="13.874402"
+           id="tspan3078"
+           sodipodi:role="line">IJS</tspan></text>
+      <text
+         transform="scale(0.85100096,1.1750868)"
+         sodipodi:linespacing="125%"
+         id="text3076-7"
+         y="782.44421"
+         x="13.874403"
+         style="font-size:386.49728394px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-size:386.49728394px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans Bold"
+           y="782.44421"
+           x="13.874403"
+           id="tspan3078-8"
+           sodipodi:role="line">I</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.1"
+   width="512"
+   height="512"
+   id="svg2">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3757">
+      <stop
+         id="stop3759"
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="0" />
+      <stop
+         id="stop3761"
+         style="stop-color:#7f7f7f;stop-opacity:1"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       x1="51.141731"
+       y1="202"
+       x2="358.85828"
+       y2="202"
+       id="linearGradient3763"
+       xlink:href="#linearGradient3757"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
+    <linearGradient
+       x1="51.141731"
+       y1="202"
+       x2="358.85828"
+       y2="202"
+       id="linearGradient3763-7"
+       xlink:href="#linearGradient3757-2"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
+    <linearGradient
+       id="linearGradient3757-2">
+      <stop
+         id="stop3759-5"
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="0" />
+      <stop
+         id="stop3761-9"
+         style="stop-color:#7f7f7f;stop-opacity:1"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       x1="51.141731"
+       y1="202"
+       x2="358.85828"
+       y2="202"
+       id="linearGradient4041"
+       xlink:href="#linearGradient3757-2"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,-88.74667)" />
+    <filter
+       color-interpolation-filters="sRGB"
+       id="filter4195">
+      <feGaussianBlur
+         id="feGaussianBlur4197"
+         stdDeviation="2.1450001" />
+    </filter>
+    <linearGradient
+       x1="51.141731"
+       y1="202"
+       x2="358.85828"
+       y2="202"
+       id="linearGradient3069"
+       xlink:href="#linearGradient3757"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
+    <linearGradient
+       x1="51.141731"
+       y1="202"
+       x2="358.85828"
+       y2="202"
+       id="linearGradient3074"
+       xlink:href="#linearGradient3757"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
+    <filter
+       color-interpolation-filters="sRGB"
+       id="filter3869">
+      <feGaussianBlur
+         id="feGaussianBlur3871"
+         stdDeviation="2.145" />
+    </filter>
+    <mask
+       id="mask3901">
+      <text
+         x="13.874403"
+         y="782.44421"
+         transform="scale(0.85100096,1.1750868)"
+         id="text3903"
+         xml:space="preserve"
+         style="font-size:386.49728394px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
+           x="13.874403"
+           y="782.44421"
+           id="tspan3905"
+           style="font-size:386.49728394px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;font-family:Sans;-inkscape-font-specification:Sans Bold">IJS</tspan></text>
+    </mask>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-540.36218)"
+     id="layer1"
+     style="display:inline">
+    <g
+       mask="url(#mask3901)"
+       id="g3894">
+      <rect
+         width="512"
+         height="512"
+         x="0"
+         y="540.36218"
+         id="rect2987"
+         style="fill:url(#linearGradient3074);fill-opacity:1;stroke:none" />
+      <text
+         x="13.874402"
+         y="782.44427"
+         transform="scale(0.85100095,1.1750868)"
+         id="text3076"
+         xml:space="preserve"
+         style="font-size:386.49728394px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3869);font-family:Sans"><tspan
+           x="13.874402"
+           y="782.44427"
+           id="tspan3078"
+           style="font-size:386.49728394px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans;-inkscape-font-specification:Sans Bold">IJS</tspan></text>
+      <text
+         x="13.874403"
+         y="782.44421"
+         transform="scale(0.85100096,1.1750868)"
+         id="text3076-7"
+         xml:space="preserve"
+         style="font-size:386.49728394px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
+           x="13.874403"
+           y="782.44421"
+           id="tspan3078-8"
+           style="font-size:386.49728394px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans Bold">I</tspan></text>
+    </g>
+  </g>
+</svg>

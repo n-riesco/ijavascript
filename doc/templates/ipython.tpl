@@ -1,8 +1,31 @@
 <!--  Modified from full.tpl which is part of ipython package to add a navbar -->
 {# Copyright (c) IPython Development Team.
    Distributed under the terms of the Modified BSD License. #}
-{%- extends 'basic.tpl' -%}
-{% from 'mathjax.tpl' import mathjax %}
+{%- extends 'html_basic.tpl' -%}
+
+{%- macro mathjax() -%}
+    <!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration -->
+{%- endmacro %}
 
 
 {%- block header -%}

@@ -46,6 +46,11 @@ lsb_release -sd
   of a pull request acknowledges their consent. To express this consent, please,
   ensure the AUTHORS file has been updated accordingly.
 
+- New functionalities should be documented, for this you can create tutorials as
+  markdown or ipython notebook format in the folder `doc/md` or `doc/ipynb`.
+  Then add a link to this tutorial in the `_navbar.tpl` jinja template and
+  regenerate the doc with `npm run doc` to see the result.
+
 ## Coding guidelines
 
 - For the sake of readability, please, ensure the coding style of your pull
@@ -59,4 +64,4 @@ lsb_release -sd
 
 - The source code in IJavascript is annotated using
   [JSDoc](https://github.com/jsdoc3/jsdoc). The generated documentation can be
-  found [here](https://github.com/n-riesco/ijavascript/tree/master/doc/jsdoc).
+  found [here](http://n-riesco.github.io/ijavascript).

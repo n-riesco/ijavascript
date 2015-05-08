@@ -27,10 +27,17 @@
     },
     "devDependencies": {
         "jsdoc": "latest",
-        "jshint": "latest"
+        "jshint": "latest",
+        "marked": "latest"
     },
     "scripts": {
-        "doc": "jsdoc -R doc/jsdoc/README.md -d doc/jsdoc lib",
+        "doc": "npm run doc:nb && npm run doc:md && npm run doc:jsdoc && npm run doc:images && npm run doc:style",
+        "doc:nb": "ipython nbconvert --template 'doc/templates/ipython' 'doc/tutorials/ipynb/*.ipynb' --FilesWriter.build_directory='doc/output'",
+        "doc:md": "node script/doc-md.js",
+        "doc:jsdoc": "jsdoc -c ./doc/jsdoc_config.json",
+        "doc:images": "node script/doc-images.js",
+        "doc:style": "ipython nbconvert --template 'doc/templates/ipython_style' 'doc/templates/empty_md.ipynb' --stdout >'doc/templates/jsdoc_templates/static/styles/ipython_style.css'",
+        "doc:publish": "node script/doc-publish.js doc/output https://github.com/n-riesco/ijavascript",
         "lint": "jshint bin lib"
     }
 }

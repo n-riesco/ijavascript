@@ -19,11 +19,17 @@ other languages](https://github.com/ipython/ipython/wiki/IPython-kernels-for-oth
 ## Main Features
 
 - Run Javascript code within a `node.js` session
-- [Autocompletion](http://n-riesco.github.io/ijavascript/complete.html): press `TAB` to complete keywords and object
-  properties
-- [Object inspection](http://n-riesco.github.io/ijavascript/inspect.html): press `Shift-TAB` to inspect an object
-  and show its content or, if available, its documentation
-- [Graphical output](http://n-riesco.github.io/ijavascript/graphics.html) for `HTML`, `PNG`, ...
+- [Text output](http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html) for
+  `HTML`, `PNG`, ...
+- [Graphical
+  output](http://n-riesco.github.io/ijavascript/doc/graphics.ipynb.html) for
+  `HTML`, `PNG`, ...
+- [Autocompletion](http://n-riesco.github.io/ijavascript/doc/complete.md.html):
+  press `TAB` to complete keywords and object properties
+- [Object
+  inspection](http://n-riesco.github.io/ijavascript/doc/inspect.md.html): press
+  `Shift-TAB` to inspect an object and show its content or, if available, its
+  documentation
 
 ## Installation
 
@@ -36,7 +42,8 @@ sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq-dev
 sudo npm install -g ijavascript
 ```
 
-For other platforms, please, refer to the [installation notes](http://n-riesco.github.io/ijavascript/install.html).
+For other platforms, please, refer to the [installation
+notes](http://n-riesco.github.io/ijavascript/doc/install.md.html).
 
 ## Usage
 
@@ -49,29 +56,22 @@ ijs
 This command should open the IPython notebook dashboard in your default web
 browser:
 
-![Screenshot: IPython Notebook Dashboard](https://n-riesco.github.io/ijavascript/images/screenshot-dashboard-home.png)
+![Screenshot: IPython Notebook
+Dashboard](../images/screenshot-dashboard-home.png)
 
 Here's a sample notebook that makes use of the IJavascript kernel:
 
-![Screenshot: Notebook Hello Sample](https://n-riesco.github.io/ijavascript/images/screenshot-notebook-hello.png)
+![Screenshot: Notebook Hello Sample](../images/screenshot-notebook-hello.png)
 
-Please, refer to the [usage notes](http://n-riesco.github.io/ijavascript/usage.html) for further details.
-
-## Documentation
-
-Currently, the documentation is hosted on the gh-pages branch on github, you can
-view it here: <http://n-riesco.github.io/ijavascript/>
-
-The IJavascript code is documented using [jsdoc](http://usejsdoc.org/).
-You can build the documentation for this package with the command `npm run doc`.
-To run this command you'll need to install `ipython` on your system as it uses
-`nbconvert` to convert ipython notebooks to html files.
+Please, refer to the [usage
+notes](http://n-riesco.github.io/ijavascript/doc/usage.md.html) for further
+details.
 
 # Contributions
 
 First of all, thank you for taking the time to contribute. Please, read
-[CONTRIBUTING](http://n-riesco.github.io/ijavascript/contributing.html) and use the
-[issue tracker](https://github.com/n-riesco/ijavascript/issues) for any
+[CONTRIBUTING](http://n-riesco.github.io/ijavascript/contributing.html) and use
+the [issue tracker](https://github.com/n-riesco/ijavascript/issues) for any
 contributions: support requests, bug reports, enhancement requests, pull
 requests, ...
 

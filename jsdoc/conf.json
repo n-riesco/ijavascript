@@ -1,0 +1,13 @@
+{
+    "source": {
+        "include": ["lib"],
+        "includePattern": ".+\\.js(doc)?$"
+    },
+    "opts": {
+        "readme": "jsdoc/README.md",
+        "destination": "gh-pages/jsdoc"
+    },
+    "tags": {
+        "allowUnknownTags": true
+    }
+}

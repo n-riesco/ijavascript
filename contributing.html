@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<link rel="shortcut icon" href="images/favicon.ico" />
+
+<title>Contribution guidelines</title>
+
+<script src="js/require.min.js"></script>
+<script src="js/jquery.min.js"></script>
+
+<!-- nbconvert styles -->
+<link rel="stylesheet" href="css/nb.css">
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.min.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="css/custom.css">
+
+<!-- Load mathjax -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<!-- MathJax configuration -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true }
+    }
+});
+</script>
+<!-- End of mathjax configuration -->
+</head>
+<body>
+<!-- Bootstrap navigation bar -->
+<nav id="menubar" class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="sr-only">Toggle navigation</span>
+	<!-- 3-bar icon -->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">
+        <img min-height="50px" height="50px" width="50px" alt="IJS" src="images/logo.svg">
+      </a>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <!-- navbar -->
+      <ul class="nav navbar-nav">
+	<!-- dropdown: Getting started -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting started <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	    <li><a href="doc/install.md.html">Installation</a></li>
+	    <li><a href="doc/usage.md.html">Usage</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Main features</li>
+	    
+	    <li><a href="doc/hello.ipynb.html">Text output</a></li>
+	    
+	    <li><a href="doc/graphics.ipynb.html">Graphical output</a></li>
+	    
+	    <li><a href="doc/complete.md.html">TAB completion</a></li>
+	    
+	    <li><a href="doc/inspect.md.html">Shift-TAB inspection</a></li>
+	    
+          </ul>
+        </li>
+	<!-- dropdown: Tutorials -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tutorials <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	  
+	    
+	    
+            <li class="dropdown-header">By N. Riesco</li>
+	    
+	    <li><a href="doc/n-riesco.global.ipynb.html">Global object</a></li>
+	    
+	    <li><a href="doc/n-riesco.this.ipynb.html">Keyword this</a></li>
+	    
+	  
+          </ul>
+        </li>
+	<!-- dropdown: Get involved -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Get involved <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="contributing.html">Contribution guidelines</a></li>
+            <li><a href="jsdoc/index.html">JSDoc</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- navbar-right -->
+      <ul class="nav navbar-nav navbar-right">
+	<!-- Github -->
+        <li><a href="https://github.com/n-riesco/ijavascript">Github</a></li>
+	<!-- npm -->
+        <li><a href="https://www.npmjs.com/package/ijavascript">npm</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
+</nav>
+
+  <!-- notebook -->
+  
+  <div id="markdown" class="container">
+    <h1 id="contributing-to-ijavascript">Contributing to IJavascript</h1>
+<p>First of all, thank you for taking the time to contribute.</p>
+<p>Here, you will find relevant information for contributing to this project.</p>
+<h2 id="issue-tracker">Issue tracker</h2>
+<p>Please, feel free to use the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> to report any problems you encounter or any enhancements you would like to see implemented. To facilitate the process of fixing a problem, please, include the following information in your report:</p>
+<ul>
+<li>IJavascript version. Please, run the command:</li>
+</ul>
+<pre class="sh"><code>npm list ijavascript</code></pre>
+<ul>
+<li>npm version:</li>
+</ul>
+<pre class="sh"><code>npm version</code></pre>
+<ul>
+<li>IPython version:</li>
+</ul>
+<pre class="sh"><code>ipython --version</code></pre>
+<ul>
+<li>Operating system. In most modern linux distributions, it is enough to run:</li>
+</ul>
+<pre class="sh"><code>lsb_release -sd</code></pre>
+<h2 id="code-contributions">Code contributions</h2>
+<ul>
+<li><p>Please, open an issue in the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a>.</p></li>
+<li><p>Pull requests will be distributed under the terms in the LICENSE file. Hence, before accepting any pull requests, it is important that the copyright holder of a pull request acknowledges their consent. To express this consent, please, ensure the AUTHORS file has been updated accordingly.</p></li>
+</ul>
+<h2 id="coding-guidelines">Coding guidelines</h2>
+<ul>
+<li><p>For the sake of readability, please, ensure the coding style of your pull requests is consistent with this project: lowerCamelCaseNaming, CONSTANTS_NAMING, 4-space indent, collapsed brackets...</p></li>
+<li><p>The IPython protocol uses underscores (<code>_</code>) in their the naming convention (as recommended in <a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a>). For these names, I find more readable to keep the original naming (although, if possible limited to a local scope).</p></li>
+<li><p>The source code in IJavascript is annotated using <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a>. The generated documentation can be found <a href="http://n-riesco.github.io/ijavascript/jsdoc">here</a>.</p></li>
+</ul>
+
+  </div>
+  
+  
+  <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

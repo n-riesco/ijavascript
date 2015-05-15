@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<link rel="shortcut icon" href="../images/favicon.ico" />
+
+<title>Text output</title>
+
+<script src="../js/require.min.js"></script>
+<script src="../js/jquery.min.js"></script>
+
+<!-- nbconvert styles -->
+<link rel="stylesheet" href="../css/nb.css">
+
+<!-- Bootstrap -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="../js/html5shiv.min.js"></script>
+<script src="../js/respond.min.js"></script>
+<![endif]-->
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="../css/custom.css">
+
+<!-- Load mathjax -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<!-- MathJax configuration -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true }
+    }
+});
+</script>
+<!-- End of mathjax configuration -->
+</head>
+<body>
+<!-- Bootstrap navigation bar -->
+<nav id="menubar" class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="sr-only">Toggle navigation</span>
+	<!-- 3-bar icon -->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">
+        <img min-height="50px" height="50px" width="50px" alt="IJS" src="../images/logo.svg">
+      </a>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <!-- navbar -->
+      <ul class="nav navbar-nav">
+	<!-- dropdown: Getting started -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting started <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	    <li><a href="../doc/install.md.html">Installation</a></li>
+	    <li><a href="../doc/usage.md.html">Usage</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Main features</li>
+	    
+	    <li><a href="../doc/hello.ipynb.html">Text output</a></li>
+	    
+	    <li><a href="../doc/graphics.ipynb.html">Graphical output</a></li>
+	    
+	    <li><a href="../doc/complete.md.html">TAB completion</a></li>
+	    
+	    <li><a href="../doc/inspect.md.html">Shift-TAB inspection</a></li>
+	    
+          </ul>
+        </li>
+	<!-- dropdown: Tutorials -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tutorials <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	  
+	    
+	    
+            <li class="dropdown-header">By N. Riesco</li>
+	    
+	    <li><a href="../doc/n-riesco.global.ipynb.html">Global object</a></li>
+	    
+	    <li><a href="../doc/n-riesco.this.ipynb.html">Keyword this</a></li>
+	    
+	  
+          </ul>
+        </li>
+	<!-- dropdown: Get involved -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Get involved <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="../contributing.html">Contribution guidelines</a></li>
+            <li><a href="../jsdoc/index.html">JSDoc</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- navbar-right -->
+      <ul class="nav navbar-nav navbar-right">
+	<!-- Github -->
+        <li><a href="https://github.com/n-riesco/ijavascript">Github</a></li>
+	<!-- npm -->
+        <li><a href="https://www.npmjs.com/package/ijavascript">npm</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
+</nav>
+
+  <!-- notebook -->
+  
+  <div id="notebook" class="border-box-sizing" tabindex="-1">
+    <div id="notebook-container" class="container">
+      
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[1]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">var</span> <span class="n">msg</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Hello&quot;</span><span class="p">,</span> <span class="s">&quot;World!&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[1]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<div class="output_html rendered_html">
+<pre>undefined</pre>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[2]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">msg</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[2]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<div class="output_html rendered_html">
+<pre>&#39;Hello, World!&#39;</pre>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+Hello, World!
+
+</pre>
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[3]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<div class="output_html rendered_html">
+<pre>undefined</pre>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[4]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">console</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stderr">
+<pre>
+Hello, World!
+
+</pre>
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[4]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<div class="output_html rendered_html">
+<pre>undefined</pre>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[5]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">throw</span> <span class="n">new</span> <span class="n">Error</span><span class="p">(</span><span class="s">&quot;Oh noes!&quot;</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_pyerr">
+<pre>
+Error: Oh noes!
+    at evalmachine.&lt;anonymous&gt;:1:7
+    at run ([eval]:180:19)
+    at onMessage ([eval]:63:41)
+    at process.EventEmitter.emit (events.js:98:17)
+    at handleMessage (child_process.js:318:10)
+    at Pipe.channel.onread (child_process.js:345:11)</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+  
+  
+  <script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

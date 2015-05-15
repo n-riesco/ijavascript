@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<link rel="shortcut icon" href="images/favicon.ico" />
+
+<title>Overview</title>
+
+<script src="js/require.min.js"></script>
+<script src="js/jquery.min.js"></script>
+
+<!-- nbconvert styles -->
+<link rel="stylesheet" href="css/nb.css">
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.min.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="css/custom.css">
+
+<!-- Load mathjax -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<!-- MathJax configuration -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true }
+    }
+});
+</script>
+<!-- End of mathjax configuration -->
+</head>
+<body>
+<!-- Bootstrap navigation bar -->
+<nav id="menubar" class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="sr-only">Toggle navigation</span>
+	<!-- 3-bar icon -->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">
+        <img min-height="50px" height="50px" width="50px" alt="IJS" src="images/logo.svg">
+      </a>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <!-- navbar -->
+      <ul class="nav navbar-nav">
+	<!-- dropdown: Getting started -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting started <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	    <li><a href="doc/install.md.html">Installation</a></li>
+	    <li><a href="doc/usage.md.html">Usage</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Main features</li>
+	    
+	    <li><a href="doc/hello.ipynb.html">Text output</a></li>
+	    
+	    <li><a href="doc/graphics.ipynb.html">Graphical output</a></li>
+	    
+	    <li><a href="doc/complete.md.html">TAB completion</a></li>
+	    
+	    <li><a href="doc/inspect.md.html">Shift-TAB inspection</a></li>
+	    
+          </ul>
+        </li>
+	<!-- dropdown: Tutorials -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tutorials <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	  
+	    
+	    
+            <li class="dropdown-header">By N. Riesco</li>
+	    
+	    <li><a href="doc/n-riesco.global.ipynb.html">Global object</a></li>
+	    
+	    <li><a href="doc/n-riesco.this.ipynb.html">Keyword this</a></li>
+	    
+	  
+          </ul>
+        </li>
+	<!-- dropdown: Get involved -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Get involved <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="contributing.html">Contribution guidelines</a></li>
+            <li><a href="jsdoc/index.html">JSDoc</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- navbar-right -->
+      <ul class="nav navbar-nav navbar-right">
+	<!-- Github -->
+        <li><a href="https://github.com/n-riesco/ijavascript">Github</a></li>
+	<!-- npm -->
+        <li><a href="https://www.npmjs.com/package/ijavascript">npm</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
+</nav>
+
+  <!-- notebook -->
+  
+  <div id="markdown" class="container">
+    <h1 id="ijavascript-a-javascript-kernel-for-ipythons-graphical-notebook">IJavascript: A Javascript Kernel for IPython's Graphical Notebook</h1>
+<p>IJavascript is an <a href="https://www.npmjs.com/"><code>npm</code> package</a> that implements a Javascript kernel for <a href="http://ipython.org/notebook.html">IPython's graphical notebook</a> (also known as <a href="http://jupyter.org/">Jupyter</a>). An IPython notebook combines the creation of rich-text documents (including equations, plots and videos) with the execution of code in a number of programming languages.</p>
+<p>The execution of code is carried out by means of a kernel that implements the <a href="http://ipython.org/ipython-doc/stable/development/messaging.html">IPython messaging protocol</a>. There are kernels available for <a href="http://ipython.org/notebook.html">Python</a>, <a href="https://github.com/JuliaLang/IJulia.jl">Julia</a>, <a href="https://github.com/minad/iruby">Ruby</a>, <a href="https://github.com/gibiansky/IHaskell">Haskell</a> and <a href="https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages">many other languages</a>.</p>
+<h2 id="main-features">Main Features</h2>
+<ul>
+<li>Run Javascript code within a <code>node.js</code> session</li>
+<li><a href="http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html">Text output</a> for <code>HTML</code>, <code>PNG</code>, ...</li>
+<li><a href="http://n-riesco.github.io/ijavascript/doc/graphics.ipynb.html">Graphical output</a> for <code>HTML</code>, <code>PNG</code>, ...</li>
+<li><a href="http://n-riesco.github.io/ijavascript/doc/complete.md.html">Autocompletion</a>: press <code>TAB</code> to complete keywords and object properties</li>
+<li><a href="http://n-riesco.github.io/ijavascript/doc/inspect.md.html">Object inspection</a>: press <code>Shift-TAB</code> to inspect an object and show its content or, if available, its documentation</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>The instructions to install IJavascript are platform-dependent. For example, in Ubuntu 14.04, IJavascript and its prerequisites can be installed simply by running:</p>
+<pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq-dev
+sudo npm install -g ijavascript</code></pre>
+<p>For other platforms, please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/install.md.html">installation notes</a>.</p>
+<h2 id="usage">Usage</h2>
+<p>To start an IPython notebook session with the IJavascript kernel, run:</p>
+<pre class="sh"><code>ijs</code></pre>
+<p>This command should open the IPython notebook dashboard in your default web browser:</p>
+<p><img src="../images/screenshot-dashboard-home.png" alt="Screenshot: IPython Notebook Dashboard" /></p>
+<p>Here's a sample notebook that makes use of the IJavascript kernel:</p>
+<p><img src="../images/screenshot-notebook-hello.png" alt="Screenshot: Notebook Hello Sample" /></p>
+<p>Please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/usage.md.html">usage notes</a> for further details.</p>
+<h1 id="contributions">Contributions</h1>
+<p>First of all, thank you for taking the time to contribute. Please, read <a href="http://n-riesco.github.io/ijavascript/contributing.html">CONTRIBUTING</a> and use the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> for any contributions: support requests, bug reports, enhancement requests, pull requests, ...</p>
+<h1 id="to-do">TO DO</h1>
+<ul>
+<li>Add tests</li>
+<li>Complete the implementation of IPython's messaging protocol v4.1</li>
+<li>Complete the implementation of IPython's messaging protocol v5.0</li>
+<li>Add tutorials</li>
+</ul>
+
+  </div>
+  
+  
+  <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

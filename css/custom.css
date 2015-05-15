@@ -1,0 +1,43 @@
+/* Fix overflowing notebook text cells */
+div.text_cell_render {
+    width: 100%;
+}
+
+/* Fix unclickable navbar-header */
+#navbar {
+    position: static;
+}
+
+/* Fix styles interfering with nbconvert */
+#menubar,
+#menubar .navbar-header,
+#menubar .navbar-brand {
+    margin-left: 0;
+    margin-right: 0;
+}
+#menubar .navbar-brand {
+    padding: 0;
+}
+
+/* Style for notebook box */
+#notebook {
+    min-height: 100%;
+}
+#notebook-container {
+    width: 95%;
+    padding: 15px 15%;
+    background-color: #FFF;
+    box-shadow: 0 0 12px 1px rgba(87, 87, 87, 0.2);
+}
+
+/* Style for markdown box */
+#markdown {
+    width: 95%;
+    margin: 0 auto;
+    padding: 15px 15%;
+    background-color: #FFF;
+    box-shadow: 0 0 12px 1px rgba(87, 87, 87, 0.2);
+}
+#markdown p {
+    text-align: justify;
+}

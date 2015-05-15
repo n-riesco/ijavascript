@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<link rel="shortcut icon" href="../images/favicon.ico" />
+
+<title>Installation</title>
+
+<script src="../js/require.min.js"></script>
+<script src="../js/jquery.min.js"></script>
+
+<!-- nbconvert styles -->
+<link rel="stylesheet" href="../css/nb.css">
+
+<!-- Bootstrap -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="../js/html5shiv.min.js"></script>
+<script src="../js/respond.min.js"></script>
+<![endif]-->
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="../css/custom.css">
+
+<!-- Load mathjax -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<!-- MathJax configuration -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true }
+    }
+});
+</script>
+<!-- End of mathjax configuration -->
+</head>
+<body>
+<!-- Bootstrap navigation bar -->
+<nav id="menubar" class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="sr-only">Toggle navigation</span>
+	<!-- 3-bar icon -->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">
+        <img min-height="50px" height="50px" width="50px" alt="IJS" src="../images/logo.svg">
+      </a>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <!-- navbar -->
+      <ul class="nav navbar-nav">
+	<!-- dropdown: Getting started -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting started <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	    <li><a href="../doc/install.md.html">Installation</a></li>
+	    <li><a href="../doc/usage.md.html">Usage</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Main features</li>
+	    
+	    <li><a href="../doc/hello.ipynb.html">Text output</a></li>
+	    
+	    <li><a href="../doc/graphics.ipynb.html">Graphical output</a></li>
+	    
+	    <li><a href="../doc/complete.md.html">TAB completion</a></li>
+	    
+	    <li><a href="../doc/inspect.md.html">Shift-TAB inspection</a></li>
+	    
+          </ul>
+        </li>
+	<!-- dropdown: Tutorials -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tutorials <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	  
+	    
+	    
+            <li class="dropdown-header">By N. Riesco</li>
+	    
+	    <li><a href="../doc/n-riesco.global.ipynb.html">Global object</a></li>
+	    
+	    <li><a href="../doc/n-riesco.this.ipynb.html">Keyword this</a></li>
+	    
+	  
+          </ul>
+        </li>
+	<!-- dropdown: Get involved -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Get involved <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="../contributing.html">Contribution guidelines</a></li>
+            <li><a href="../jsdoc/index.html">JSDoc</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- navbar-right -->
+      <ul class="nav navbar-nav navbar-right">
+	<!-- Github -->
+        <li><a href="https://github.com/n-riesco/ijavascript">Github</a></li>
+	<!-- npm -->
+        <li><a href="https://www.npmjs.com/package/ijavascript">npm</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
+</nav>
+
+  <!-- notebook -->
+  
+  <div id="markdown" class="container">
+    <h1 id="installation">Installation</h1>
+<p>The instructions to install IJavascript are platform-dependent and very much determined by the following dependencies:</p>
+<ul>
+<li><a href="http://ipython.org/notebook.html">IPython notebook</a></li>
+<li><a href="http://zeromq.org/">ZeroMQ</a></li>
+<li><a href="https://www.npmjs.com/">npm</a></li>
+<li><a href="http://nodejs.org/">node.js</a></li>
+</ul>
+<h2 id="debian-and-ubuntu">Debian and Ubuntu</h2>
+<p>In recent distributions Debian and Ubuntu distributions, the IJavascript dependencies are available from their repositories and can be installed by a user with administrator rights:</p>
+<pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq-dev</code></pre>
+<p>Note, however, that the versions available in the repositories are fairly old. If you wish to install the latest stable versions, see the section for Ubuntu 12.04 further below.</p>
+<h3 id="global-installation">Global installation</h3>
+<p>IJavascript can be installed globally (i.e. for all users in the system) by a user with administrator rights by running:</p>
+<pre class="sh"><code>sudo npm install -g ijavascript</code></pre>
+<h3 id="local-installation">Local installation</h3>
+<p>It is possible to install IJavascript locally:</p>
+<pre class="sh"><code>npm install ijavascript</code></pre>
+<p>But note that the above command will install the executable <code>ijs</code> in the folder <code>~/node_modules/.bin/</code> and you may want to add this folder to your <code>PATH</code>:</p>
+<pre class="sh"><code>echo \&quot;PATH=\&quot;\$HOME/node_modules/.bin\&quot; &gt;&gt; ~/.profile</code></pre>
+<p>The above change won't take effect until you log out of the current session.</p>
+<h3 id="ubuntu-12.04">Ubuntu 12.04</h3>
+<p>To install IJavascript in Ubuntu 12.04, both <code>node.js</code> and <code>ipython</code> need upgrading to a recent version. You can do so by running:</p>
+<pre class="sh"><code>sudo apt-get install libzmq-dev python-dev python-pip g++ curl
+curl -sL https://deb.nodesource.com/setup | sudo bash -
+sudo apt-get install -y nodejs
+sudo pip install --upgrade ipython jinja2 tornado jsonschema pyzmq</code></pre>
+<p>The instructions for upgrading <code>node.js</code> have been adapted from those found <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#debian-and-ubuntu-based-linux-distributions">here</a>.</p>
+<h2 id="os-x">OS X</h2>
+<p>I don't have access to any OS X machine, but I have been told that <a href="http://brew.sh/">Homebrew</a> may help with the installation of the IJavascript dependencies in OS X. I would be grateful if OS X users could confirm the instructions below work as intended:</p>
+<pre class="sh"><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+brew install node
+brew install zeromq
+sudo easy_install pip
+sudo pip install --upgrade ipython jinja2 tornado jsonschema pyzmq</code></pre>
+<p>Once the dependencies have been installed, <code>npm</code> can be used to install IJavascript as described above in the section for Ubuntu and Debian.</p>
+<h2 id="windows-and-other-platforms">Windows and other platforms</h2>
+<p>For other platforms, instructions to install the IJavascript dependencies may be found at <a href="http://nodejs.org/download/">nodejs.org/download</a>, <a href="http://ipython.org/install.html">ipython.org/install</a> and <a href="http://zeromq.org/intro:get-the-software">zeromq.org/intro:get-the-software</a>.</p>
+
+  </div>
+  
+  
+  <script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

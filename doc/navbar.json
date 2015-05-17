@@ -4,8 +4,9 @@
     "Features": {
         "01. Text output": "hello.ipynb",
         "02. Graphical output": "graphics.ipynb",
-        "03. TAB completion": "complete.md",
-        "04. Shift-TAB inspection": "inspect.md"
+        "03. Asynchronous output": "async.ipynb",
+        "04. TAB completion": "complete.md",
+        "05. Shift-TAB inspection": "inspect.md"
     },
     "Tutorials": {
         "N. Riesco": {

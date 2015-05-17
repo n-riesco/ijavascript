@@ -19,11 +19,12 @@ other languages](https://github.com/ipython/ipython/wiki/IPython-kernels-for-oth
 ## Main Features
 
 - Run Javascript code within a `node.js` session
-- [Text output](http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html) for
-  `HTML`, `PNG`, ...
+- [Hello, World!](http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html)
 - [Graphical
   output](http://n-riesco.github.io/ijavascript/doc/graphics.ipynb.html) for
-  `HTML`, `PNG`, ...
+  `HTML`, `SVG`, `PNG`, ...
+- [Asynchronous
+  output](http://n-riesco.github.io/ijavascript/doc/async.ipynb.html)
 - [Autocompletion](http://n-riesco.github.io/ijavascript/doc/complete.md.html):
   press `TAB` to complete keywords and object properties
 - [Object
@@ -73,11 +74,10 @@ First of all, thank you for taking the time to contribute. Please, read
 [CONTRIBUTING](http://n-riesco.github.io/ijavascript/contributing.html) and use
 the [issue tracker](https://github.com/n-riesco/ijavascript/issues) for any
 contributions: support requests, bug reports, enhancement requests, pull
-requests, ...
+requests, submission of tutorials...
 
 # TO DO
 
 - Add tests
 - Complete the implementation of IPython's messaging protocol v4.1
 - Complete the implementation of IPython's messaging protocol v5.0
-- Add tutorials

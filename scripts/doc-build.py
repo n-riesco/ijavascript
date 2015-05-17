@@ -298,7 +298,8 @@ config["nb_empty"] = nbformat.NotebookNode({
     "metadata": {
         "name": ""
     },
-    "worksheets": []
+    "worksheets": [],
+    "cells": []
 })
 
 # List of notebooks

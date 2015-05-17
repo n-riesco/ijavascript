@@ -83,7 +83,7 @@ def render(title, infilename, outfilename):
 def render_notebook(exporter, title, infilename, outfilename):
     resources = {
         "title": title,
-        "navbar": config["index"],
+        "navbar": config["navbar"],
     }
 
     html, resources = exporter.from_filename(
@@ -99,7 +99,7 @@ def render_markdown(exporter, title, infilename, outfilename):
     notebook = config["nb_empty"]
     resources = {
         "title": title,
-        "navbar": config["index"],
+        "navbar": config["navbar"],
         "md": subprocess.check_output([
             "pandoc",
             "--from=markdown_github-hard_line_breaks",
@@ -182,19 +182,19 @@ def build_root():
 
 
 def build_doc():
-    index = config["index"]
+    navbar = config["navbar"]
 
     docs = [
-        ("Installation", index["Installation"]),
-        ("Usage", index["Usage"]),
+        ("Installation", navbar["Installation"]),
+        ("Usage", navbar["Usage"]),
     ]
 
-    for title, filename in index["Features"].iteritems():
+    for title, filename in navbar["Features"].iteritems():
         docs.append(
             (title[4:], filename)
         )
 
-    for author, tutorials in index["Tutorials"].iteritems():
+    for author, tutorials in navbar["Tutorials"].iteritems():
         for title, filename in tutorials.iteritems():
             docs.append(
                 (author + ": " + title[4:], filename)
@@ -222,36 +222,41 @@ def build_jsdoc():
 
 def download_libs():
     urls = [
+        "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css",
+    ]
+    folder = config["out_css"]
+    download(urls, folder)
+
+    urls = [
         "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js",
         "https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js",
         "https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js",
         "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js",
         "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js",
     ]
-    for url in urls:
-        filename = url.split("/")[-1].split("?")[0]
-        destination = os.path.join(config["out_js"], filename)
-        with open(destination, "wb") as outfile:
-            shutil.copyfileobj(
-                urllib2.urlopen(url, timeout=10),
-                outfile
-            )
+    folder = config["out_js"]
+    download(urls, folder)
 
-    urls = [
-        "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css",
-    ]
+
+def download(urls, folder):
     for url in urls:
         filename = url.split("/")[-1].split("?")[0]
-        destination = os.path.join(config["out_css"], filename)
-        with open(destination, "wb") as outfile:
-            shutil.copyfileobj(
-                urllib2.urlopen(url, timeout=10),
-                outfile
-            )
+        outfilename = os.path.join(folder, filename)
+        tmpfilename = outfilename + ".tmp"
+        try:
+            with open(tmpfilename, "wb") as tmpfile:
+                shutil.copyfileobj(
+                    urllib2.urlopen(url, timeout=10),
+                    tmpfile
+                )
+        except urllib2.URLError:
+            os.remove(tmpfilename)
+            raise
+        os.rename(outfilename + ".tmp", outfilename)
 
 
 def main():
-    print "Building IJavascript documentation..."
+    print "Building IJavascript website..."
     make_folders()
     copy_images()
     build_css()
@@ -261,7 +266,7 @@ def main():
     print "Generating JSDoc documentation..."
     build_jsdoc()
 
-    print "Downloading JS and CSS libraries..."
+    print "Downloading CSS and JS libraries..."
     try:
         download_libs()
         print "Done."
@@ -297,8 +302,8 @@ config["nb_empty"] = nbformat.NotebookNode({
 })
 
 # List of notebooks
-with open(os.path.join(config["in_doc"], "index.json")) as infile:
-    config["index"] = json.load(infile)
+with open(os.path.join(config["in_doc"], "navbar.json")) as infile:
+    config["navbar"] = json.load(infile)
 
 # Exporters
 config["exporter_root"] = Exporter("root.tpl")  # For files in the root folder

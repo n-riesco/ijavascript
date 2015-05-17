@@ -8,6 +8,11 @@
         "ipython",
         "jupyter"
     ],
+    "homepage": "https://n-riesco.github.io/ijavascript",
+    "bugs": {
+        "url": "https://github.com/n-riesco/ijavascript/issues"
+    },
+    "license": "BSD-3-Clause",
     "author": {
         "author": "Nicolas Riesco",
         "email": "enquiries@nicolasriesco.net",
@@ -20,7 +25,6 @@
     "bin": {
         "ijs": "bin/ijavascript.js"
     },
-    "license": "BSD-3-Clause",
     "dependencies": {
         "node-uuid": "^1.4.2",
         "zmq": "^2.10.0"

@@ -156,6 +156,17 @@ exec("ipython --version && ipython locate", function(error, stdout, stderr) {
             language: "javascript",
         };
         fs.writeFileSync(config.ijsKernelSpecFile, JSON.stringify(ijsSpec));
+
+        logos = [
+            "logo-32x32.png",
+            "logo-64x64.png",
+        ];
+        logos.forEach(function(logo) {
+            fs.writeFileSync(
+                path.join(config.ijsKernelSpecDir, logo),
+                fs.readFileSync(path.join(config.rootPath, "images", logo))
+            );
+        });
     }
 
     if (config.runIPython) {

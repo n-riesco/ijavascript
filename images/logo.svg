@@ -8,107 +8,69 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   version="1.1"
+   version="1.2"
    width="512"
    height="512"
    id="svg2">
   <defs
      id="defs4">
     <linearGradient
-       id="linearGradient3757">
+       id="linearGradient3835">
       <stop
-         id="stop3759"
-         style="stop-color:#ffffff;stop-opacity:1"
+         id="stop3837"
+         style="stop-color:#f0f0f0;stop-opacity:1"
          offset="0" />
       <stop
-         id="stop3761"
-         style="stop-color:#7f7f7f;stop-opacity:1"
+         id="stop3839"
+         style="stop-color:#a0a0a0;stop-opacity:1"
          offset="1" />
     </linearGradient>
-    <linearGradient
-       x1="51.141731"
-       y1="202"
-       x2="358.85828"
-       y2="202"
-       id="linearGradient3763"
-       xlink:href="#linearGradient3757"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
-    <linearGradient
-       x1="51.141731"
-       y1="202"
-       x2="358.85828"
-       y2="202"
-       id="linearGradient3763-7"
-       xlink:href="#linearGradient3757-2"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
-    <linearGradient
-       id="linearGradient3757-2">
-      <stop
-         id="stop3759-5"
-         style="stop-color:#ffffff;stop-opacity:1"
-         offset="0" />
-      <stop
-         id="stop3761-9"
-         style="stop-color:#7f7f7f;stop-opacity:1"
-         offset="1" />
-    </linearGradient>
-    <linearGradient
-       x1="51.141731"
-       y1="202"
-       x2="358.85828"
-       y2="202"
-       id="linearGradient4041"
-       xlink:href="#linearGradient3757-2"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,-88.74667)" />
     <filter
        color-interpolation-filters="sRGB"
-       id="filter4195">
+       id="filter3790">
       <feGaussianBlur
-         id="feGaussianBlur4197"
-         stdDeviation="2.1450001" />
+         id="feGaussianBlur3792"
+         stdDeviation="1.2961481" />
     </filter>
-    <linearGradient
-       x1="51.141731"
-       y1="202"
-       x2="358.85828"
-       y2="202"
-       id="linearGradient3069"
-       xlink:href="#linearGradient3757"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
-    <linearGradient
-       x1="51.141731"
-       y1="202"
-       x2="358.85828"
-       y2="202"
-       id="linearGradient3074"
-       xlink:href="#linearGradient3757"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.7655172,0,0,1.7066667,-105.93103,451.61551)" />
     <filter
        color-interpolation-filters="sRGB"
-       id="filter3869">
+       id="filter3795">
       <feGaussianBlur
-         id="feGaussianBlur3871"
-         stdDeviation="2.145" />
+         id="feGaussianBlur3797"
+         stdDeviation="10.016751" />
     </filter>
-    <mask
-       id="mask3901">
-      <text
-         x="13.874403"
-         y="782.44421"
-         transform="scale(0.85100096,1.1750868)"
-         id="text3903"
-         xml:space="preserve"
-         style="font-size:386.49728394px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
-           x="13.874403"
-           y="782.44421"
-           id="tspan3905"
-           style="font-size:386.49728394px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;font-family:Sans;-inkscape-font-specification:Sans Bold">IJS</tspan></text>
-    </mask>
+    <linearGradient
+       x1="0"
+       y1="796.36218"
+       x2="512"
+       y2="796.36218"
+       id="linearGradient3841"
+       xlink:href="#linearGradient3835"
+       gradientUnits="userSpaceOnUse" />
+    <clipPath
+       id="clipPath3882">
+      <g
+         transform="translate(6.9304688e-6,-1.0148574e-5)"
+         id="g3884"
+         style="display:inline">
+        <flowRoot
+           transform="matrix(2.4779189,0,0,2.8297064,-320.48397,162.92621)"
+           id="flowRoot3886"
+           xml:space="preserve"
+           style="font-size:144px;font-style:normal;font-weight:bold;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"><flowRegion
+             id="flowRegion3888"><rect
+               width="356"
+               height="286"
+               x="64"
+               y="119.33334"
+               id="rect3890" /></flowRegion><flowPara
+             id="flowPara3892">JS</flowPara></flowRoot>        <path
+           d="m 410,427 a 30,35 0 1 1 -60,0 30,35 0 1 1 60,0 z"
+           transform="matrix(0.85546491,0,0,0.73325563,90.923339,643.26204)"
+           id="path3894"
+           style="opacity:0.9;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+      </g>
+    </clipPath>
   </defs>
   <metadata
      id="metadata7">
@@ -124,40 +86,28 @@
   </metadata>
   <g
      transform="translate(0,-540.36218)"
-     id="layer1"
+     id="g3763"
      style="display:inline">
     <g
-       mask="url(#mask3901)"
-       id="g3894">
+       clip-path="url(#clipPath3882)"
+       id="g3843">
       <rect
          width="512"
          height="512"
          x="0"
          y="540.36218"
-         id="rect2987"
-         style="fill:url(#linearGradient3074);fill-opacity:1;stroke:none" />
-      <text
-         x="13.874402"
-         y="782.44427"
-         transform="scale(0.85100095,1.1750868)"
-         id="text3076"
-         xml:space="preserve"
-         style="font-size:386.49728394px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter3869);font-family:Sans"><tspan
-           x="13.874402"
-           y="782.44427"
-           id="tspan3078"
-           style="font-size:386.49728394px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Sans;-inkscape-font-specification:Sans Bold">IJS</tspan></text>
-      <text
-         x="13.874403"
-         y="782.44421"
-         transform="scale(0.85100096,1.1750868)"
-         id="text3076-7"
-         xml:space="preserve"
-         style="font-size:386.49728394px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Sans"><tspan
-           x="13.874403"
-           y="782.44421"
-           id="tspan3078-8"
-           style="font-size:386.49728394px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;font-family:Sans;-inkscape-font-specification:Sans Bold">I</tspan></text>
+         id="rect3833"
+         style="opacity:0.9;fill:url(#linearGradient3841);fill-opacity:1;fill-rule:nonzero;stroke:none" />
+      <g
+         id="g3766">
+        <g
+           id="g3768" />
+        <path
+           d="m 410,427 c 0,19.32997 -13.43146,35 -30,35 -8.28427,0 -15.78427,-3.91751 -21.2132,-10.25126 C 353.35786,445.41498 350,436.66498 350,427 c 0,-19.32997 13.43146,-35 30,-35 8.28427,0 15.78427,3.91751 21.2132,10.25126 C 406.64213,408.58501 410,417.33501 410,427 z m -229.86375,-43.64101 0,-133.31982 c 19.41607,13.74817 38.15327,24.14963 56.21168,31.20445 18.194,6.8741 35.70921,10.31109 52.54567,10.31102 17.10777,7e-5 30.21022,-3.79872 39.30747,-11.3964 9.09687,-7.59751 13.64539,-18.45123 13.64557,-32.56114 -1.8e-4,-12.66255 -3.12307,-22.43091 -9.36861,-29.30504 -6.11015,-6.87387 -18.39795,-13.0243 -36.86344,-18.45132 l -30.34617,-8.95431 c -30.41415,-8.68281 -52.68153,-22.52127 -66.80229,-41.51549 -13.98504,-18.99376 -20.97755,-44.59043 -20.97752,-76.790018 -3e-5,-40.339328 9.77588,-71.3628611 29.32783,-93.070639 19.55179,-21.707054 47.65762,-32.560731 84.31749,-32.561154 16.70042,4.23e-4 64.74566,10.733546 82.39683,14.170151 17.65081,3.256504 35.91279,8.231113 54.78604,14.923827 m -459.788987,516.418353 0,-100.78126 12.219928,0 c 16.2932387,-3e-5 28.5810344,-6.06002 36.863444,-18.17998 8.418148,-12.12 12.627251,-29.93817 12.627274,-53.45455 l 0,-365.770269 0,0 87.915611,0"
+           transform="matrix(0.85546491,0,0,0.73325563,90.923339,643.26204)"
+           id="path3770"
+           style="opacity:0.9;fill:none;stroke:#000000;stroke-width:20.20185089;stroke-miterlimit:4;stroke-opacity:1;filter:url(#filter3795)" />
+      </g>
     </g>
   </g>
 </svg>

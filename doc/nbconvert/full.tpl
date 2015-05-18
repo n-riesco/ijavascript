@@ -88,7 +88,7 @@ MathJax.Hub.Config({
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="{{path_root ~ "index.html"}}">
-        <img min-height="50px" height="50px" width="50px" alt="IJS" src="{{path_images ~ "logo.svg"}}">
+        <img min-height="50px" height="50px" width="50px" alt="IJS" src="{{path_images ~ "logo-50x50.png"}}">
       </a>
     </div>
 

@@ -43,7 +43,7 @@ import urllib2
 
 import IPython
 import IPython.nbconvert as nbconvert
-import IPython.nbformat.current as nbformat
+import IPython.nbformat.v3 as nbformat
 import jinja2
 
 

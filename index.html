@@ -65,7 +65,7 @@ MathJax.Hub.Config({
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="index.html">
-        <img min-height="50px" height="50px" width="50px" alt="IJS" src="images/logo.svg">
+        <img min-height="50px" height="50px" width="50px" alt="IJS" src="images/logo-50x50.png">
       </a>
     </div>
 
@@ -84,6 +84,8 @@ MathJax.Hub.Config({
 	    <li><a href="doc/hello.ipynb.html">Text output</a></li>
 	    
 	    <li><a href="doc/graphics.ipynb.html">Graphical output</a></li>
+	    
+	    <li><a href="doc/async.ipynb.html">Asynchronous output</a></li>
 	    
 	    <li><a href="doc/complete.md.html">TAB completion</a></li>
 	    
@@ -137,8 +139,9 @@ MathJax.Hub.Config({
 <h2 id="main-features">Main Features</h2>
 <ul>
 <li>Run Javascript code within a <code>node.js</code> session</li>
-<li><a href="http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html">Text output</a> for <code>HTML</code>, <code>PNG</code>, ...</li>
-<li><a href="http://n-riesco.github.io/ijavascript/doc/graphics.ipynb.html">Graphical output</a> for <code>HTML</code>, <code>PNG</code>, ...</li>
+<li><a href="http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html">Hello, World!</a></li>
+<li><a href="http://n-riesco.github.io/ijavascript/doc/graphics.ipynb.html">Graphical output</a> for <code>HTML</code>, <code>SVG</code>, <code>PNG</code>, ...</li>
+<li><a href="http://n-riesco.github.io/ijavascript/doc/async.ipynb.html">Asynchronous output</a></li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/complete.md.html">Autocompletion</a>: press <code>TAB</code> to complete keywords and object properties</li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/inspect.md.html">Object inspection</a>: press <code>Shift-TAB</code> to inspect an object and show its content or, if available, its documentation</li>
 </ul>
@@ -151,18 +154,17 @@ sudo npm install -g ijavascript</code></pre>
 <p>To start an IPython notebook session with the IJavascript kernel, run:</p>
 <pre class="sh"><code>ijs</code></pre>
 <p>This command should open the IPython notebook dashboard in your default web browser:</p>
-<p><img src="../images/screenshot-dashboard-home.png" alt="Screenshot: IPython Notebook Dashboard" /></p>
+<p><img src="images/screenshot-dashboard-home.png" alt="Screenshot: IPython Notebook Dashboard" /></p>
 <p>Here's a sample notebook that makes use of the IJavascript kernel:</p>
-<p><img src="../images/screenshot-notebook-hello.png" alt="Screenshot: Notebook Hello Sample" /></p>
+<p><img src="images/screenshot-notebook-hello.png" alt="Screenshot: Notebook Hello Sample" /></p>
 <p>Please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/usage.md.html">usage notes</a> for further details.</p>
 <h1 id="contributions">Contributions</h1>
-<p>First of all, thank you for taking the time to contribute. Please, read <a href="http://n-riesco.github.io/ijavascript/contributing.html">CONTRIBUTING</a> and use the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> for any contributions: support requests, bug reports, enhancement requests, pull requests, ...</p>
+<p>First of all, thank you for taking the time to contribute. Please, read <a href="http://n-riesco.github.io/ijavascript/contributing.html">CONTRIBUTING</a> and use the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> for any contributions: support requests, bug reports, enhancement requests, pull requests, submission of tutorials...</p>
 <h1 id="to-do">TO DO</h1>
 <ul>
 <li>Add tests</li>
 <li>Complete the implementation of IPython's messaging protocol v4.1</li>
 <li>Complete the implementation of IPython's messaging protocol v5.0</li>
-<li>Add tutorials</li>
 </ul>
 
   </div>

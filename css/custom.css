@@ -18,6 +18,9 @@ div.text_cell_render {
 #menubar .navbar-brand {
     padding: 0;
 }
+#menubar .navbar-collapse {
+    clear: none;
+}
 
 /* Style for notebook box */
 #notebook {
@@ -40,4 +43,7 @@ div.text_cell_render {
 }
 #markdown p {
     text-align: justify;
+}
+#markdown img {
+    max-width: 100%;
 }

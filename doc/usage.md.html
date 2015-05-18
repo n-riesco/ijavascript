@@ -65,7 +65,7 @@ MathJax.Hub.Config({
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="../index.html">
-        <img min-height="50px" height="50px" width="50px" alt="IJS" src="../images/logo.svg">
+        <img min-height="50px" height="50px" width="50px" alt="IJS" src="../images/logo-50x50.png">
       </a>
     </div>
 
@@ -84,6 +84,8 @@ MathJax.Hub.Config({
 	    <li><a href="../doc/hello.ipynb.html">Text output</a></li>
 	    
 	    <li><a href="../doc/graphics.ipynb.html">Graphical output</a></li>
+	    
+	    <li><a href="../doc/async.ipynb.html">Asynchronous output</a></li>
 	    
 	    <li><a href="../doc/complete.md.html">TAB completion</a></li>
 	    
@@ -136,18 +138,25 @@ MathJax.Hub.Config({
 <pre class="sh"><code>ijs</code></pre>
 <p>This command should open the IPython notebook dashboard in your default web browser:</p>
 <p><img src="../images/screenshot-dashboard-home.png" alt="Screenshot: IPython Notebook Dashboard" /></p>
+<h2 id="register-ijavascript-with-the-dashboard">Register IJavascript with the dashboard</h2>
+<p>Those users running multiple kernels may register IJavascript without opening the dashboard by running:</p>
+<pre class="sh"><code>ijs --ijs-install-kernel</code></pre>
+<h2 id="set-the-dashboard-home-folder">Set the dashboard home folder</h2>
 <p>By default, the dashboard lists the notebooks in the current working folder. The flag <code>--notebook-dir=path/to/another/folder</code> can be used to open the dashboard at a different folder:</p>
 <pre class="sh"><code>ijs --notebook-dir=path/to/another/folder</code></pre>
 <p><img src="../images/screenshot-dashboard-dir.png" alt="Screenshot: IPython Notebook --notebook-dir" /></p>
+<h2 id="set-the-working-folder">Set the working folder</h2>
 <p>Also by default, the IJavascript kernel runs a <code>node.js</code> session in the current working folder. The flag <code>--ijs-working-dir=path/to/another/folder</code> can be used to run the <code>node.js</code> session at a different folder.</p>
 <p><img src="../images/screenshot-notebook-dir.png" alt="Screenshot: IPython Notebook --ijs_working-dir" /></p>
+<h2 id="other-command-flags">Other command flags</h2>
 <p>Documentation on other flags can be found by running:</p>
 <pre class="sh"><code>ijs --ijs-help</code></pre>
 <p>and</p>
 <pre class="sh"><code>ipython notebook --help-all</code></pre>
+<h2 id="sample-notebooks">Sample notebooks</h2>
 <p>Here's a sample notebook that makes use of the Javascript kernel:</p>
 <p><img src="../images/screenshot-notebook-hello.png" alt="Screenshot: Notebook Hello Sample" /></p>
-<p>Also, please, see <a href="https://n-riesco.github.com/ijavascript/doc/graphics.ipynb.html">graphics tutorial</a> for some examples exercising the graphical capabilities provided by IJavascript.</p>
+<p>More examples of use can be found on the <a href="https:///n-riesco.github.io/ijavascript/index.html">IJavascript website</a>.</p>
 
   </div>
   

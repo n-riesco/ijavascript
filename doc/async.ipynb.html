@@ -8,7 +8,7 @@
 
 <link rel="shortcut icon" href="../images/favicon.ico" />
 
-<title>N. Riesco: Global object</title>
+<title>Asynchronous output</title>
 
 <script src="../js/require.min.js"></script>
 <script src="../js/jquery.min.js"></script>
@@ -136,16 +136,16 @@ MathJax.Hub.Config({
     <div id="notebook-container" class="container">
       
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="the-global-object">The <code>global</code> object</h1>
-<p>Javascript provides a unique <code>global</code> object accessible to all execution contexts. The <code>global</code> object has a number of properties predefined. Some of this properties are required by the <a href="http://www.ecma-international.org/ecma-262/5.1/">ECMA standard</a> and some are specific to the platform. See <a href="https://nodejs.org/api/globals.html">here</a> the relevant documentation for Node.js and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window">here</a> for the HTML DOM.</p>
+<h1 id="asynchronous-output">Asynchronous output</h1>
+<p>Javascript and Node.JS make heavy use of asynchronous execution. IJavascript lets you exercise these asynchronous capabilities, both:</p>
+<ul>
+<li>by updating <code>stdout</code> and <code>stderr</code> asynchronously, or</li>
+<li>by updating the IJavascript output asynchronously.</li>
+</ul>
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="how-to-access-properties-defined-in-the-global-object">How to access properties defined in the global object</h2>
-<p>Javascript provides two ways to access the properties in the <code>global</code> object: - explicit access - implicit access</p>
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="explicit-access">Explicit access</h3>
-<p>Javascript platforms may include a <code>global</code> property whose value is the <code>global</code> object itself. In the HTML DOM, this property is <code>window</code>; in Node.js, the property is <code>global</code> property. This <code>global</code> property can be used to access properties in the <code>global</code> object from different execution contexts, for example:</p>
+<h2 id="updating-stdout-and-stderr-asynchronously">Updating <code>stdout</code> and <code>stderr</code> asynchronously</h2>
+<p>Both streams <code>stdout</code> and <code>stderr</code> can be written asynchronously. Any text written to these streams will be forwarded back to the latest request from the frontend:</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
@@ -153,10 +153,20 @@ MathJax.Hub.Config({
 In&nbsp;[1]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">global</span><span class="o">.</span><span class="n">myGlobalProperty</span> <span class="o">=</span> <span class="s">&quot;Hello, World!&quot;</span><span class="p">;</span>
-<span class="p">})()</span>
-<span class="k">global</span><span class="o">.</span><span class="n">myGlobalProperty</span><span class="p">;</span>
+<div class="highlight"><pre><span class="n">function</span> <span class="n">countTo</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">milliseconds</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">_n</span><span class="o">++</span><span class="p">);</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">_n</span> <span class="o">&gt;</span> <span class="n">number</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">clearInterval</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">_intervalObject</span><span class="p">);</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Done!&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+    <span class="n">counter</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">counter</span><span class="o">.</span><span class="n">_intervalObject</span> <span class="o">=</span> <span class="n">setInterval</span><span class="p">(</span><span class="n">counter</span><span class="p">,</span> <span class="n">milliseconds</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">countTo</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
 </pre></div>
 
 </div>
@@ -171,9 +181,31 @@ In&nbsp;[1]:
 <div class="box-flex1 output_subarea output_pyout">
 
 <div class="output_html rendered_html">
-<pre>&#39;Hello, World!&#39;</pre>
+<pre>undefined</pre>
 </div>
 
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+1
+2
+3
+4
+5
+
+</pre>
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stderr">
+<pre>
+Done!
+
+</pre>
 </div>
 </div>
 
@@ -182,8 +214,9 @@ In&nbsp;[1]:
 
 </div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="implicit-access">Implicit access</h3>
-<p><code>NaN</code> and <code>isNaN</code> are properties defined in the <code>global</code> object. <code>NaN</code> is set to the &quot;Not-a-Number&quot; value defined by the <a href="http://dx.doi.org/10.1109/IEEESTD.2008.4610935">IEEE 754 standard</a> for floating-point numbers. And <code>isNaN</code> is set to a function that returns whether a number is <code>NaN</code>. Here is an example that illustrates how these properties are implicitly accessible from different execution contexts:</p>
+<h2 id="updating-the-ijavascript-output-asynchronously">Updating the IJavascript output asynchronously</h2>
+<p>IJavascript offers two global definitions to help produce an output asynchronously: <code>$$async$$</code> and <code>$$done$$()</code>.</p>
+<p>When <code>$$async$$</code> is set to <code>true</code>, the IJavascript kernel is instructed not to produce an output. Instead, an output can be produced by calling <code>$$done$$()</code>.</p>
 </div>
 <div class="cell border-box-sizing code_cell vbox">
 <div class="input hbox">
@@ -191,84 +224,16 @@ In&nbsp;[1]:
 In&nbsp;[2]:
 </div>
 <div class="input_area box-flex1">
-<div class="highlight"><pre><span class="p">(</span><span class="n">function</span> <span class="n">f</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">isNaN</span><span class="p">(</span><span class="n">NaN</span><span class="p">);</span>
-<span class="p">})()</span>
-</pre></div>
+<div class="highlight"><pre><span class="err">$$</span><span class="n">async</span><span class="err">$$</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
 
-</div>
-</div>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello!&quot;</span><span class="p">);</span>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[2]:</div>
-<div class="box-flex1 output_subarea output_pyout">
-
-<div class="output_html rendered_html">
-<pre>true</pre>
-</div>
-
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Note that although accessing <code>global</code> properties in this way is very convenient, it is also riddle with unexpected side effects:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">var</span> <span class="n">isNaN</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="err">!</span><span class="k">global</span><span class="o">.</span><span class="n">isNaN</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
-    <span class="p">};</span>
-    <span class="k">return</span> <span class="n">isNaN</span><span class="p">(</span><span class="n">NaN</span><span class="p">);</span>
-<span class="p">})()</span>
-</pre></div>
-
-</div>
-</div>
-
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[3]:</div>
-<div class="box-flex1 output_subarea output_pyout">
-
-<div class="output_html rendered_html">
-<pre>false</pre>
-</div>
-
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">isNaN</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="err">!</span><span class="k">global</span><span class="o">.</span><span class="n">isNaN</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
-    <span class="p">};</span>
-    <span class="k">return</span> <span class="n">isNaN</span><span class="p">(</span><span class="n">NaN</span><span class="p">);</span>
-<span class="p">})()</span>
+<span class="n">setTimeout</span><span class="p">(</span>
+    <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="err">$$</span><span class="n">done</span><span class="err">$$</span><span class="p">(</span><span class="s">&quot;And good bye!&quot;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="mi">1000</span>
+<span class="p">);</span>
 </pre></div>
 
 </div>
@@ -279,15 +244,73 @@ In&nbsp;[4]:
 
 
 <div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_pyerr">
+<div class="box-flex1 output_subarea output_stream output_stdout">
 <pre>
-TypeError: Cannot call method &apos;split&apos; of undefined
-    at formatError ([eval]:174:40)
-    at sendError ([eval]:97:14)
-    at onMessage ([eval]:74:13)
-    at process.EventEmitter.emit (events.js:98:17)
-    at handleMessage (child_process.js:318:10)
-    at Pipe.channel.onread (child_process.js:345:11)</pre>
+Hello!
+
+</pre>
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[2]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<div class="output_html rendered_html">
+<pre>&#39;And good bye!&#39;</pre>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It is also possible to produce a graphical output asynchronously, the same way it is done synchronously, with the difference that <code>$$done$$()</code> has to be called to instruct the IJavascript kernel that the output is ready:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="err">$$</span><span class="n">async</span><span class="err">$$</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
+
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello!&quot;</span><span class="p">);</span>
+
+<span class="n">setTimeout</span><span class="p">(</span>
+    <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="err">$$</span><span class="n">svg</span><span class="err">$$</span> <span class="o">=</span> <span class="s">&quot;&lt;svg&gt;&lt;circle cx=&#39;30px&#39; cy=&#39;30px&#39; r=&#39;20px&#39;/&gt;&lt;/svg&gt;&quot;</span><span class="p">;</span>
+        <span class="err">$$</span><span class="n">done</span><span class="err">$$</span><span class="p">();</span>
+    <span class="p">},</span>
+    <span class="mi">1000</span>
+<span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+Hello!
+
+</pre>
+</div>
+</div>
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[3]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<svg><circle cx='30px' cy='30px' r='20px'/></svg>
+
 </div>
 </div>
 

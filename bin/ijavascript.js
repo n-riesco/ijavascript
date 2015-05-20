@@ -37,6 +37,7 @@
 var console = require("console");
 var exec = require("child_process").exec;
 var fs = require("fs");
+var os = require("os");
 var path = require("path");
 var spawn = require("child_process").spawn;
 var util = require("util");
@@ -102,7 +103,7 @@ config.kernelArgs.push("{connection_file}");
 
 // Determine IPython version and start the IPython notebook accordingly
 exec("ipython --version && ipython locate", function(error, stdout, stderr) {
-    var lines = stdout.toString().split("\n", 2);
+    var lines = stdout.toString().split(os.EOL, 2);
 
     config.ipythonVersion = lines[0].split(".").map(function(e) {
         return parseInt(e);

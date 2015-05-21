@@ -43,7 +43,7 @@ var spawn = require("child_process").spawn;
 var util = require("util");
 
 var usage = (
-    "iJavascript Notebook\n" +
+    "IJavascript Notebook\n" +
     "\n" +
     "Usage:\n" +
     "\n" +
@@ -56,6 +56,7 @@ var usage = (
     "    --ijs-install-kernel    install IJavascript kernel and exit\n" +
     "    --ijs-working-dir=path  set working directory for Javascript sessions\n" +
     "                            (default = current working directory)\n" +
+    "    --version               show IJavascript version\n" +
     "\n" +
     "and any other options recognised by the IPython notebook; run:\n" +
     "\n" +
@@ -69,6 +70,9 @@ var config = {
     ijsPath: fs.realpathSync(process.argv[1]),
 };
 config.rootPath = path.dirname(path.dirname(config.ijsPath));
+config.npmPackage = JSON.parse(
+    fs.readFileSync(path.join(config.rootPath, "package.json"))
+);
 config.kernelPath = path.join(config.rootPath, "lib", "kernel.js");
 config.kernelArgs = [config.nodePath, config.kernelPath];
 config.ipythonArgs = ["notebook"];
@@ -78,14 +82,17 @@ config.runIPython = true;
 process.argv.slice(2).forEach(function(e) {
     if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
         console.warn(util.format("Warning: Flag '%s' skipped", e));
-    } else if (e.lastIndexOf("--ijs-debug", 0) === 0) {
+    } else if (e === "--ijs-debug") {
         config.kernelArgs.push("--debug");
+    } else if (e === "--ijs-help") {
+        console.warn(usage);
+        process.exit(0);
     } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
         config.cwd = fs.realpathSync(e.slice(18));
-    } else if (e.lastIndexOf("--ijs-install-kernel", 0) === 0) {
+    } else if (e === "--ijs-install-kernel") {
         config.runIPython = false;
-    } else if (e.lastIndexOf("--ijs-help", 0) === 0) {
-        console.warn(usage);
+    } else if (e === "--version") {
+        console.warn(config.npmPackage.version);
         process.exit(0);
     } else if (e.lastIndexOf("--ijs-", 0) === 0) {
         console.warn(util.format("Error: Unrecognised flag '%s'\n", e));

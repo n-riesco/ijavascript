@@ -15,7 +15,7 @@ information in your report:
 - IJavascript version. Please, run the command:
 
 ```sh
-npm list ijavascript
+ijs --version
 ```
 
 - npm version:

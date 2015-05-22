@@ -33,6 +33,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
+var DEBUG = false;
 
 var console = require("console");
 var exec = require("child_process").exec;
@@ -83,20 +84,21 @@ process.argv.slice(2).forEach(function(e) {
     if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
         console.warn(util.format("Warning: Flag '%s' skipped", e));
     } else if (e === "--ijs-debug") {
+        DEBUG = true;
         config.kernelArgs.push("--debug");
     } else if (e === "--ijs-help") {
-        console.warn(usage);
+        console.log(usage);
         process.exit(0);
     } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
         config.cwd = fs.realpathSync(e.slice(18));
     } else if (e === "--ijs-install-kernel") {
         config.runIPython = false;
     } else if (e === "--version") {
-        console.warn(config.npmPackage.version);
+        console.log(config.npmPackage.version);
         process.exit(0);
     } else if (e.lastIndexOf("--ijs-", 0) === 0) {
-        console.warn(util.format("Error: Unrecognised flag '%s'\n", e));
-        console.warn(usage);
+        console.error(util.format("Error: Unrecognised flag '%s'\n", e));
+        console.error(usage);
         process.exit(1);
     } else {
         config.ipythonArgs.push(e);
@@ -116,8 +118,10 @@ exec("ipython --version && ipython locate", function(error, stdout, stderr) {
         return parseInt(e);
     });
 
-    if (isNaN(config.ipythonVersion[0]) || lines.length != 2) {
-        console.warn("Error running `ipython --version && ipython locate`");
+    if (stderr || lines.length != 2 || isNaN(config.ipythonVersion[0])) {
+        console.error("Error running `ipython --version && ipython locate`");
+        if (stderr) console.error(stderr);
+        if (DEBUG) console.log("CONFIG:", config);
         process.exit(1);
     }
 
@@ -176,6 +180,8 @@ exec("ipython --version && ipython locate", function(error, stdout, stderr) {
             );
         });
     }
+
+    if (DEBUG) console.log("CONFIG:", config);
 
     if (config.runIPython) {
         // Start the IPython notebook with the default profile

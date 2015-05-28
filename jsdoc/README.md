@@ -4,8 +4,8 @@ The [IJavascript kernel](../index.html) is implemented by class `Kernel` in
 [`handlers_v5.js`](handlers_v5.js.html).
 
 The kernel makes use of [package `jmp`](https://www.npmjs.com/package/jmp) to
-parse messages in the IPython/Jupyter protocol.  The kernel also makes use of
-the Javascript sessions provided by module `sm` in [`sm.js`](sm.js.html). This
-module provides Javascript sessions by means of a `node.js` server implemented
-in
-[`sm_server.js`](https://github.com/n-riesco/ijavascript/blob/master/lib/sm_server.js).
+parse messages in the IPython/Jupyter messaging protocol, and [package
+`nel`](https://www.npmjs.com/package/nel) to provide Javascript REPL sessions.
+This package provides Javascript sessions by means of a `Node.js` server
+implemented in
+[`nel_server.js`](https://github.com/n-riesco/nel/blob/master/lib/nel_server.js).

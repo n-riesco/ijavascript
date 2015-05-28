@@ -28,8 +28,7 @@
     "dependencies": {
         "jmp": "latest",
         "nel": "latest",
-        "node-uuid": "^1.4.2",
-        "zmq": "^2.10.0"
+        "node-uuid": "^1.4.2"
     },
     "devDependencies": {
         "jsdoc": "latest",

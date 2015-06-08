@@ -38,7 +38,7 @@ lsb_release -sd
 
 You can use this template (copy, paste, insert values):
 
-> h5. Software versions:
+> ##### Software versions:
 > 
 > - ijs:
 > - npm: 

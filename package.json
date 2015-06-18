@@ -26,8 +26,8 @@
         "ijs": "bin/ijavascript.js"
     },
     "dependencies": {
-        "jmp": "latest",
-        "nel": "latest",
+        "jmp": "<0.1.0",
+        "nel": "<0.1.0",
         "node-uuid": "^1.4.2"
     },
     "devDependencies": {

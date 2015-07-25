@@ -230,7 +230,9 @@ function parseCommandArgs(context) {
         }
     });
 
-    context.args.kernel.push(context.flag.cwd || process.cwd());
+    if (context.flag.cwd) {
+        context.args.kernel.push("--session-working-dir=" + context.flag.cwd);
+    }
     context.args.kernel.push("{connection_file}");
 }
 

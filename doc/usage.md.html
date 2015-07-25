@@ -143,8 +143,10 @@ MathJax.Hub.Config({
 <p>This command should open the IPython notebook dashboard in your default web browser:</p>
 <p><img src="../images/screenshot-dashboard-home.png" alt="Screenshot: IPython Notebook Dashboard" /></p>
 <h2 id="register-ijavascript-with-the-dashboard">Register IJavascript with the dashboard</h2>
-<p>Those users running multiple kernels may register IJavascript without opening the dashboard by running:</p>
-<pre class="sh"><code>ijs --ijs-install-kernel</code></pre>
+<p>The IJavascript kernel can be registered with IPython v3 without opening the dashboard. To register the kernel for all users, run:</p>
+<pre class="sh"><code>ijs --ijs-install=global</code></pre>
+<p>and for the current user only:</p>
+<pre class="sh"><code>ijs --ijs-install=local</code></pre>
 <h2 id="set-the-dashboard-home-folder">Set the dashboard home folder</h2>
 <p>By default, the dashboard lists the notebooks in the current working folder. The flag <code>--notebook-dir=path/to/another/folder</code> can be used to open the dashboard at a different folder:</p>
 <pre class="sh"><code>ijs --notebook-dir=path/to/another/folder</code></pre>

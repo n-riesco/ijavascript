@@ -32,7 +32,7 @@
         Kernel
         </h2>
         
-            <div class="class-description">Implements a Javascript kernel for an IPython notebook.</div>
+            <div class="class-description">Implements a Javascript kernel for IPython/Jupyter.</div>
         
     
 </header>
@@ -46,7 +46,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="Kernel"><span class="type-signature"></span>new Kernel<span class="signature">(ipythonConfig, nelConfig, protocolVersion)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Kernel"><span class="type-signature"></span>new Kernel<span class="signature">(config)</span><span class="type-signature"></span></h4>
 
     
 
@@ -85,7 +85,44 @@
 
         <tr>
             
-                <td class="name"><code>ipythonConfig</code></td>
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>connection</code></td>
             
 
             <td class="type">
@@ -101,14 +138,38 @@
 
             
 
-            <td class="description last">Configuration provided by IPython.</td>
+            <td class="description last">Connection configuration provided by
+                                        IPython/Jupyter.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>nelConfig</code></td>
+                <td class="name"><code>hideUndefined</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Flag to hide undefined results</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>nel</code></td>
             
 
             <td class="type">
@@ -154,6 +215,13 @@
     </tbody>
 </table>
 
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
 
 
 
@@ -188,7 +256,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line111">line 111</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line125">line 125</a>
     </li></ul></dd>
     
 
@@ -232,7 +300,7 @@
 
         
             
-<h4 class="name" id="config"><span class="type-signature"></span>config<span class="type-signature"> :Object</span></h4>
+<h4 class="name" id="connectionConfig"><span class="type-signature"></span>connectionConfig<span class="type-signature"> :Object</span></h4>
 
 
 
@@ -286,7 +354,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line116">line 116</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line130">line 130</a>
     </li></ul></dd>
     
 
@@ -358,7 +426,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line140">line 140</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line154">line 154</a>
     </li></ul></dd>
     
 
@@ -430,7 +498,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line152">line 152</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -503,7 +571,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line180">line 180</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -584,7 +652,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line122">line 122</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line136">line 136</a>
     </li></ul></dd>
     
 
@@ -602,13 +670,13 @@ handling the response
 
         
             
-<h4 class="name" id="history"><span class="type-signature"></span>history<span class="type-signature"> :Array.&lt;String></span></h4>
+<h4 class="name" id="hideUndefined"><span class="type-signature"></span>hideUndefined<span class="type-signature"> :Boolean</span></h4>
 
 
 
 
 <div class="description">
-    Array of visible execution requests
+    Flag to hide undefined results
 </div>
 
 
@@ -617,7 +685,7 @@ handling the response
     <ul>
         <li>
             
-<span class="param-type">Array.&lt;String></span>
+<span class="param-type">Boolean</span>
 
 
         </li>
@@ -656,7 +724,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line158">line 158</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line160">line 160</a>
     </li></ul></dd>
     
 
@@ -728,7 +796,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line128">line 128</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line142">line 142</a>
     </li></ul></dd>
     
 
@@ -800,7 +868,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line164">line 164</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line178">line 178</a>
     </li></ul></dd>
     
 
@@ -872,7 +940,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line170">line 170</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line184">line 184</a>
     </li></ul></dd>
     
 
@@ -944,7 +1012,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line146">line 146</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line166">line 166</a>
     </li></ul></dd>
     
 
@@ -1016,7 +1084,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line134">line 134</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line148">line 148</a>
     </li></ul></dd>
     
 
@@ -1156,7 +1224,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line320">line 320</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line334">line 334</a>
     </li></ul></dd>
     
 
@@ -1300,7 +1368,7 @@ handling the response
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line356">line 356</a>
+        <a href="kernel.js.html">kernel.js</a>, <a href="kernel.js.html#line370">line 370</a>
     </li></ul></dd>
     
 
@@ -1348,7 +1416,7 @@ handling the response
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Sun Jun 21 2015 16:09:27 GMT+0100 (BST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Sat Jul 25 2015 21:57:13 GMT+0100 (BST)
 </footer>
 
 <script> prettyPrint(); </script>

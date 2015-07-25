@@ -217,7 +217,6 @@ function setupContext(context, tests) {
     var args = [
         context.kernelPath,
         "--protocol=" + context.protocolVersion,
-        context.rootPath,
         context.connectionFilePath,
     ];
     if (DEBUG) args.push("--debug");

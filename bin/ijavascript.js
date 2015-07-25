@@ -54,6 +54,7 @@ var usage = (
     "\n" +
     "    --ijs-debug                   enable debug log level\n" +
     "    --ijs-help                    show this help\n" +
+    "    --ijs-hide-undefined          do not show undefined results\n" +
     "    --ijs-install=[local|global]  install IJavascript kernel\n" +
     "    --ijs-install-kernel          same as --ijs-install=local\n" +
     "                                  (for backwards-compatibility)\n" +
@@ -195,6 +196,9 @@ function parseCommandArgs(context) {
         } else if (e === "--ijs-help") {
             console.log(usage);
             process.exit(0);
+
+        } else if (e === "--ijs-hide-undefined") {
+            context.args.kernel.push("--hide-undefined");
 
         } else if (e.lastIndexOf("--ijs-install=", 0) === 0) {
             context.flag.install = e.slice(14);

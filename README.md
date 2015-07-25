@@ -78,11 +78,10 @@ requests, submission of tutorials...
 
 # TO DO
 
-- Add tutorial to demonstrate animated graphs and javascript injection
-- Update installation notes for Windows
 - Use module:jmp~Socket
-- Add tests (and move some of the tests to packages `jmp` and `nel`)
-- Implement `$$text$$`
+- Add more tests
 - Update tutorial on globals to discuss the use of `var`
+- Implement `$$text$$`
+- Add tutorial to demonstrate animated graphs and javascript injection
 - Complete the implementation of IPython's messaging protocol v4.1
 - Complete the implementation of IPython's messaging protocol v5.0

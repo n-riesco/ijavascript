@@ -1,6 +1,6 @@
 {
     "name": "ijavascript",
-    "version": "5.0.4",
+    "version": "5.0.5",
     "description": "IJavascript is a javascript kernel for IPython's graphical notebook",
     "keywords": [
         "javascript",

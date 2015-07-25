@@ -50,6 +50,8 @@ var uuid = require("node-uuid");
 var jmp = require("jmp");
 var zmq = jmp.zmq;
 
+var TIMEOUT = 1500; // ms
+
 /**
  * @typedef Context
  *
@@ -278,7 +280,7 @@ function testHeartBeat(context, tests) {
         );
 
         testNext(context, tests);
-    }, 1000);
+    }, TIMEOUT);
 }
 
 /**

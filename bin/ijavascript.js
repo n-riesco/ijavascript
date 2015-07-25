@@ -279,7 +279,8 @@ function spawnIPython(context) {
     });
 
     // Relay SIGINT onto ipython
-    process.on("SIGINT", function() {
+    var signal = "SIGINT";
+    process.on(signal, function() {
         ipython.emit(signal);
     });
 }

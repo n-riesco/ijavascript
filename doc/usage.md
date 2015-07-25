@@ -14,11 +14,17 @@ Dashboard](../images/screenshot-dashboard-home.png)
 
 ## Register IJavascript with the dashboard
 
-Those users running multiple kernels may register IJavascript without opening
-the dashboard by running:
+The IJavascript kernel can be registered with IPython v3 without opening the
+dashboard. To register the kernel for all users, run:
 
 ```sh
-ijs --ijs-install-kernel
+ijs --ijs-install=global
+```
+
+and for the current user only:
+
+```sh
+ijs --ijs-install=local
 ```
 
 ## Set the dashboard home folder

@@ -52,10 +52,12 @@ var usage = (
     "\n" +
     "The recognised options are:\n" +
     "\n" +
-    "    --ijs-debug             enable debug log level\n" +
-    "    --ijs-help              show this help\n" +
-    "    --ijs-install-kernel    install IJavascript kernel and exit\n" +
-    "    --ijs-working-dir=path  set working directory for Javascript sessions\n" +
+    "    --ijs-debug                   enable debug log level\n" +
+    "    --ijs-help                    show this help\n" +
+    "    --ijs-install=[local|global]  install IJavascript kernel\n" +
+    "    --ijs-install-kernel          same as --ijs-install=local\n" +
+    "                                  (for backwards-compatibility)\n" +
+    "    --ijs-working-dir=path  set Javascript session working directory\n" +
     "                            (default = current working directory)\n" +
     "    --version               show IJavascript version\n" +
     "\n" +
@@ -66,133 +68,216 @@ var usage = (
     "for a full list.\n"
 );
 
-var config = {
-    nodePath: process.argv[0],
-    ijsPath: fs.realpathSync(process.argv[1]),
-};
-config.rootPath = path.dirname(path.dirname(config.ijsPath));
-config.npmPackage = JSON.parse(
-    fs.readFileSync(path.join(config.rootPath, "package.json"))
-);
-config.kernelPath = path.join(config.rootPath, "lib", "kernel.js");
-config.kernelArgs = [config.nodePath, config.kernelPath];
-config.ipythonArgs = ["notebook"];
-config.runIPython = true;
+/**
+ * @typedef Context
+ *
+ * @property            context
+ * @property {Object}   context.packageJSON   Contents of npm package.json
+ * @property            context.args
+ * @property {String[]} context.args.kernel   Command arguments to run kernel
+ * @property {String[]} context.args.ipython  Command arguments to run IPython
+ * @property            context.flag
+ * @property {Boolean}  context.flag.debug         --ijs-debug
+ * @property {String}   [context.flag.install]     --ijs-install=[local|global]
+ * @property {String}   [context.flag.cwd]         --ijs-working-dir=path
+ * @property            context.path
+ * @property {String}   context.path.node     Path to Node.js shell
+ * @property {String}   context.path.root     Path to IJavascript root folder
+ * @property {String}   context.path.kernel   Path to IJavascript kernel
+ * @property {String}   context.path.specDir  Path to kernel spec folder
+ * @property {String}   context.path.specFile Path to kernel spec file
+ * @property            context.version
+ * @property {String}   context.version.ijs      IJavascript version
+ * @property {String}   context.version.ipython  IPython version
+ * @property {String}   context.version.protocol Jupyter protocol version
+ */
 
-// Parse command arguments
-process.argv.slice(2).forEach(function(e) {
-    if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
-        console.warn(util.format("Warning: Flag '%s' skipped", e));
-    } else if (e === "--ijs-debug") {
-        DEBUG = true;
-        config.kernelArgs.push("--debug");
-    } else if (e === "--ijs-help") {
-        console.log(usage);
-        process.exit(0);
-    } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
-        config.cwd = fs.realpathSync(e.slice(18));
-    } else if (e === "--ijs-install-kernel") {
-        config.runIPython = false;
-    } else if (e === "--version") {
-        console.log(config.npmPackage.version);
-        process.exit(0);
-    } else if (e.lastIndexOf("--ijs-", 0) === 0) {
-        console.error(util.format("Error: Unrecognised flag '%s'\n", e));
-        console.error(usage);
-        process.exit(1);
-    } else {
-        config.ipythonArgs.push(e);
-    }
-});
+/**
+ * Script context
+ * @type Context
+ */
+var context = initContext();
 
-config.cwd = config.cwd || process.cwd();
-
-config.kernelArgs.push(config.cwd);
-config.kernelArgs.push("{connection_file}");
+parseCommandArgs(context);
 
 // Determine IPython version and start the IPython notebook accordingly
-exec("ipython --version && ipython locate", function(error, stdout, stderr) {
-    var lines = stdout.toString().split(os.EOL, 2);
-
-    config.ipythonVersion = lines[0].split(".").map(function(e) {
-        return parseInt(e);
-    });
-
-    if (stderr || lines.length != 2 || isNaN(config.ipythonVersion[0])) {
-        console.error("Error running `ipython --version && ipython locate`");
-        if (stderr) console.error(stderr);
-        if (DEBUG) console.log("CONFIG:", config);
+exec("ipython --version", function(error, stdout, stderr) {
+    if (error) {
+        console.error("Error running `ipython --version`");
+        console.error(error.toString());
+        if (stderr) console.error(stderr.toString());
+        if (DEBUG) console.log("CONTEXT:", context);
         process.exit(1);
     }
 
-    config.ipythonConfigDir = lines[1];
-    config.ipythonKernelsDir = path.join(config.ipythonConfigDir, "kernels");
-    config.ijsKernelSpecDir = path.join(
-        config.ipythonKernelsDir, "javascript"
-    );
-    config.ijsKernelSpecFile = path.join(
-        config.ijsKernelSpecDir, "kernel.json"
-    );
+    context.version.ipython = stdout.toString().trim();
 
-    if (config.ipythonVersion[0] < 3) {
-        config.kernelArgs.push("--protocol=4.1");
-
-        // Set IPython arguments to use the IJavascript kernel
-        config.ipythonArgs.push(util.format(
-            "--KernelManager.kernel_cmd=['%s']",
-            config.kernelArgs.join("', '")
-        ));
-    } else {
-        config.kernelArgs.push("--protocol=5.0");
-
-        // Create a spec for the IJavascript kernel
-        try {
-            fs.mkdirSync(config.ipythonKernelsDir);
-        } catch (e) {
-            if (e.code != 'EEXIST') {
-                throw e;
-            }
-        }
-
-        try {
-            fs.mkdirSync(config.ijsKernelSpecDir);
-        } catch (e) {
-            if (e.code != 'EEXIST') {
-                throw e;
-            }
-        }
-
-        var ijsSpec = {
-            argv: config.kernelArgs,
-            display_name: "Javascript (Node.js)",
-            language: "javascript",
-        };
-        fs.writeFileSync(config.ijsKernelSpecFile, JSON.stringify(ijsSpec));
-
-        logos = [
-            "logo-32x32.png",
-            "logo-64x64.png",
-        ];
-        logos.forEach(function(logo) {
-            fs.writeFileSync(
-                path.join(config.ijsKernelSpecDir, logo),
-                fs.readFileSync(path.join(config.rootPath, "images", logo))
-            );
-        });
+    var major = parseInt(context.version.ipython.split(".")[0]);
+    if (isNaN(major)) {
+        console.error(
+            "Error parsing IPython version:",
+            context.version.ipython
+        );
+        if (DEBUG) console.log("CONTEXT:", context);
+        process.exit(1);
     }
 
-    if (DEBUG) console.log("CONFIG:", config);
+    if (major < 3) {
+        if (context.flag.install) {
+            console.error(util.format(
+                "Error: IPython v%s cannot install kernel specs",
+                context.version.ipython
+            ));
+            if (DEBUG) console.log("CONTEXT:", context);
+            process.exit(1);
+        }
 
-    if (config.runIPython) {
-        // Start the IPython notebook with the default profile
-        var ipython = spawn("ipython", config.ipythonArgs, {
-            stdio: "inherit"
-        });
+        context.args.kernel.push(
+            "--protocol=" + (context.version.protocol || "4.1")
+        );
+        context.args.ipython.push(util.format(
+            "--KernelManager.kernel_cmd=['%s']",
+            context.args.kernel.join("', '")
+        ));
 
-        // Relay SIGINT onto ipython
-        var signal = "SIGINT";
-        process.on(signal, function() {
-            ipython.emit(signal);
-        });
+        spawnIPython(context);
+
+    } else {
+        context.args.kernel.push(
+            "--protocol=" + (context.version.protocol || "5.0")
+        );
+
+        registerSpecAndSpawnIPython(context);
     }
 });
+
+function initContext() {
+    var context = {
+        path: {
+            node: process.argv[0],
+            root: path.dirname(path.dirname(fs.realpathSync(process.argv[1]))),
+        },
+    };
+
+    context.path.kernel = path.join(context.path.root, "lib", "kernel.js");
+    context.path.specDir = path.join(context.path.root, "spec", "javascript");
+    context.path.specFile = path.join(context.path.specDir, "kernel.json");
+
+    context.packageJSON = JSON.parse(
+        fs.readFileSync(path.join(context.path.root, "package.json"))
+    );
+
+    context.version = {
+        ijs: context.packageJSON.version,
+    };
+
+    return context;
+}
+
+function parseCommandArgs(context) {
+    context.args = {
+        kernel: [
+            context.path.node,
+            context.path.kernel,
+        ],
+        ipython: [
+            "ipython",
+            "notebook",
+        ],
+    };
+
+    context.flag = {};
+    process.argv.slice(2).forEach(function(e) {
+        if (e === "--ijs-debug") {
+            context.flag.debug = DEBUG = true;
+            context.args.kernel.push("--debug");
+
+        } else if (e === "--ijs-help") {
+            console.log(usage);
+            process.exit(0);
+
+        } else if (e.lastIndexOf("--ijs-install=", 0) === 0) {
+            context.flag.install = e.slice(14);
+            if (context.flag.install !== "local" &&
+                context.flag.install !== "global") {
+                console.error(
+                    util.format("Error: Unknown flag option '%s'\n", e)
+                );
+                console.error(usage);
+                process.exit(1);
+            }
+
+        } else if (e === "--ijs-install-kernel") {
+            context.flag.install = "local";
+
+        } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
+            context.flag.cwd = fs.realpathSync(e.slice(18));
+
+        } else if (e.lastIndexOf("--ijs-", 0) === 0) {
+            console.error(util.format("Error: Unknown flag '%s'\n", e));
+            console.error(usage);
+            process.exit(1);
+
+        } else if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
+            console.warn(util.format("Warning: Flag '%s' skipped", e));
+
+        } else if (e === "--version") {
+            console.log(context.packageJSON.version);
+            process.exit(0);
+
+        } else {
+            context.args.ipython.push(e);
+        }
+    });
+
+    context.args.kernel.push(context.flag.cwd || process.cwd());
+    context.args.kernel.push("{connection_file}");
+}
+
+function registerSpecAndSpawnIPython(context) {
+    // Create a spec file for the IJavascript kernel
+    var spec = {
+        argv: context.args.kernel,
+        display_name: "Javascript (Node.js)",
+        language: "javascript",
+    };
+    fs.writeFileSync(context.path.specFile, JSON.stringify(spec));
+
+    // Register spec folder
+    var cmd = "ipython kernelspec install --replace " + context.path.specDir;
+    if (context.flag.install !== "global") {
+        cmd += "  --user";
+    }
+    exec(cmd, function(error, stdout, stderr) {
+        if (error) {
+            console.error(util.format(
+                "Error running `%s`", cmd
+            ));
+            console.error(error.toString());
+            if (stderr) console.error(stderr.toString());
+            if (DEBUG) console.log("CONTEXT:", context);
+            process.exit(1);
+        }
+
+        spawnIPython(context);
+    });
+}
+
+function spawnIPython(context) {
+    if (DEBUG) console.log("CONTEXT:", context);
+
+    if (context.flag.install) {
+        return;
+    }
+
+    var cmd = context.args.ipython[0];
+    var args = context.args.ipython.slice(1);
+    var ipython = spawn(cmd, args, {
+        stdio: "inherit"
+    });
+
+    // Relay SIGINT onto ipython
+    process.on("SIGINT", function() {
+        ipython.emit(signal);
+    });
+}

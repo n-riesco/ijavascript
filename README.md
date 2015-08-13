@@ -80,6 +80,7 @@ requests, submission of tutorials...
 
 - Use module:jmp~Socket
 - Add more tests
+- Use Mocha test framework
 - Update tutorial on globals to discuss the use of `var`
 - Implement `$$text$$`
 - Add tutorial to demonstrate animated graphs and javascript injection

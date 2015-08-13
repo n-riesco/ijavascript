@@ -51,11 +51,27 @@ var jmp = require("jmp");
 var zmq = jmp.zmq;
 
 var TIMEOUT = 1500; // ms
+function onTimeout() {
+    throw new Error("Timeout error");
+}
+
+/**
+ * @callback Task
+ * @param {Context} context
+ * @description Run a task using context and after completion invoke next task
+ */
 
 /**
  * @typedef Context
  *
  * @property          context
+ *
+ * @property {Task[]} context.tests          List of tests
+ * @property {Task[]} context.createContext  Tasks to create context resources
+ * @property {Task[]} context.destroyContext Tasks to release context resources
+ *
+ * @property {Error}  context.lastUncaughtException Last uncaught exception
+ *
  * @property {String} context.ipythonVersion
  * @property {String} context.protocolVersion Jupyter protocol version
  *
@@ -92,48 +108,80 @@ var TIMEOUT = 1500; // ms
  * @property {Integer} context.hbCount HeartBeat counter
  */
 
-testNext({}, [
-    getProtocolVersion,
-    setupContext,
-    testHeartBeat,
-    testCommunication,
-    testHeartBeat,
-    destroyContext,
-]);
+var context = {
+    createContext: [
+        getProtocolVersion,
+        setupContext,
+    ],
+    tests: [
+        testHeartBeat,
+        testKernelInfoRequest,
+        testHeartBeat,
+    ],
+    destroyContext: [
+        destroyContext,
+    ],
+};
+
+startRun(context);
 
 /**
- * @callback Test
- * @param {Context}       context
- * @param {(Test|Test[])} [tests]
- * @description Run a test using context and call the next test in tests
+ * @type Task
+ * @description Start running tasks
  */
+function startRun(context) {
+    process.on('uncaughtException', onUncaughtException);
 
-/**
- * @type Test
- * @description This function is called by each test to ensure all tests are run
- */
-function testNext(context, tests) {
-    if (!tests) {
-        return;
-    }
+    nextTask(context);
 
-    if (!Array.isArray(tests)) {
-        tests(context);
-        return;
-    }
+    function onUncaughtException(err) {
+        if (context.lastUncaughtException) {
+            console.error(context.lastUncaughtException.message);
+            console.error(context.lastUncaughtException.stack);
+        }
 
-    var test = tests.shift();
-    if (test) {
-        test(context, tests);
+        context.lastUncaughtException = err;
+
+        // Exit if no tasks are left in context.destroyContext
+        if (!context.destroyContext || context.destroyContext.length <= 0) {
+            process.removeListener("uncaughtException", onUncaughtException);
+            throw context.lastUncaughtException;
+        }
+
+        delete context.createContext;
+        delete context.tests;
+        nextTask(context);
     }
 }
 
 /**
- * @type Test
+ * @type Task
+ * @description This function is called by each task to invoke next task
+ */
+function nextTask(context) {
+    var task;
+
+    if (context.createContext && context.createContext.length > 0) {
+        task = context.createContext.shift();
+    } else if (context.tests && context.tests.length > 0) {
+        task = context.tests.shift();
+    } else if (context.destroyContext && context.destroyContext.length > 0) {
+        task = context.destroyContext.shift();
+    } else if (context.lastUncaughtException) {
+        throw context.lastUncaughtException;
+    } else {
+        return;
+    }
+
+    task(context);
+}
+
+/**
+ * @type Task
  * @description Get Jupyter procotol version
  *
  */
-function getProtocolVersion(context, tests) {
+function getProtocolVersion(context) {
     console.log("Getting IPython version");
 
     exec("ipython --version", function(error, stdout, stderr) {
@@ -149,16 +197,16 @@ function getProtocolVersion(context, tests) {
 
         context.protocolVersion = major < 3 ? "4.1" : "5.0";
 
-        testNext(context, tests);
+        nextTask(context);
     });
 }
 
 /**
- * @type Test
+ * @type Task
  * @description Setup sockets and kernel spec file
  *
  */
-function setupContext(context, tests) {
+function setupContext(context) {
     console.log("Setting up context");
 
     // Set file paths
@@ -189,7 +237,7 @@ function setupContext(context, tests) {
     for (var i = 0, attempts = 0; i < socketNames.length; attempts++) {
         var socketName = socketNames[i];
         var socketType = socketTypes[i];
-        var socket = (socketName === "hb") ?
+        var socket = (true || socketName === "hb") ?
             new zmq.Socket(socketType) :
             new jmp.Socket(socketType, scheme, key);
         var port = Math.floor(1024 + Math.random() * (65536 - 1024));
@@ -227,14 +275,14 @@ function setupContext(context, tests) {
     };
     context.kernelProcess = spawn(cmd, args, config);
 
-    testNext(context, tests);
+    nextTask(context);
 }
 
 /**
- * @type Test
+ * @type Task
  * @description Destroy context
  */
-function destroyContext(context, tests) {
+function destroyContext(context) {
     console.log("Destroy context");
 
     // Close sockets
@@ -250,14 +298,14 @@ function destroyContext(context, tests) {
     // Delete spec file
     fs.unlinkSync(context.connectionFilePath);
 
-    testNext(context, tests);
+    nextTask(context);
 }
 
 /**
- * @type Test
+ * @type Task
  * @description Test kernel heart beats
  */
-function testHeartBeat(context, tests) {
+function testHeartBeat(context) {
     console.log("Testing kernel heart beats");
 
     context.hbCount = 0;
@@ -279,16 +327,156 @@ function testHeartBeat(context, tests) {
             "testHeartBeats: " + context.hbCount + " missed heart beats"
         );
 
-        testNext(context, tests);
+        nextTask(context);
     }, TIMEOUT);
 }
 
 /**
- * @type Test
- * @description Tests kernel communication
+ * @type Task
+ * @description Tests kernel_info_request
  */
-function testCommunication(context, tests) {
-    console.log("Testing communication with kernel");
+function testKernelInfoRequest(context) {
+    console.log("Testing kernel_info_request");
 
-    testNext(context, tests);
+    // Create request
+    var username = "user";
+    var session = uuid.v4();
+    var version = context.protocolVersion;
+
+    var msg_id = uuid.v4();
+    var msg_type = "kernel_info_request";
+
+    var request = new jmp.Message();
+    request.idents = [];
+    request.header = {
+        "msg_id": msg_id,
+        "username": username,
+        "session": session,
+        "msg_type": msg_type,
+        "version": version,
+    };
+    request.parent_header = {};
+    request.metadata = {};
+    request.content = {};
+
+    // Send request
+    context.shellSocket.send(encode(
+        request,
+        context.connectionFile.signature_scheme.slice(5),
+        context.connectionFile.key
+    ));
+
+    // Set timeout
+    var timeout = setTimeout(onTimeout, TIMEOUT);
+
+    // Listen to response
+    context.shellSocket.on("message", onResponse);
+
+    function onResponse() {
+        var response = new jmp.Message(arguments);
+
+        assert(response.signatureOK, "Error: invalid signature");
+
+        assert.strictEqual(
+            response.header.msg_type,
+            "kernel_info_reply",
+            "Error in msg_type: " + response.msg_type
+        );
+
+        assert.deepEqual(
+            response.metadata, {},
+            "Error: missing metadata"
+        );
+
+        var major = parseInt(context.ipythonVersion.split(".", 1)[0]);
+        if (major < 3) {
+            var protocolVersion = context.protocolVersion.split(".").map(
+                function(v) {
+                    return parseInt(v);
+                }
+            );
+            assert.deepEqual(
+                response.content.protocol_version,
+                protocolVersion,
+                "Error in content.protocol_version: " +
+                util.inspect(response.content)
+            );
+
+            assert.strictEqual(
+                response.content.language,
+                "javascript",
+                "Error in content.language: " + util.inspect(response.content)
+            );
+
+            var nodeVersion = process.versions.node.split('.').map(function(v) {
+                return parseInt(v, 10);
+            });
+
+            assert.deepEqual(
+                response.content.language_version,
+                nodeVersion,
+                "Error in content.language_version: " +
+                util.inspect(response.content)
+            );
+        } else {
+            assert.strictEqual(
+                response.content.protocol_version,
+                context.protocolVersion,
+                "Error in content.protocol_version: " +
+                util.inspect(response.content)
+            );
+
+            assert.strictEqual(
+                response.content.implementation,
+                "ijavascript",
+                "Error in content.implementation: " +
+                util.inspect(response.content)
+            );
+
+            assert.strictEqual(
+                response.content.implementation_version,
+                "5.0.0",
+                "Error in content.implementation_version: " +
+                util.inspect(response.content)
+            );
+        }
+
+        // Clear listeners
+        context.shellSocket.removeListener("message", onResponse);
+
+        // Clear timeout
+        clearTimeout(timeout);
+
+        // Call next test
+        nextTask(context);
+    }
+
+    function encode(message, scheme, key) {
+        var idents = message.idents;
+        var header = JSON.stringify(message.header);
+        var parent_header = JSON.stringify(message.parent_header);
+        var metadata = JSON.stringify(message.metadata);
+        var content = JSON.stringify(message.content);
+
+        var signature = '';
+        if (key) {
+            var hmac = crypto.createHmac(scheme, key);
+            hmac.update(header);
+            hmac.update(parent_header);
+            hmac.update(metadata);
+            hmac.update(content);
+            signature = hmac.digest("hex");
+        }
+
+        var response = idents.concat([
+            "<IDS|MSG>", // delimiter
+            signature,
+            header,
+            parent_header,
+            metadata,
+            content,
+        ]);
+
+        return response;
+    }
 }

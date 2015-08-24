@@ -50,144 +50,307 @@ var uuid = require("node-uuid");
 var jmp = require("jmp");
 var zmq = jmp.zmq;
 
-var TIMEOUT = 1500; // ms
+var TIMEOUT = 2500; // ms
 function onTimeout() {
     throw new Error("Timeout error");
 }
 
 /**
- * @callback Task
- * @param {Context} context
+ * @callback    Task
+ * @param       {TestFixture} context
  * @description Run a task using context and after completion invoke next task
  */
 
 /**
- * @typedef Context
- *
- * @property          context
- *
- * @property {Task[]} context.tests          List of tests
- * @property {Task[]} context.createContext  Tasks to create context resources
- * @property {Task[]} context.destroyContext Tasks to release context resources
- *
- * @property {Error}  context.lastUncaughtException Last uncaught exception
- *
- * @property {String} context.ipythonVersion
- * @property {String} context.protocolVersion Jupyter protocol version
- *
- * @property {String} context.nodePath           Path to node
- * @property {String} context.rootPath           Path to IJavascript folder
- * @property {String} context.testsPath          Path to tests folder
- * @property {String} context.connectionFilePath Path to kernel connection file
- *
- * @property          context.connectionFile Kernel connection file
- * @property {String} context.connectionFile.transport     Transport protocol
- *                                                         (e.g. "tcp")
- * @property {String} context.connectionFile.ip            IP address
- *                                                         (e.g. "127.0.0.1")
- * @property {String} context.connectionFile.signature_scheme
- *                                                         Signature scheme
- *                                                         (e.g. "hmac-sha256")
- * @property {String} context.connectionFile.key           Hashing key
- *                                                         (e.g. uuid.v4())
- * @property {Integer} context.connectionFile.hb_port      HeartBeat port
- * @property {Integer} context.connectionFile.shell_port   Shell port
- * @property {Integer} context.connectionFile.stdin_port   Stdin port
- * @property {Integer} context.connectionFile.iopub_port   IOPub port
- * @property {Integer} context.connectionFile.control_port Control port
- *
- * @property {module:jmp~Socket} context.controlSocket Control socket
- * @property {module:jmp~Socket} context.hbSocket      HearBeat socket
- * @property {module:jmp~Socket} context.iopubSocket   IOPub socket
- * @property {module:jmp~Socket} context.shellSocket   Shell socket
- * @property {module:jmp~Socket} context.stdinSocket   Stdin socket
- *
- * @property {module:child_process~ChildProcess} context.kernelProcess
- *                                                     Kernel process
- *
- * @property {Integer} context.hbCount HeartBeat counter
+ * @class     TestFixture
+ * @classdesc Context for running a collection of tests
+ * @param {Task[]} beforeFixture Tasks to setup the context
+ * @param {Task[]} tests         Tasks to run the tests
+ * @param {Task[]} afterFixture  Tasks to release the context
  */
+function TestFixture(beforeFixture, tests, afterFixture) {
+    /**
+     * @member      {Task[]} beforeFixture
+     * @description Tasks to setup the context
+     */
+    this.beforeFixture = beforeFixture;
 
-var context = {
-    createContext: [
-        getProtocolVersion,
-        setupContext,
-    ],
-    tests: [
-        testHeartBeat,
-        testKernelInfoRequest,
-        testHeartBeat,
-    ],
-    destroyContext: [
-        destroyContext,
-    ],
-};
+    /**
+     * @member      {Task[]} tests
+     * @description Tasks to run the tests
+     */
+    this.tests = tests;
 
-startRun(context);
+    /**
+     * @member      {Task[]} afterFixture
+     * @description Tasks to release the context
+     */
+    this.afterFixture = afterFixture;
 
-/**
- * @type Task
- * @description Start running tasks
- */
-function startRun(context) {
-    process.on('uncaughtException', onUncaughtException);
+    /**
+     * @member      {Error}  lastUncaughtException
+     * @description Last uncaught exception
+     */
+    this.lastUncaughtException = null;
 
-    nextTask(context);
-
-    function onUncaughtException(err) {
-        if (context.lastUncaughtException) {
-            console.error(context.lastUncaughtException.message);
-            console.error(context.lastUncaughtException.stack);
-        }
-
-        context.lastUncaughtException = err;
-
-        // Exit if no tasks are left in context.destroyContext
-        if (!context.destroyContext || context.destroyContext.length <= 0) {
-            process.removeListener("uncaughtException", onUncaughtException);
-            throw context.lastUncaughtException;
-        }
-
-        delete context.createContext;
-        delete context.tests;
-        nextTask(context);
-    }
+    /**
+     * @member      {MessagingTestEngine}  mte
+     * @description Messaging test engine
+     */
+    this.mte = new MessagingTestEngine();
 }
 
 /**
- * @type Task
- * @description This function is called by each task to invoke next task
+ * @method      start
+ * @description Start test fixture
  */
-function nextTask(context) {
+TestFixture.prototype.start = function() {
+    // Capture uncaught exceptions to ensure the test fixture doesn't exit
+    // before running all the tasks in `this.afterFixture`.
+    process.on('uncaughtException', onUncaughtException.bind(this));
+
+    this.nextTask();
+
+    function onUncaughtException(err) {
+        if (this.lastUncaughtException) {
+            console.error(this.lastUncaughtException.message);
+            console.error(this.lastUncaughtException.stack);
+        }
+
+        this.lastUncaughtException = err;
+
+        // Exit if no tasks are left in context.destroyContext
+        if (!this.afterFixture || this.afterFixture.length <= 0) {
+            process.removeListener("uncaughtException", arguments.callee);
+            throw this.lastUncaughtException;
+        }
+
+        this.finish();
+    }
+};
+/**
+ * @method      finish
+ * @description Finish test fixture
+ */
+TestFixture.prototype.finish = function() {
+    this.beforeFixture = null;
+    this.tests = null;
+
+    this.nextTask();
+};
+
+/**
+ * @method      nextTask
+ * @description Run next task
+ */
+TestFixture.prototype.nextTask = function() {
     var task;
 
-    if (context.createContext && context.createContext.length > 0) {
-        task = context.createContext.shift();
-    } else if (context.tests && context.tests.length > 0) {
-        task = context.tests.shift();
-    } else if (context.destroyContext && context.destroyContext.length > 0) {
-        task = context.destroyContext.shift();
-    } else if (context.lastUncaughtException) {
-        throw context.lastUncaughtException;
+    if (this.beforeFixture && this.beforeFixture.length > 0) {
+        task = this.beforeFixture.shift();
+    } else if (this.tests && this.tests.length > 0) {
+        task = this.tests.shift();
+    } else if (this.afterFixture && this.afterFixture.length > 0) {
+        task = this.afterFixture.shift();
+    } else if (this.lastUncaughtException) {
+        throw this.lastUncaughtException;
     } else {
         return;
     }
 
-    task(context);
+    task(this);
+};
+
+/**
+ * @class     MessagingTestEngine
+ * @classdesc Engine to send messaging requests and test responses
+ */
+function MessagingTestEngine() {
+    /**
+     * @member          version
+     * @member {String} version.ipython  IPython version
+     * @member {String} version.protocol IPython/Jupyter protocol version
+     */
+    this.version = {};
+
+    /**
+     * @member          path
+     * @member {String} path.node           Path to node
+     * @member {String} path.root           Path to IJavascript folder
+     * @member {String} path.test           Path to test folder
+     * @member {String} path.connectionFile Path to kernel connection file
+     * @member {String} path.testMessagesFile Path to file with test messages
+     * @member {String} path.kernel         Path to IJavascript kernel
+     */
+    this.path = {};
+
+    /**
+     * @member           connectionFile
+     * @member {String}  connectionFile.transport    Transport protocol
+     *                                               (e.g. "tcp")
+     * @member {String}  connectionFile.ip           IP address
+     *                                               (e.g. "127.0.0.1")
+     * @member {String}  connectionFile.signature_scheme
+     *                                               Signature scheme
+     *                                               (e.g. "hmac-sha256")
+     * @member {String}  connectionFile.key          Hashing key
+     *                                               (e.g. uuid.v4())
+     * @member {Integer} connectionFile.hb_port      HeartBeat port
+     * @member {Integer} connectionFile.shell_port   Shell port
+     * @member {Integer} connectionFile.stdin_port   Stdin port
+     * @member {Integer} connectionFile.iopub_port   IOPub port
+     * @member {Integer} connectionFile.control_port Control port
+     */
+    this.connectionFile = {};
+
+    /**
+     * @member                     socket
+     * @member {module:jmp~Socket} socket.control Control socket
+     * @member {module:jmp~Socket} socket.hb      HearBeat socket
+     * @member {module:jmp~Socket} socket.iopub   IOPub socket
+     * @member {module:jmp~Socket} socket.shell   Shell socket
+     * @member {module:jmp~Socket} socket.stdin   Stdin socket
+     */
+    this.socket = {};
+
+    /**
+     * @member         messageBuffer
+     * @member {Array} messageBuffer.control Control messages
+     * @member {Array} messageBuffer.iopub   IOPub messages
+     * @member {Array} messageBuffer.shell   Shell messages
+     * @member {Array} messageBuffer.stdin   Stdin messages
+     */
+    this.messageBuffer = {
+        control: [],
+        iopub: [],
+        shell: [],
+        stdin: [],
+    };
+
+    /**
+     * @member      {module:child_process~ChildProcess} kernelProcess
+     * @description Kernel process
+     */
+    this.kernelProcess = null;
+
+    /**
+     * @member      {?MessagingTestEngine~MessagingTest} _test
+     * @description Current messaging test (null if none)
+     * @private
+     */
+    this._test = null;
 }
 
 /**
- * @type Task
- * @description Get Jupyter procotol version
- *
+ * @typedef     {Object} MessagingTestEngine~MessagingTest
+ * @description A messaging test (request and response messages and/or tests)
+ * @property    {String}                               description
+ *                                                     Test description
+ * @property    {MessagingTestEngine~RequestMessage}   request
+ *                                                     Request message
+ * @property    {MessagingTestEngine~ResponseTest[]}   responses
+ *                                                     Response tests
+ * @property    {Function}                             callback
+ *                                                     Invoked when tests
+ *                                                     complete
+ * @property    {Integer}                              timeoutID
+ *                                                     Timeout ID
  */
-function getProtocolVersion(context) {
-    console.log("Getting IPython version");
 
-    exec("ipython --version", function(error, stdout, stderr) {
-        context.ipythonVersion = stdout.toString().split(os.EOL, 1)[0];
+/**
+ * @typedef     {Object} MessagingTestEngine~RequestMessage
+ * @description A request message
+ * @property    {MessagingTestEngine~Message} [shell]   Shell-socket request
+ * @property    {MessagingTestEngine~Message} [stdin]   Stdin-socket request
+ * @property    {MessagingTestEngine~Message} [iopub]   IOPub-socket request
+ * @property    {MessagingTestEngine~Message} [control] Control-socket request
+ */
 
-        var major = parseInt(context.ipythonVersion.split(".", 1)[0]);
+/**
+ * @typedef     {Object} MessagingTestEngine~ResponseTest
+ * @description A response test
+ * @property    {MessagingTestEngine~Message|MessagingTestEngine~Test} [shell]
+ *              The shell-socket expected response or a custom test
+ * @property    {MessagingTestEngine~Message|MessagingTestEngine~Test} [stdin]
+ *              The stdin-socket expected response or a custom test
+ * @property    {MessagingTestEngine~Message|MessagingTestEngine~Test} [iopub]
+ *              The IOPub-socket expected response or a custom test
+ * @property    {MessagingTestEngine~Message|MessagingTestEngine~Test} [control]
+ *              The control-socket expected response or a custom test
+ */
+
+/**
+ * @typedef     {Object} MessagingTestEngine~Message
+ * @description IPython/Jupyter message
+ * @property    {Array}   [message.idents]        Identities
+ * @property    {Object}  [message.header]        Header
+ * @property    {Object}  [message.parent_header] Parent header
+ * @property    {Object}  [message.metadata]      Message metadata
+ * @property    {Object}  [message.content]       Message content
+ */
+
+/**
+ * @callback    MessagingTestEngine~Test
+ * @description Custom test
+ * @param       {MessagingTestEngine~Message} observedResponse
+ * @returns     {Boolean} True if observedResponse was reply to request message
+ */
+
+/**
+ * @method      initAsync
+ * @description Initialise the messaging test engine
+ * @param       {Function} callback
+ */
+MessagingTestEngine.prototype.initAsync = function(callback) {
+    this._initPaths();
+    this._initVersionsAsync((function() {
+        this._initSockets();
+        this._initKernel();
+        callback();
+    }).bind(this));
+};
+
+/**
+ * @method      dispose
+ * @description Dispose the messaging test engine
+ * @param       {Function} callback
+ */
+MessagingTestEngine.prototype.dispose = function() {
+    this._disposeKernel();
+    this._disposeSockets();
+};
+
+/**
+ * @method      _initPaths
+ * @description Set up paths
+ * @private
+ */
+MessagingTestEngine.prototype._initPaths = function() {
+    console.log("Setting up paths");
+
+    this.path.node = process.argv[0];
+    this.path.root = path.dirname(path.dirname(
+        fs.realpathSync(process.argv[1])
+    ));
+    this.path.test = path.join(this.path.root, "tests");
+    this.path.connectionFile = path.join(this.path.test, "conn.json");
+    this.path.testMessagesFile = path.join(this.path.test, "messages.json");
+    this.path.kernel = path.join(this.path.root, "lib", "kernel.js");
+};
+
+/**
+ * @method      _initVersionsAsync
+ * @description Get Jupyter/IPython version
+ * @param       {Function} callback
+ * @private
+ */
+MessagingTestEngine.prototype._initVersionsAsync = function(callback) {
+    console.log("Getting Jupyter/IPython version");
+
+    exec("ipython --version", (function(error, stdout, stderr) {
+        this.version.ipython = stdout.toString().split(os.EOL, 1)[0];
+
+        var major = parseInt(this.version.ipython.split(".", 1)[0]);
         if (stderr || isNaN(major)) {
             console.error("Error running `ipython --version`");
             if (stdout) console.out(stdout);
@@ -195,37 +358,27 @@ function getProtocolVersion(context) {
             process.exit(1);
         }
 
-        context.protocolVersion = major < 3 ? "4.1" : "5.0";
+        this.version.protocol = major < 3 ? "4.1" : "5.0";
 
-        nextTask(context);
-    });
-}
+        callback();
+    }).bind(this));
+};
 
 /**
- * @type Task
- * @description Setup sockets and kernel spec file
- *
+ * @method      _initSockets
+ * @description Setup ZMQ sockets and message listeners
+ * @private
  */
-function setupContext(context) {
-    console.log("Setting up context");
+MessagingTestEngine.prototype._initSockets = function() {
+    console.log("Setting up ZMQ sockets");
 
-    // Set file paths
-    context.nodePath = process.argv[0];
-    context.rootPath = path.dirname(path.dirname(
-        fs.realpathSync(process.argv[1])
-    ));
-    context.testsPath = path.join(context.rootPath, "tests");
-    context.connectionFilePath = path.join(context.testsPath, "conn.json");
-    context.kernelPath = path.join(context.rootPath, "lib", "kernel.js");
-
-    // Setup test sockets
     var transport = "tcp";
     var ip = "127.0.0.1";
     var address = transport + "://" + ip + ":";
     var scheme = "sha256";
     var key = crypto.randomBytes(256).toString('base64');
 
-    context.connectionFile = {
+    this.connectionFile = {
         transport: transport,
         ip: ip,
         signature_scheme: "hmac-" + scheme,
@@ -244,8 +397,8 @@ function setupContext(context) {
 
         try {
             socket.connect(address + port);
-            context[socketName + "Socket"] = socket;
-            context.connectionFile[socketName + "_port"] = port;
+            this.connectionFile[socketName + "_port"] = port;
+            this.socket[socketName] = socket;
             i++;
         } catch (e) {
             console.error(e.stack);
@@ -256,49 +409,253 @@ function setupContext(context) {
         }
     }
 
+    this.socket.iopub.subscribe("");
+
+    console.log("Setting up message listeners");
+
+    Object.getOwnPropertyNames(this.messageBuffer).forEach(
+        (function(socketName) {
+            this.socket[socketName].on("message", (function() {
+                var message = new jmp.Message(arguments);
+
+                var msg_type = message.header.msg_type;
+                if (DEBUG) console.log("Received", msg_type, "on", socketName);
+
+                message.parent_header = message.parentHeader;
+                delete message.parentHeader;
+
+                this.messageBuffer[socketName].push(message);
+
+                this._runIfPossible();
+            }).bind(this));
+        }).bind(this)
+    );
+};
+
+/**
+ * @method      _initKernel
+ * @description Setup IJavascript kernel
+ * @private
+ */
+MessagingTestEngine.prototype._initKernel = function() {
+    console.log("Setting up IJavascript kernel");
+
     // Create connection file
     fs.writeFileSync(
-        context.connectionFilePath,
-        JSON.stringify(context.connectionFile)
+        this.path.connectionFile,
+        JSON.stringify(this.connectionFile)
     );
 
     // Spawn kernel
-    var cmd = context.nodePath;
+    var cmd = this.path.node;
     var args = [
-        context.kernelPath,
-        "--protocol=" + context.protocolVersion,
-        context.connectionFilePath,
+        this.path.kernel,
+        "--protocol=" + this.version.protocol,
+        this.path.connectionFile,
     ];
     if (DEBUG) args.push("--debug");
     var config = {
         stdio: "inherit"
     };
-    context.kernelProcess = spawn(cmd, args, config);
+    this.kernelProcess = spawn(cmd, args, config);
+};
 
-    nextTask(context);
+/**
+ * @method      _disposeKernel
+ * @description Dispose IJavascript kernel
+ * @private
+ */
+MessagingTestEngine.prototype._disposeKernel = function() {
+    console.log("Dispose IJavascript kernel");
+
+    // Kill kernel
+    if (this.kernelProcess) {
+        this.kernelProcess.kill("SIGTERM");
+    }
+
+    // Delete connection file
+    try {
+        fs.unlinkSync(this.path.connectionFile);
+    } catch (e) {
+        console.error(e.message);
+    }
+};
+
+/**
+ * @method      _disposeSockets
+ * @description Dispose ZMQ sockets
+ * @private
+ */
+MessagingTestEngine.prototype._disposeSockets = function() {
+    console.log("Dispose ZMQ sockets");
+
+    this.socket.control.close();
+    this.socket.hb.close();
+    this.socket.iopub.close();
+    this.socket.shell.close();
+    this.socket.stdin.close();
+};
+
+/**
+ * @method      run
+ * @description Run a messaging test
+ * @param       {MessagingTestEngine~MessagingTest} test
+ */
+MessagingTestEngine.prototype.run = function(test) {
+    this._test = test;
+
+    console.log("Testing " + this._test.description);
+
+    // clear message buffers
+    var buffer = this.messageBuffer;
+    Object.getOwnPropertyNames(buffer).forEach(
+        function(socketName) {
+            buffer[socketName].length = 0;
+        }
+    );
+
+    // set timeout
+    this._test.timeoutID = setTimeout(onTimeout, TIMEOUT);
+
+    // send request
+    var request = this._test.request;
+    var socketName = Object.getOwnPropertyNames(request)[0];
+    var message = request[socketName];
+
+    request[socketName] = send(
+        message,
+        this.socket[socketName],
+        this.connectionFile.signature_scheme.slice(5),
+        this.connectionFile.key,
+        this.version.protocol
+    );
+};
+
+/**
+ * @method      _runIfPossible
+ * @description Run test if possible
+ * @private
+ */
+MessagingTestEngine.prototype._runIfPossible = function() {
+    // Exit if there are no tests
+    if (!this._test) {
+        return;
+    }
+
+    // Invoke callback if there are no response tests left
+    if (this._test.responses.length === 0) {
+        clearTimeout(this._test.timeoutID);
+
+        var callback = this._test.callback;
+        this._test = null;
+        callback();
+
+        return;
+    }
+
+    // Get next response test
+    var response = this._test.responses[0];
+    var responseSocketName = Object.getOwnPropertyNames(response)[0];
+    var responseTest = response[responseSocketName];
+
+    // Exit if there are no messages to test in the appropriate buffer
+    if (this.messageBuffer[responseSocketName].length === 0) {
+        if (DEBUG) console.log("Waiting for messages on", responseSocketName);
+        //console.trace();
+        return;
+    }
+
+    // Get first observed message and remove it from buffer
+    var observedMessage = this.messageBuffer[responseSocketName].shift();
+    var observed_msg_id = observedMessage.parent_header.msg_id;
+
+    // Get request message
+    var request = this._test.request;
+    var requestSocketName = Object.getOwnPropertyNames(request)[0];
+    var requestMessage = request[requestSocketName];
+    var request_msg_id = requestMessage.header.msg_id;
+
+    // If the observed message ID doesn't match the request, try next message
+    if (observed_msg_id !== request_msg_id) {
+        this._runIfPossible();
+        return;
+    }
+
+    // Run response test
+    var isMatchedResponse;
+
+    if (typeof(responseTest) === "function") {
+        isMatchedResponse = responseTest(observedMessage);
+    } else {
+        var observed_msg_type = observedMessage.header.msg_type;
+        var expected_msg_type = responseTest.header.msg_type;
+
+        isMatchedResponse = (observed_msg_type === expected_msg_type);
+
+        if (isMatchedResponse) {
+            MessagingTestEngine.checkMessage(
+                observedMessage, responseTest, this._test.description
+            );
+        }
+    }
+
+    // If the response was matched, remove response test from queue
+    if (isMatchedResponse) {
+        if (DEBUG) console.log("Passed response test on", responseSocketName);
+        this._test.responses.shift();
+    }
+
+    // Continue testing
+    this._runIfPossible();
+};
+
+/**
+ * @method      checkMessage
+ * @description Run any message tests queued in the buffers
+ * @param       {MessagingTestEngine~Message} observed    Observed message
+ * @param       {MessagingTestEngine~Message} expected    Expected message
+ * @param       {String}                      description Test description
+ * @static
+ */
+MessagingTestEngine.checkMessage = function(observed, expected, description) {
+    if (typeof(expected) !== 'object') {
+        assert.strictEqual(
+            observed,
+            expected,
+            "Failed test " + description +
+            ": Observed = " + observed +
+            ": Expected = " + expected
+        );
+        return;
+    }
+
+    // check recursively only the properties present in expected
+    Object.getOwnPropertyNames(expected).forEach(function(name) {
+        assert(observed.hasOwnProperty(name), description);
+
+        MessagingTestEngine.checkMessage(
+            observed[name], expected[name], description
+        );
+    });
+};
+
+/**
+ * @type Task
+ * @description Initialise the messaging test engine
+ */
+function initMTE(context) {
+    context.mte.initAsync(function() {
+        context.nextTask();
+    });
 }
 
 /**
  * @type Task
- * @description Destroy context
+ * @description Dispose the messaging test engine
  */
-function destroyContext(context) {
-    console.log("Destroy context");
-
-    // Close sockets
-    context.controlSocket.close();
-    context.hbSocket.close();
-    context.iopubSocket.close();
-    context.shellSocket.close();
-    context.stdinSocket.close();
-
-    // Kill kernel
-    context.kernelProcess.kill("SIGTERM");
-
-    // Delete spec file
-    fs.unlinkSync(context.connectionFilePath);
-
-    nextTask(context);
+function disposeMTE(context) {
+    context.mte.dispose();
+    context.nextTask();
 }
 
 /**
@@ -308,27 +665,52 @@ function destroyContext(context) {
 function testHeartBeat(context) {
     console.log("Testing kernel heart beats");
 
-    context.hbCount = 0;
+    var timeout = setTimeout(onTimeout, TIMEOUT);
+
+    var hbCount = 0;
     for (var i = 0; i < 10; i++) {
-        context.hbSocket.send();
-        context.hbCount++;
+        context.mte.socket.hb.send();
+        hbCount++;
     }
+
+    context.mte.socket.hb.on("message", onHeartBeat);
 
     function onHeartBeat() {
-        context.hbCount--;
+        hbCount--;
+
+        if (hbCount === 0) {
+            clearTimeout(timeout);
+            context.mte.socket.hb.removeListener("message", arguments.callee);
+            context.nextTask();
+        }
     }
-    context.hbSocket.on("message", onHeartBeat);
+}
 
-    setTimeout(function() {
-        context.hbSocket.removeListener("message", onHeartBeat);
+/**
+ * @type Task
+ * @description Tests messaging protocol
+ */
+function testMessagingProtocol(context) {
+    console.log("Testing messaging protocol");
 
-        assert.strictEqual(
-            context.hbCount, 0,
-            "testHeartBeats: " + context.hbCount + " missed heart beats"
-        );
+    // Load test cases
+    var testCases = JSON.parse(
+        fs.readFileSync(context.mte.path.testMessagesFile)
+    );
 
-        nextTask(context);
-    }, TIMEOUT);
+    // For each test case, create and queue a task
+    context.tests = testCases.map(function(testCase) {
+        return function(context) {
+            testCase.callback = function() {
+                context.nextTask();
+            };
+
+            context.mte.run(testCase);
+        };
+    }).concat(context.tests);
+
+    // Run next task in the queue
+    context.nextTask();
 }
 
 /**
@@ -336,61 +718,44 @@ function testHeartBeat(context) {
  * @description Tests kernel_info_request
  */
 function testKernelInfoRequest(context) {
-    console.log("Testing kernel_info_request");
-
-    // Create request
-    var username = "user";
-    var session = uuid.v4();
-    var version = context.protocolVersion;
-
-    var msg_id = uuid.v4();
-    var msg_type = "kernel_info_request";
-
-    var request = new jmp.Message();
-    request.idents = [];
-    request.header = {
-        "msg_id": msg_id,
-        "username": username,
-        "session": session,
-        "msg_type": msg_type,
-        "version": version,
+    var description = "kernel_info_request (more thorough test)";
+    var request = {
+        shell: {
+            header: {
+                msg_type: "kernel_info_request",
+                version: context.mte.version.protocol,
+            }
+        }
     };
-    request.parent_header = {};
-    request.metadata = {};
-    request.content = {};
+    var responses = [{
+        shell: messagingTest
+    }];
+    var callback = function() {
+        context.nextTask();
+    };
 
-    // Send request
-    context.shellSocket.send(encode(
-        request,
-        context.connectionFile.signature_scheme.slice(5),
-        context.connectionFile.key
-    ));
+    context.mte.run({
+        description: description,
+        request: request,
+        responses: responses,
+        callback: callback,
+    });
 
-    // Set timeout
-    var timeout = setTimeout(onTimeout, TIMEOUT);
-
-    // Listen to response
-    context.shellSocket.on("message", onResponse);
-
-    function onResponse() {
-        var response = new jmp.Message(arguments);
+    function messagingTest(response) {
+        if (response.header.msg_type !== "kernel_info_reply") {
+            return false;
+        }
 
         assert(response.signatureOK, "Error: invalid signature");
 
-        assert.strictEqual(
-            response.header.msg_type,
-            "kernel_info_reply",
-            "Error in msg_type: " + response.msg_type
-        );
-
         assert.deepEqual(
             response.metadata, {},
-            "Error: missing metadata"
+            "Error: no metadata"
         );
 
-        var major = parseInt(context.ipythonVersion.split(".", 1)[0]);
+        var major = parseInt(context.mte.version.ipython.split(".", 1)[0]);
         if (major < 3) {
-            var protocolVersion = context.protocolVersion.split(".").map(
+            var protocolVersion = context.mte.version.protocol.split(".").map(
                 function(v) {
                     return parseInt(v);
                 }
@@ -421,7 +786,7 @@ function testKernelInfoRequest(context) {
         } else {
             assert.strictEqual(
                 response.content.protocol_version,
-                context.protocolVersion,
+                context.mte.version.protocol,
                 "Error in content.protocol_version: " +
                 util.inspect(response.content)
             );
@@ -441,42 +806,138 @@ function testKernelInfoRequest(context) {
             );
         }
 
-        // Clear listeners
-        context.shellSocket.removeListener("message", onResponse);
-
-        // Clear timeout
-        clearTimeout(timeout);
-
-        // Call next test
-        nextTask(context);
-    }
-
-    function encode(message, scheme, key) {
-        var idents = message.idents;
-        var header = JSON.stringify(message.header);
-        var parent_header = JSON.stringify(message.parent_header);
-        var metadata = JSON.stringify(message.metadata);
-        var content = JSON.stringify(message.content);
-
-        var signature = '';
-        if (key) {
-            var hmac = crypto.createHmac(scheme, key);
-            hmac.update(header);
-            hmac.update(parent_header);
-            hmac.update(metadata);
-            hmac.update(content);
-            signature = hmac.digest("hex");
-        }
-
-        var response = idents.concat([
-            "<IDS|MSG>", // delimiter
-            signature,
-            header,
-            parent_header,
-            metadata,
-            content,
-        ]);
-
-        return response;
+        return true;
     }
 }
+
+/**
+ * Send IPython/Jupyter message
+ *
+ * @param {?Object} message                 IPython/Jupyter message
+ * @param {Array}   [message.idents]        Identities
+ * @param {Object}  [message.header]        Header
+ * @param {Object}  [message.parent_header] Parent header
+ * @param {Object}  [message.metadata]      Message metadata
+ * @param {Object}  [message.content]       Message content
+ * @param {module:jmp~Socket} socket        ZMQ socket
+ * @param {String}  scheme                  Hashing scheme (e.g. "hmac-sha256")
+ * @param {String}  key                     Hashing key
+ * @param {String}  [protocolVersion]       IPython/Jupyter protocol version
+ *                                          (required if message.header.version
+ *                                          is missing)
+ * @param {String}  [msg_type]              IPython/Jupyter message type
+ *                                          (required if message.header.msg_type
+ *                                          is missing)
+ *
+ * @returns           message               IPython/Jupyter message
+ * @returns {Array}   message.idents        Identities
+ * @returns {Object}  message.header        Header
+ * @returns {Object}  message.parent_header Parent header
+ * @returns {Object}  message.metadata      Message metadata
+ * @returns {Object}  message.content       Message content
+ */
+function send(message, socket, scheme, key, protocolVersion, msg_type) {
+    if (DEBUG) console.log("Sending " + message.header.msg_type);
+
+    if (!message) {
+        message = {};
+    }
+
+    if (!message.idents) {
+        message.idents = [];
+    }
+
+    if (!message.header) {
+        message.header = {};
+    }
+
+    if (!message.header.msg_id) {
+        message.header.msg_id = uuid.v4();
+    }
+
+    if (!message.header.username) {
+        message.header.username = "user";
+    }
+
+    if (!message.header.session) {
+        message.header.session = uuid.v4();
+    }
+
+    if (!message.header.msg_type) {
+        message.header.msg_type = msg_type;
+    }
+
+    if (!message.header.version) {
+        message.header.version = protocolVersion;
+    }
+
+    if (!message.parent_header) {
+        message.parent_header = {};
+    }
+
+    if (!message.metadata) {
+        message.metadata = {};
+    }
+
+    if (!message.content) {
+        message.content = {};
+    }
+
+    socket.send(encode(message, scheme, key));
+
+    return message;
+}
+
+/**
+ * Encode an IPython/Jupyter message for sending over a ZMQ socket
+ *
+ * @param {module:jmp~Socket} socket        ZMQ socket
+ * @param {String}  scheme                  Hashing scheme (e.g. "hmac-sha256")
+ * @param {String}  key                     Hashing key
+ */
+function encode(message, scheme, key) {
+    var idents = message.idents;
+    var header = JSON.stringify(message.header);
+    var parent_header = JSON.stringify(message.parent_header);
+    var metadata = JSON.stringify(message.metadata);
+    var content = JSON.stringify(message.content);
+
+    var signature = '';
+    if (key) {
+        var hmac = crypto.createHmac(scheme, key);
+        hmac.update(header);
+        hmac.update(parent_header);
+        hmac.update(metadata);
+        hmac.update(content);
+        signature = hmac.digest("hex");
+    }
+
+    var response = idents.concat([
+        "<IDS|MSG>", // delimiter
+        signature,
+        header,
+        parent_header,
+        metadata,
+        content,
+    ]);
+
+    return response;
+}
+
+var beforeFixture = [
+    initMTE,
+];
+
+var tests = [
+    //testHeartBeat,
+    testMessagingProtocol,
+    testKernelInfoRequest,
+    //testHeartBeat,
+];
+
+var afterFixture = [
+    disposeMTE,
+];
+
+var fixture = new TestFixture(beforeFixture, tests, afterFixture);
+fixture.start();

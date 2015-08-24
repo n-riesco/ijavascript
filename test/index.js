@@ -522,7 +522,7 @@ MessagingTestEngine.prototype.run = function(test) {
     var socketName = Object.getOwnPropertyNames(request)[0];
     var message = request[socketName];
 
-    request[socketName] = send(
+    request[socketName] = MessagingTestEngine.sendMessage(
         message,
         this.socket[socketName],
         this.connectionFile.signature_scheme.slice(5),
@@ -637,6 +637,124 @@ MessagingTestEngine.checkMessage = function(observed, expected, description) {
             observed[name], expected[name], description
         );
     });
+};
+
+/**
+ * @method      sendMessage
+ * @description Create and send a request message on the specified socket
+ * @param {?Object} message                 IPython/Jupyter message
+ * @param {Array}   [message.idents]        Identities
+ * @param {Object}  [message.header]        Header
+ * @param {Object}  [message.parent_header] Parent header
+ * @param {Object}  [message.metadata]      Message metadata
+ * @param {Object}  [message.content]       Message content
+ * @param {module:jmp~Socket} socket        ZMQ socket
+ * @param {String}  scheme                  Hashing scheme (e.g. "hmac-sha256")
+ * @param {String}  key                     Hashing key
+ * @param {String}  [protocolVersion]       IPython/Jupyter protocol version
+ *                                          (required if message.header.version
+ *                                          is missing)
+ * @param {String}  [msg_type]              IPython/Jupyter message type
+ *                                          (required if message.header.msg_type
+ *                                          is missing)
+ *
+ * @returns           message               IPython/Jupyter message
+ * @returns {Array}   message.idents        Identities
+ * @returns {Object}  message.header        Header
+ * @returns {Object}  message.parent_header Parent header
+ * @returns {Object}  message.metadata      Message metadata
+ * @returns {Object}  message.content       Message content
+ * @static
+ */
+MessagingTestEngine.sendMessage = function(
+    message, socket, scheme, key, protocolVersion, msg_type
+) {
+    if (DEBUG) console.log("Sending " + message.header.msg_type);
+
+    if (!message) {
+        message = {};
+    }
+
+    if (!message.idents) {
+        message.idents = [];
+    }
+
+    if (!message.header) {
+        message.header = {};
+    }
+
+    if (!message.header.msg_id) {
+        message.header.msg_id = uuid.v4();
+    }
+
+    if (!message.header.username) {
+        message.header.username = "user";
+    }
+
+    if (!message.header.session) {
+        message.header.session = uuid.v4();
+    }
+
+    if (!message.header.msg_type) {
+        message.header.msg_type = msg_type;
+    }
+
+    if (!message.header.version) {
+        message.header.version = protocolVersion;
+    }
+
+    if (!message.parent_header) {
+        message.parent_header = {};
+    }
+
+    if (!message.metadata) {
+        message.metadata = {};
+    }
+
+    if (!message.content) {
+        message.content = {};
+    }
+
+    socket.send(MessagingTestEngine.encodeMessage(message, scheme, key));
+
+    return message;
+};
+
+/**
+ * @method      encodeMessage
+ * @description Encode an IPython/Jupyter message for sending over a ZMQ socket
+ * @param {module:jmp~Socket} socket        ZMQ socket
+ * @param {String}            scheme        Hashing scheme (e.g. "hmac-sha256")
+ * @param {String}            key           Hashing key
+ * @static
+ */
+MessagingTestEngine.encodeMessage = function(message, scheme, key) {
+    var idents = message.idents;
+    var header = JSON.stringify(message.header);
+    var parent_header = JSON.stringify(message.parent_header);
+    var metadata = JSON.stringify(message.metadata);
+    var content = JSON.stringify(message.content);
+
+    var signature = '';
+    if (key) {
+        var hmac = crypto.createHmac(scheme, key);
+        hmac.update(header);
+        hmac.update(parent_header);
+        hmac.update(metadata);
+        hmac.update(content);
+        signature = hmac.digest("hex");
+    }
+
+    var response = idents.concat([
+        "<IDS|MSG>", // delimiter
+        signature,
+        header,
+        parent_header,
+        metadata,
+        content,
+    ]);
+
+    return response;
 };
 
 /**
@@ -808,120 +926,6 @@ function testKernelInfoRequest(context) {
 
         return true;
     }
-}
-
-/**
- * Send IPython/Jupyter message
- *
- * @param {?Object} message                 IPython/Jupyter message
- * @param {Array}   [message.idents]        Identities
- * @param {Object}  [message.header]        Header
- * @param {Object}  [message.parent_header] Parent header
- * @param {Object}  [message.metadata]      Message metadata
- * @param {Object}  [message.content]       Message content
- * @param {module:jmp~Socket} socket        ZMQ socket
- * @param {String}  scheme                  Hashing scheme (e.g. "hmac-sha256")
- * @param {String}  key                     Hashing key
- * @param {String}  [protocolVersion]       IPython/Jupyter protocol version
- *                                          (required if message.header.version
- *                                          is missing)
- * @param {String}  [msg_type]              IPython/Jupyter message type
- *                                          (required if message.header.msg_type
- *                                          is missing)
- *
- * @returns           message               IPython/Jupyter message
- * @returns {Array}   message.idents        Identities
- * @returns {Object}  message.header        Header
- * @returns {Object}  message.parent_header Parent header
- * @returns {Object}  message.metadata      Message metadata
- * @returns {Object}  message.content       Message content
- */
-function send(message, socket, scheme, key, protocolVersion, msg_type) {
-    if (DEBUG) console.log("Sending " + message.header.msg_type);
-
-    if (!message) {
-        message = {};
-    }
-
-    if (!message.idents) {
-        message.idents = [];
-    }
-
-    if (!message.header) {
-        message.header = {};
-    }
-
-    if (!message.header.msg_id) {
-        message.header.msg_id = uuid.v4();
-    }
-
-    if (!message.header.username) {
-        message.header.username = "user";
-    }
-
-    if (!message.header.session) {
-        message.header.session = uuid.v4();
-    }
-
-    if (!message.header.msg_type) {
-        message.header.msg_type = msg_type;
-    }
-
-    if (!message.header.version) {
-        message.header.version = protocolVersion;
-    }
-
-    if (!message.parent_header) {
-        message.parent_header = {};
-    }
-
-    if (!message.metadata) {
-        message.metadata = {};
-    }
-
-    if (!message.content) {
-        message.content = {};
-    }
-
-    socket.send(encode(message, scheme, key));
-
-    return message;
-}
-
-/**
- * Encode an IPython/Jupyter message for sending over a ZMQ socket
- *
- * @param {module:jmp~Socket} socket        ZMQ socket
- * @param {String}  scheme                  Hashing scheme (e.g. "hmac-sha256")
- * @param {String}  key                     Hashing key
- */
-function encode(message, scheme, key) {
-    var idents = message.idents;
-    var header = JSON.stringify(message.header);
-    var parent_header = JSON.stringify(message.parent_header);
-    var metadata = JSON.stringify(message.metadata);
-    var content = JSON.stringify(message.content);
-
-    var signature = '';
-    if (key) {
-        var hmac = crypto.createHmac(scheme, key);
-        hmac.update(header);
-        hmac.update(parent_header);
-        hmac.update(metadata);
-        hmac.update(content);
-        signature = hmac.digest("hex");
-    }
-
-    var response = idents.concat([
-        "<IDS|MSG>", // delimiter
-        signature,
-        header,
-        parent_header,
-        metadata,
-        content,
-    ]);
-
-    return response;
 }
 
 var beforeFixture = [

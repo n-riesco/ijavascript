@@ -929,10 +929,10 @@ var beforeFixture = [
 ];
 
 var tests = [
-    //testHeartBeat,
+    testHeartBeat,
     testMessagingProtocol,
     testKernelInfoRequest,
-    //testHeartBeat,
+    testHeartBeat,
 ];
 
 var afterFixture = [

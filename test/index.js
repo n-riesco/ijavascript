@@ -332,7 +332,7 @@ MessagingTestEngine.prototype._initPaths = function() {
     this.path.root = path.dirname(path.dirname(
         fs.realpathSync(process.argv[1])
     ));
-    this.path.test = path.join(this.path.root, "tests");
+    this.path.test = path.join(this.path.root, "test");
     this.path.connectionFile = path.join(this.path.test, "conn.json");
     this.path.testMessagesFile = path.join(this.path.test, "messages.json");
     this.path.kernel = path.join(this.path.root, "lib", "kernel.js");

@@ -14,37 +14,4 @@
             }
         }
     }]
-}, {
-    "description": "execute_request: 'Hello, World!'",
-    "request": {
-        "shell": {
-            "header": {
-                "msg_type": "execute_request"
-            },
-            "content": {
-                "code": "'Hello, World!'"
-            }
-        }
-    },
-    "responses": [{
-        "shell": {
-            "header": {
-                "msg_type": "execute_reply"
-            },
-            "content": {
-                "status": "ok"
-            }
-        }
-    }, {
-        "iopub": {
-            "header": {
-                "msg_type": "pyout"
-            },
-            "content": {
-                "data": {
-                    "text/plain": "'Hello, World!'"
-                }
-            }
-        }
-    }]
 }]

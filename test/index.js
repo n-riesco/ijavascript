@@ -112,12 +112,10 @@ TestFixture.prototype.start = function() {
     this.nextTask();
 
     function onUncaughtException(err) {
-        if (this.lastUncaughtException) {
-            console.error(this.lastUncaughtException.message);
-            console.error(this.lastUncaughtException.stack);
-        }
-
         this.lastUncaughtException = err;
+
+        console.error(this.lastUncaughtException.message);
+        console.error(this.lastUncaughtException.stack);
 
         // Exit if no tasks are left in context.destroyContext
         if (!this.afterFixture || this.afterFixture.length <= 0) {
@@ -179,7 +177,9 @@ function MessagingTestEngine() {
      * @member {String} path.root           Path to IJavascript folder
      * @member {String} path.test           Path to test folder
      * @member {String} path.connectionFile Path to kernel connection file
-     * @member {String} path.testMessagesFile Path to file with test messages
+     * @member {String} path.testMessages   Path to file with test messages
+     * @member {String} path.testMessagesV4 Path to file with test messages v4
+     * @member {String} path.testMessagesV5 Path to file with test messages v5
      * @member {String} path.kernel         Path to IJavascript kernel
      */
     this.path = {};
@@ -334,7 +334,9 @@ MessagingTestEngine.prototype._initPaths = function() {
     ));
     this.path.test = path.join(this.path.root, "test");
     this.path.connectionFile = path.join(this.path.test, "conn.json");
-    this.path.testMessagesFile = path.join(this.path.test, "messages.json");
+    this.path.testMessages = path.join(this.path.test, "messages.json");
+    this.path.testMessagesV4 = path.join(this.path.test, "messages_v4.json");
+    this.path.testMessagesV5 = path.join(this.path.test, "messages_v5.json");
     this.path.kernel = path.join(this.path.root, "lib", "kernel.js");
 };
 
@@ -813,11 +815,27 @@ function testMessagingProtocol(context) {
 
     // Load test cases
     var testCases = JSON.parse(
-        fs.readFileSync(context.mte.path.testMessagesFile)
+        fs.readFileSync(context.mte.path.testMessages)
     );
 
+    var major = parseInt(context.mte.version.ipython.split(".", 1)[0]);
+    if (major < 3) {
+        testCases = testCases.concat(JSON.parse(
+            fs.readFileSync(context.mte.path.testMessagesV4)
+        ));
+    } else {
+        testCases = testCases.concat(JSON.parse(
+            fs.readFileSync(context.mte.path.testMessagesV5)
+        ));
+    }
+
     // For each test case, create and queue a task
-    context.tests = testCases.map(function(testCase) {
+    context.tests = testCases.map(makeTask).concat(context.tests);
+
+    // Run next task in the queue
+    context.nextTask();
+
+    function makeTask(testCase) {
         return function(context) {
             testCase.callback = function() {
                 context.nextTask();
@@ -825,10 +843,7 @@ function testMessagingProtocol(context) {
 
             context.mte.run(testCase);
         };
-    }).concat(context.tests);
-
-    // Run next task in the queue
-    context.nextTask();
+    }
 }
 
 /**

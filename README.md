@@ -79,7 +79,8 @@ requests, submission of tutorials...
 # TO DO
 
 - Use module:jmp~Socket
-- Add more tests
+- Now that the tests have been automated, it's possible to develop docker
+  containers to run the tests under different environments.
 - Use Mocha test framework
 - Update tutorial on globals to discuss the use of `var`
 - Implement `$$text$$`

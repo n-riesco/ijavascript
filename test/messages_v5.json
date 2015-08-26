@@ -1,0 +1,1030 @@
+[{
+    "description": "execute_request: 'Hello, World!'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "'Hello, World!'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "'Hello, World!'"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: throw new Error('Hello, World!')",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "throw new Error('Hello, World!')"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "error"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "error"
+            },
+            "content": {
+                "ename": "Error",
+                "evalue": "Hello, World!"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: [] instanceof Array",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "[] instanceof Array"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "true"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: var a = {}",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "var a = {}"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "undefined"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: a",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "a"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "{}"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: a.a = a",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "a.a = a"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "{ a: [Circular] }"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: console.log('Hello, World!')",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "console.log('Hello, World!')"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "stream"
+            },
+            "content": {
+                "name": "stdout",
+                "data": "Hello, World!\n"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: console.error('Hello, World!')",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "console.error('Hello, World!')"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "stream"
+            },
+            "content": {
+                "name": "stderr",
+                "data": "Hello, World!\n"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: require instanceof Function",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "require instanceof Function"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "true"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: var fs = require('fs')",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "var fs = require('fs')"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "undefined"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: this",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "this"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: process",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "process"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: new Array(1 + 16*1024)",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "new Array(1 + 16*1024)"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: global",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "global"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$mime$$ = { 'text/plain': 'test' }",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$mime$$ = { 'text/plain': 'test' }"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$html$$ = 'test'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$html$$ = 'test'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/html": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$svg$$ = 'test'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$svg$$ = 'test'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "image/svg+xml": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$png$$ = 'test'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$png$$ = 'test'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "image/png": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$jpeg$$ = 'test'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$jpeg$$ = 'test'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "image/jpeg": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$async$$ = true; $$html$$ = 1; $$done$$();",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$async$$ = true; $$html$$ = 1; $$done$$();"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/html": 1
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$async$$ = true; setTimeout(function() {$$html$$ = 1; $$done$$();}, 0);",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$async$$ = true; setTimeout(function() {$$html$$ = 1; $$done$$();}, 0);"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/html": 1
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$done$$(1)",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$done$$(1)"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "1"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$async$$ = true; setTimeout(function() {throw new Error(2);}, 0); $$done$$(1);",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$async$$ = true; setTimeout(function() {throw new Error(2);}, 0); $$done$$(1);"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "stream"
+            },
+            "content": {
+                "name": "stderr"
+            }
+        }
+    }]
+}, {
+    "description": "complete_request: b|reak",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "code": "b",
+                "cursor_pos": 1
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["break"],
+                "cursor_start": 1,
+                "cursor_end": 1,
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: var a = {b123: {c123: {d123: {e123: {$_$: 0}}}}};",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "var a = {b123: {c123: {d123: {e123: {$_$: 0}}}}};"
+            }
+        }
+    },
+    "responses": []
+}, {
+    "description": "complete_request: a.b|",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "code": "a.b",
+                "cursor_pos": 3
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["a.b123"],
+                "cursor_start": 3,
+                "cursor_end": 3,
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "complete_request: a['b|",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "code": "a['b",
+                "cursor_pos": 4
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["a['b123']"],
+                "cursor_start": 3,
+                "cursor_end": 3,
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "complete_request: a[\"b|",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "code": "a[\"b",
+                "cursor_pos": 4
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["a[\"b123\"]"],
+                "cursor_start": 3,
+                "cursor_end": 3,
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "complete_request: a.b123[\"c123\"].d123['e123'].$_|$",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "code": "a.b123[\"c123\"].d123['e123'].$_$",
+                "cursor_pos": 30
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["a.b123[\"c123\"].d123['e123'].$_$"],
+                "cursor_start": 30,
+                "cursor_end": 30,
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "inspect_request: null",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "inspect_request"
+            },
+            "content": {
+                "code": "null",
+                "cursor_pos": 4,
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "inspect_reply"
+            },
+            "content": {
+                "found": true,
+                "data": {
+                    "text/plain": "",
+                    "text/html": ""
+                },
+                "metadata": {},
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "inspect_request: undefined",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "inspect_request"
+            },
+            "content": {
+                "code": "undefined",
+                "cursor_pos": 9,
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "inspect_reply"
+            },
+            "content": {
+                "found": true,
+                "data": {
+                    "text/plain": "",
+                    "text/html": ""
+                },
+                "metadata": {},
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "inspect_request: Array",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "inspect_request"
+            },
+            "content": {
+                "code": "Array",
+                "cursor_pos": 5,
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "inspect_reply"
+            },
+            "content": {
+                "found": true,
+                "data": {
+                    "text/plain": "",
+                    "text/html": ""
+                },
+                "metadata": {},
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "inspect_request: Array.apply",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "inspect_request"
+            },
+            "content": {
+                "code": "Array.apply",
+                "cursor_pos": 11,
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "inspect_reply"
+            },
+            "content": {
+                "found": true,
+                "data": {
+                    "text/plain": "",
+                    "text/html": ""
+                },
+                "metadata": {},
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "inspect_request: console",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "inspect_request"
+            },
+            "content": {
+                "code": "console",
+                "cursor_pos": 7,
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "inspect_reply"
+            },
+            "content": {
+                "found": true,
+                "data": {
+                    "text/plain": "",
+                    "text/html": ""
+                },
+                "metadata": {},
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "inspect_request: util.inspect",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "inspect_request"
+            },
+            "content": {
+                "code": "util.inspect",
+                "cursor_pos": 12,
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "inspect_reply"
+            },
+            "content": {
+                "ename": "ReferenceError",
+                "evalue": "util is not defined",
+                "status": "error"
+            }
+        }
+    }]
+}]

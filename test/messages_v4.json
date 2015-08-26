@@ -1,0 +1,1030 @@
+[{
+    "description": "execute_request: 'Hello, World!'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "'Hello, World!'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "'Hello, World!'"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: throw new Error('Hello, World!')",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "throw new Error('Hello, World!')"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "error"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyerr"
+            },
+            "content": {
+                "ename": "Error",
+                "evalue": "Hello, World!"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: [] instanceof Array",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "[] instanceof Array"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "true"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: var a = {}",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "var a = {}"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "undefined"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: a",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "a"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "{}"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: a.a = a",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "a.a = a"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "{ a: [Circular] }"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: console.log('Hello, World!')",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "console.log('Hello, World!')"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "stream"
+            },
+            "content": {
+                "name": "stdout",
+                "data": "Hello, World!\n"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: console.error('Hello, World!')",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "console.error('Hello, World!')"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "stream"
+            },
+            "content": {
+                "name": "stderr",
+                "data": "Hello, World!\n"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: require instanceof Function",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "require instanceof Function"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "true"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: var fs = require('fs')",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "var fs = require('fs')"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "undefined"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: this",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "this"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: process",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "process"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: new Array(1 + 16*1024)",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "new Array(1 + 16*1024)"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: global",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "global"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$mime$$ = { 'text/plain': 'test' }",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$mime$$ = { 'text/plain': 'test' }"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$html$$ = 'test'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$html$$ = 'test'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/html": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$svg$$ = 'test'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$svg$$ = 'test'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "image/svg+xml": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$png$$ = 'test'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$png$$ = 'test'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "image/png": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$jpeg$$ = 'test'",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$jpeg$$ = 'test'"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "image/jpeg": "test"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$async$$ = true; $$html$$ = 1; $$done$$();",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$async$$ = true; $$html$$ = 1; $$done$$();"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/html": 1
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$async$$ = true; setTimeout(function() {$$html$$ = 1; $$done$$();}, 0);",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$async$$ = true; setTimeout(function() {$$html$$ = 1; $$done$$();}, 0);"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/html": 1
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$done$$(1)",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$done$$(1)"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "pyout"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "1"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: $$async$$ = true; setTimeout(function() {throw new Error(2);}, 0); $$done$$(1);",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "$$async$$ = true; setTimeout(function() {throw new Error(2);}, 0); $$done$$(1);"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "stream"
+            },
+            "content": {
+                "name": "stderr"
+            }
+        }
+    }]
+}, {
+    "description": "complete_request: b|reak",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "text": "",
+                "line": "b",
+                "block": null,
+                "cursor_pos": 1
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["break"],
+                "matched_text": "b",
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: var a = {b123: {c123: {d123: {e123: {$_$: 0}}}}};",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "var a = {b123: {c123: {d123: {e123: {$_$: 0}}}}};"
+            }
+        }
+    },
+    "responses": []
+}, {
+    "description": "complete_request: a.b|",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "text": "",
+                "line": "a.b",
+                "block": null,
+                "cursor_pos": 3
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["a.b123"],
+                "matched_text": "a.b",
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "complete_request: a['b|",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "text": "",
+                "line": "a['b",
+                "block": null,
+                "cursor_pos": 4
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["a['b123']"],
+                "matched_text": "a['b",
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "complete_request: a[\"b|",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "text": "",
+                "line": "a[\"b",
+                "block": null,
+                "cursor_pos": 4
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["a[\"b123\"]"],
+                "matched_text": "a[\"b",
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "complete_request: a.b123[\"c123\"].d123['e123'].$_|$",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "complete_request"
+            },
+            "content": {
+                "text": "",
+                "line": "a.b123[\"c123\"].d123['e123'].$_$",
+                "block": null,
+                "cursor_pos": 30
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "complete_reply"
+            },
+            "content": {
+                "matches": ["a.b123[\"c123\"].d123['e123'].$_$"],
+                "matched_text": "a.b123[\"c123\"].d123['e123'].$_",
+                "status": "ok"
+            }
+        }
+    }]
+}, {
+    "description": "object_info_request: null",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "object_info_request"
+            },
+            "content": {
+                "oname": "null",
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "object_info_reply"
+            },
+            "content": {
+                "oname": "null",
+                "found": true,
+                "ismagic": false,
+                "isalias": false,
+                "string_name": "null",
+                "docstring": "The value null is a JavaScript literal representing null or an \"empty\" value, i.e. no object value is present. It is one of JavaScript's primitive values.",
+                "namespace": "builtin",
+                "definition": "null "
+            }
+        }
+    }]
+}, {
+    "description": "object_info_request: undefined",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "object_info_request"
+            },
+            "content": {
+                "oname": "undefined",
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "object_info_reply"
+            },
+            "content": {
+                "oname": "undefined",
+                "found": true,
+                "ismagic": false,
+                "isalias": false,
+                "string_name": "undefined",
+                "docstring": "The global undefined value property represents the value undefined. It is one of JavaScript's primitive types.",
+                "namespace": "builtin",
+                "definition": "undefined"
+            }
+        }
+    }]
+}, {
+    "description": "object_info_request: Array",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "object_info_request"
+            },
+            "content": {
+                "oname": "Array",
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "object_info_reply"
+            },
+            "content": {
+                "oname": "Array",
+                "found": true,
+                "ismagic": false,
+                "isalias": false,
+                "string_name": "[Function: Array]",
+                "length": 1,
+                "docstring": "The JavaScript Array global object is a constructor for arrays, which are high-level, list-like objects.",
+                "namespace": "builtin",
+                "definition": "[element0, element1, ..., elementN]\nnew Array(element0, element1[, ...[, elementN]])\nnew Array(arrayLength)"
+            }
+        }
+    }]
+}, {
+    "description": "object_info_request: Array.apply",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "object_info_request"
+            },
+            "content": {
+                "oname": "Array.apply",
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "object_info_reply"
+            },
+            "content": {
+                "oname": "Array.apply",
+                "found": true,
+                "ismagic": false,
+                "isalias": false,
+                "string_name": "[Function: apply]",
+                "length": 2,
+                "docstring": "The apply() method calls a function with a given this value and arguments provided as an array (or an array-like object).",
+                "namespace": "builtin"
+            }
+        }
+    }]
+}, {
+    "description": "object_info_request: util.inspect",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "object_info_request"
+            },
+            "content": {
+                "oname": "util.inspect",
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "object_info_reply"
+            },
+            "content": {
+                "oname": "util.inspect",
+                "found": false
+            }
+        }
+    }]
+}, {
+    "description": "object_info_request: console",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "object_info_request"
+            },
+            "content": {
+                "oname": "console",
+                "detail_level": 0
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "object_info_reply"
+            },
+            "content": {
+                "oname": "console",
+                "found": true,
+                "ismagic": false,
+                "isalias": false
+            }
+        }
+    }]
+}]

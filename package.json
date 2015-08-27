@@ -38,6 +38,8 @@
         "doc": "python scripts/doc-build.py",
         "doc:publish": "node scripts/doc-publish.js gh-pages https://github.com/n-riesco/ijavascript",
         "lint": "jshint bin lib",
-        "test": "node test/index.js"
+        "test": "node test/index.js",
+        "test:4": "node test/index.js --protocol=4.1",
+        "test:5": "node test/index.js --protocol=5.0"
     }
 }

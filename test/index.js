@@ -349,6 +349,17 @@ MessagingTestEngine.prototype._initPaths = function() {
 MessagingTestEngine.prototype._initVersionsAsync = function(callback) {
     console.log("Getting Jupyter/IPython version");
 
+    process.argv.slice(2).forEach((function(arg) {
+        if (arg.lastIndexOf("--protocol=", 0) === 0) {
+            this.version.protocol = arg.slice(11);
+        }
+    }).bind(this));
+
+    if (this.version.protocol) {
+        callback();
+        return;
+    }
+
     exec("ipython --version", (function(error, stdout, stderr) {
         this.version.ipython = stdout.toString().split(os.EOL, 1)[0];
 
@@ -633,7 +644,10 @@ MessagingTestEngine.checkMessage = function(observed, expected, description) {
 
     // check recursively only the properties present in expected
     Object.getOwnPropertyNames(expected).forEach(function(name) {
-        assert(observed.hasOwnProperty(name), description);
+        assert(
+            observed.hasOwnProperty(name),
+            description + ": Missing property '" + name + "'"
+        );
 
         MessagingTestEngine.checkMessage(
             observed[name], expected[name], description
@@ -818,8 +832,8 @@ function testMessagingProtocol(context) {
         fs.readFileSync(context.mte.path.testMessages)
     );
 
-    var major = parseInt(context.mte.version.ipython.split(".", 1)[0]);
-    if (major < 3) {
+    var major = parseInt(context.mte.version.protocol.split(".", 1)[0]);
+    if (major < 5) {
         testCases = testCases.concat(JSON.parse(
             fs.readFileSync(context.mte.path.testMessagesV4)
         ));
@@ -886,8 +900,8 @@ function testKernelInfoRequest(context) {
             "Error: no metadata"
         );
 
-        var major = parseInt(context.mte.version.ipython.split(".", 1)[0]);
-        if (major < 3) {
+        var major = parseInt(context.mte.version.protocol.split(".", 1)[0]);
+        if (major < 5) {
             var protocolVersion = context.mte.version.protocol.split(".").map(
                 function(v) {
                     return parseInt(v);

@@ -223,7 +223,7 @@
             },
             "content": {
                 "name": "stdout",
-                "data": "Hello, World!\n"
+                "text": "Hello, World!\n"
             }
         }
     }]
@@ -255,7 +255,7 @@
             },
             "content": {
                 "name": "stderr",
-                "data": "Hello, World!\n"
+                "text": "Hello, World!\n"
             }
         }
     }]
@@ -728,7 +728,7 @@
             },
             "content": {
                 "matches": ["break"],
-                "cursor_start": 1,
+                "cursor_start": 0,
                 "cursor_end": 1,
                 "status": "ok"
             }
@@ -767,7 +767,7 @@
             },
             "content": {
                 "matches": ["a.b123"],
-                "cursor_start": 3,
+                "cursor_start": 0,
                 "cursor_end": 3,
                 "status": "ok"
             }
@@ -793,8 +793,8 @@
             },
             "content": {
                 "matches": ["a['b123']"],
-                "cursor_start": 3,
-                "cursor_end": 3,
+                "cursor_start": 0,
+                "cursor_end": 4,
                 "status": "ok"
             }
         }
@@ -819,8 +819,8 @@
             },
             "content": {
                 "matches": ["a[\"b123\"]"],
-                "cursor_start": 3,
-                "cursor_end": 3,
+                "cursor_start": 0,
+                "cursor_end": 4,
                 "status": "ok"
             }
         }
@@ -845,8 +845,8 @@
             },
             "content": {
                 "matches": ["a.b123[\"c123\"].d123['e123'].$_$"],
-                "cursor_start": 30,
-                "cursor_end": 30,
+                "cursor_start": 0,
+                "cursor_end": 31,
                 "status": "ok"
             }
         }
@@ -873,8 +873,8 @@
             "content": {
                 "found": true,
                 "data": {
-                    "text/plain": "",
-                    "text/html": ""
+                    "text/plain": "null \n\nThe value null is a JavaScript literal representing null or an \"empty\" value, i.e. no object value is present. It is one of JavaScript's primitive values.",
+                    "text/html": "<pre>null \n\nThe value null is a JavaScript literal representing null or an \"empty\" value, i.e. no object value is present. It is one of JavaScript's primitive values.</pre>"
                 },
                 "metadata": {},
                 "status": "ok"
@@ -903,8 +903,8 @@
             "content": {
                 "found": true,
                 "data": {
-                    "text/plain": "",
-                    "text/html": ""
+                    "text/plain": "undefined\n\nThe global undefined value property represents the value undefined. It is one of JavaScript's primitive types.",
+                    "text/html": "<pre>undefined\n\nThe global undefined value property represents the value undefined. It is one of JavaScript's primitive types.</pre>"
                 },
                 "metadata": {},
                 "status": "ok"
@@ -933,8 +933,8 @@
             "content": {
                 "found": true,
                 "data": {
-                    "text/plain": "",
-                    "text/html": ""
+                    "text/plain": "[element0, element1, ..., elementN]\nnew Array(element0, element1[, ...[, elementN]])\nnew Array(arrayLength)\n\nThe JavaScript Array global object is a constructor for arrays, which are high-level, list-like objects.",
+                    "text/html": "<pre>[element0, element1, ..., elementN]\nnew Array(element0, element1[, ...[, elementN]])\nnew Array(arrayLength)\n\nThe JavaScript Array global object is a constructor for arrays, which are high-level, list-like objects.</pre>"
                 },
                 "metadata": {},
                 "status": "ok"
@@ -962,10 +962,6 @@
             },
             "content": {
                 "found": true,
-                "data": {
-                    "text/plain": "",
-                    "text/html": ""
-                },
                 "metadata": {},
                 "status": "ok"
             }
@@ -992,10 +988,6 @@
             },
             "content": {
                 "found": true,
-                "data": {
-                    "text/plain": "",
-                    "text/html": ""
-                },
                 "metadata": {},
                 "status": "ok"
             }

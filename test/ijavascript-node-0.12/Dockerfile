@@ -10,4 +10,4 @@ RUN git clone https://github.com/n-riesco/ijavascript.git && \
 
 WORKDIR ijavascript
 
-CMD npm t
+CMD git pull && npm run test:4 && npm run test:5

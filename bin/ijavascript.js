@@ -58,6 +58,7 @@ var usage = (
     "    --ijs-install=[local|global]  install IJavascript kernel\n" +
     "    --ijs-install-kernel          same as --ijs-install=local\n" +
     "                                  (for backwards-compatibility)\n" +
+    "    --ijs-protocol=version  set protocol version, e.g. 4.1\n" +
     "    --ijs-working-dir=path  set Javascript session working directory\n" +
     "                            (default = current working directory)\n" +
     "    --version               show IJavascript version\n" +
@@ -73,121 +74,82 @@ var usage = (
  * @typedef Context
  *
  * @property            context
- * @property {Object}   context.packageJSON   Contents of npm package.json
- * @property            context.args
- * @property {String[]} context.args.kernel   Command arguments to run kernel
- * @property {String[]} context.args.ipython  Command arguments to run IPython
- * @property            context.flag
- * @property {Boolean}  context.flag.debug         --ijs-debug
- * @property {String}   [context.flag.install]     --ijs-install=[local|global]
- * @property {String}   [context.flag.cwd]         --ijs-working-dir=path
  * @property            context.path
  * @property {String}   context.path.node     Path to Node.js shell
  * @property {String}   context.path.root     Path to IJavascript root folder
  * @property {String}   context.path.kernel   Path to IJavascript kernel
  * @property {String}   context.path.specDir  Path to kernel spec folder
  * @property {String}   context.path.specFile Path to kernel spec file
- * @property            context.version
- * @property {String}   context.version.ijs      IJavascript version
- * @property {String}   context.version.ipython  IPython version
- * @property {String}   context.version.protocol Jupyter protocol version
+ * @property {Object}   context.packageJSON   Contents of npm package.json
+ * @property            context.flag
+ * @property {Boolean}  context.flag.debug    --ijs-debug
+ * @property {String}   context.flag.install  --ijs-install=[local|global]
+ * @property {String}   context.flag.cwd      --ijs-working-dir=path
+ * @property            context.args
+ * @property {String[]} context.args.kernel   Command arguments to run kernel
+ * @property {String[]} context.args.frontend Command arguments to run frontend
+ * @property            context.protocol
+ * @property {String}   context.protocol.version      Protocol version
+ * @property {Integer}  context.protocol.majorVersion Protocol major version
+ * @property            context.frontend
+ * @property {String}   context.frontend.version      Frontend version
+ * @property {Integer}  context.frontend.majorVersion Frontend major version
  */
 
 /**
  * Script context
  * @type Context
  */
-var context = initContext();
+var context = {
+    path: {},
+    packageJSON: undefined,
+    flag: {},
+    args: {},
+    protocol: {},
+    frontend: {},
+};
 
+setPaths(context);
+readPackageJson(context);
 parseCommandArgs(context);
+setFrontendInfoAsync(context, function() {
+    setProtocol(context);
 
-// Determine IPython version and start the IPython notebook accordingly
-exec("ipython --version", function(error, stdout, stderr) {
-    if (error) {
-        console.error("Error running `ipython --version`");
-        console.error(error.toString());
-        if (stderr) console.error(stderr.toString());
-        if (DEBUG) console.log("CONTEXT:", context);
-        process.exit(1);
-    }
+    if (DEBUG) console.log("CONTEXT:", context);
 
-    context.version.ipython = stdout.toString().trim();
-
-    var major = parseInt(context.version.ipython.split(".")[0]);
-    if (isNaN(major)) {
-        console.error(
-            "Error parsing IPython version:",
-            context.version.ipython
-        );
-        if (DEBUG) console.log("CONTEXT:", context);
-        process.exit(1);
-    }
-
-    if (major < 3) {
-        if (context.flag.install) {
-            console.error(util.format(
-                "Error: IPython v%s cannot install kernel specs",
-                context.version.ipython
-            ));
-            if (DEBUG) console.log("CONTEXT:", context);
-            process.exit(1);
+    installKernelAsync(context, function() {
+        if (!context.flag.install) {
+            spawnFrontend(context);
         }
-
-        context.args.kernel.push(
-            "--protocol=" + (context.version.protocol || "4.1")
-        );
-        context.args.ipython.push(util.format(
-            "--KernelManager.kernel_cmd=['%s']",
-            context.args.kernel.join("', '")
-        ));
-
-        spawnIPython(context);
-
-    } else {
-        context.args.kernel.push(
-            "--protocol=" + (context.version.protocol || "5.0")
-        );
-
-        registerSpecAndSpawnIPython(context);
-    }
+    });
 });
 
-function initContext() {
-    var context = {
-        path: {
-            node: process.argv[0],
-            root: path.dirname(path.dirname(fs.realpathSync(process.argv[1]))),
-        },
-    };
-
+function setPaths(context) {
+    context.path.node = process.argv[0];
+    context.path.root = path.dirname(path.dirname(
+        fs.realpathSync(process.argv[1])
+    ));
     context.path.kernel = path.join(context.path.root, "lib", "kernel.js");
     context.path.specDir = path.join(context.path.root, "spec", "javascript");
     context.path.specFile = path.join(context.path.specDir, "kernel.json");
+}
 
+function readPackageJson(context) {
     context.packageJSON = JSON.parse(
         fs.readFileSync(path.join(context.path.root, "package.json"))
     );
-
-    context.version = {
-        ijs: context.packageJSON.version,
-    };
-
-    return context;
 }
 
 function parseCommandArgs(context) {
-    context.args = {
-        kernel: [
-            context.path.node,
-            context.path.kernel,
-        ],
-        ipython: [
-            "ipython",
-            "notebook",
-        ],
-    };
+    context.args.kernel = [
+        context.path.node,
+        context.path.kernel,
+    ];
+    context.args.frontend = [
+        "ipython",
+        "notebook",
+    ];
 
-    context.flag = {};
     process.argv.slice(2).forEach(function(e) {
         if (e === "--ijs-debug") {
             context.flag.debug = DEBUG = true;
@@ -214,6 +176,12 @@ function parseCommandArgs(context) {
         } else if (e === "--ijs-install-kernel") {
             context.flag.install = "local";
 
+        } else if (e.lastIndexOf("--ijs-protocol=", 0) === 0) {
+            context.protocol.version = e.slice(15);
+            context.protocol.majorVersion = parseInt(
+                context.protocol.version.split(".", 1)[0]
+            );
+
         } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
             context.flag.cwd = fs.realpathSync(e.slice(18));
 
@@ -230,18 +198,87 @@ function parseCommandArgs(context) {
             process.exit(0);
 
         } else {
-            context.args.ipython.push(e);
+            context.args.frontend.push(e);
         }
     });
 
     if (context.flag.cwd) {
         context.args.kernel.push("--session-working-dir=" + context.flag.cwd);
     }
+
     context.args.kernel.push("{connection_file}");
 }
 
-function registerSpecAndSpawnIPython(context) {
-    // Create a spec file for the IJavascript kernel
+function setFrontendInfoAsync(context, callback) {
+    exec("ipython --version", function(error, stdout, stderr) {
+        if (error) {
+            console.error("Error running `ipython --version`");
+            console.error(error.toString());
+            if (stderr) console.error(stderr.toString());
+            if (DEBUG) console.log("CONTEXT:", context);
+            process.exit(1);
+        }
+
+        context.frontend.version = stdout.toString().trim();
+        context.frontend.majorVersion = parseInt(
+            context.frontend.version.split(".")[0]
+        );
+        if (isNaN(context.frontend.majorVersion)) {
+            console.error(
+                "Error parsing IPython version:",
+                context.version.frontend
+            );
+            if (DEBUG) console.log("CONTEXT:", context);
+            process.exit(1);
+        }
+
+        if (callback) {
+            callback();
+        }
+    });
+}
+
+function setProtocol(context) {
+    if (!context.protocol.version) {
+        if (context.frontend.majorVersion < 3) {
+            context.protocol.version = "4.1";
+            context.protocol.majorVersion = 4;
+        } else {
+            context.protocol.version = "5.0";
+            context.protocol.majorVersion = 5;
+        }
+    }
+
+    context.args.kernel.push("--protocol=" + context.protocol.version);
+
+    if (context.frontend.majorVersion < 3) {
+        context.args.frontend.push(util.format(
+            "--KernelManager.kernel_cmd=['%s']",
+            context.args.kernel.join("', '")
+        ));
+    }
+
+    if (context.frontend.majorVersion < 3 &&
+        context.protocol.majorVersion >= 5) {
+        console.warn("Warning: Protocol v5+ requires IPython v3+");
+    }
+}
+
+function installKernelAsync(context, callback) {
+    if (context.frontend.majorVersion < 3) {
+        if (context.flag.install) {
+            console.error(
+                "Error: Installation of kernel specs requires IPython v3+"
+            );
+        }
+
+        if (callback) {
+            callback();
+        }
+
+        return;
+    }
+
     var spec = {
         argv: context.args.kernel,
         display_name: "Javascript (Node.js)",
@@ -249,42 +286,35 @@ function registerSpecAndSpawnIPython(context) {
     };
     fs.writeFileSync(context.path.specFile, JSON.stringify(spec));
 
-    // Register spec folder
     var cmd = "ipython kernelspec install --replace " + context.path.specDir;
     if (context.flag.install !== "global") {
         cmd += "  --user";
     }
     exec(cmd, function(error, stdout, stderr) {
         if (error) {
-            console.error(util.format(
-                "Error running `%s`", cmd
-            ));
+            console.error(util.format("Error running `%s`", cmd));
             console.error(error.toString());
             if (stderr) console.error(stderr.toString());
             if (DEBUG) console.log("CONTEXT:", context);
             process.exit(1);
         }
 
-        spawnIPython(context);
+        if (callback) {
+            callback();
+        }
     });
 }
 
-function spawnIPython(context) {
-    if (DEBUG) console.log("CONTEXT:", context);
-
-    if (context.flag.install) {
-        return;
-    }
-
-    var cmd = context.args.ipython[0];
-    var args = context.args.ipython.slice(1);
-    var ipython = spawn(cmd, args, {
+function spawnFrontend(context) {
+    var cmd = context.args.frontend[0];
+    var args = context.args.frontend.slice(1);
+    var frontend = spawn(cmd, args, {
         stdio: "inherit"
     });
 
-    // Relay SIGINT onto ipython
+    // Relay SIGINT onto the frontend
     var signal = "SIGINT";
     process.on(signal, function() {
-        ipython.emit(signal);
+        frontend.emit(signal);
     });
 }

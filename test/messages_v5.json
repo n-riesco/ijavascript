@@ -58,7 +58,8 @@
                 "msg_type": "error"
             },
             "content": {
-                "ename": "Error"
+                "ename": "Error",
+                "evalue": "Hello, World!"
             }
         }
     }]
@@ -1013,6 +1014,7 @@
             },
             "content": {
                 "ename": "ReferenceError",
+                "evalue": "util is not defined",
                 "status": "error"
             }
         }

@@ -58,7 +58,8 @@
                 "msg_type": "pyerr"
             },
             "content": {
-                "ename": "Error"
+                "ename": "Error",
+                "evalue": "Hello, World!"
             }
         }
     }]

@@ -78,10 +78,14 @@ requests, submission of tutorials...
 
 # TO DO
 
-- Use module:jmp~Socket
 - Use Mocha test framework
 - Update tutorial on globals to discuss the use of `var`
-- Implement `$$text$$`
 - Add tutorial to demonstrate animated graphs and javascript injection
 - Complete the implementation of IPython's messaging protocol v4.1
 - Complete the implementation of IPython's messaging protocol v5.0
+- Split kernel into Jupyter and Javascript frameworks to help reuse code in the
+  [CoffeeScript](https://github.com/n-riesco/jp-coffeescript) and
+  [Babel](https://github.com/n-riesco/jp-babel) kernels.
+
+See TODO list in package [NEL](https://github.com/n-riesco/nel) for additional
+items.

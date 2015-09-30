@@ -403,7 +403,7 @@ MessagingTestEngine.prototype._initSockets = function() {
     for (var i = 0, attempts = 0; i < socketNames.length; attempts++) {
         var socketName = socketNames[i];
         var socketType = socketTypes[i];
-        var socket = (true || socketName === "hb") ?
+        var socket = (socketName === "hb") ?
             new zmq.Socket(socketType) :
             new jmp.Socket(socketType, scheme, key);
         var port = Math.floor(1024 + Math.random() * (65536 - 1024));
@@ -428,14 +428,9 @@ MessagingTestEngine.prototype._initSockets = function() {
 
     Object.getOwnPropertyNames(this.messageBuffer).forEach(
         (function(socketName) {
-            this.socket[socketName].on("message", (function() {
-                var message = new jmp.Message(arguments);
-
+            this.socket[socketName].on("message", (function(message) {
                 var msg_type = message.header.msg_type;
                 if (DEBUG) console.log("Received", msg_type, "on", socketName);
-
-                message.parent_header = message.parentHeader;
-                delete message.parentHeader;
 
                 this.messageBuffer[socketName].push(message);
 
@@ -687,16 +682,8 @@ MessagingTestEngine.sendMessage = function(
 ) {
     if (DEBUG) console.log("Sending " + message.header.msg_type);
 
-    if (!message) {
-        message = {};
-    }
-
-    if (!message.idents) {
-        message.idents = [];
-    }
-
-    if (!message.header) {
-        message.header = {};
+    if (!(message instanceof jmp.Message)) {
+        message = new jmp.Message(message);
     }
 
     if (!message.header.msg_id) {
@@ -719,58 +706,9 @@ MessagingTestEngine.sendMessage = function(
         message.header.version = protocolVersion;
     }
 
-    if (!message.parent_header) {
-        message.parent_header = {};
-    }
-
-    if (!message.metadata) {
-        message.metadata = {};
-    }
-
-    if (!message.content) {
-        message.content = {};
-    }
-
-    socket.send(MessagingTestEngine.encodeMessage(message, scheme, key));
+    socket.send(message);
 
     return message;
-};
-
-/**
- * @method      encodeMessage
- * @description Encode an IPython/Jupyter message for sending over a ZMQ socket
- * @param {module:jmp~Socket} socket        ZMQ socket
- * @param {String}            scheme        Hashing scheme (e.g. "hmac-sha256")
- * @param {String}            key           Hashing key
- * @static
- */
-MessagingTestEngine.encodeMessage = function(message, scheme, key) {
-    var idents = message.idents;
-    var header = JSON.stringify(message.header);
-    var parent_header = JSON.stringify(message.parent_header);
-    var metadata = JSON.stringify(message.metadata);
-    var content = JSON.stringify(message.content);
-
-    var signature = '';
-    if (key) {
-        var hmac = crypto.createHmac(scheme, key);
-        hmac.update(header);
-        hmac.update(parent_header);
-        hmac.update(metadata);
-        hmac.update(content);
-        signature = hmac.digest("hex");
-    }
-
-    var response = idents.concat([
-        "<IDS|MSG>", // delimiter
-        signature,
-        header,
-        parent_header,
-        metadata,
-        content,
-    ]);
-
-    return response;
 };
 
 /**

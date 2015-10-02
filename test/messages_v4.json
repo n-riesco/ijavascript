@@ -939,7 +939,7 @@
                 "found": true,
                 "ismagic": false,
                 "isalias": false,
-                "string_name": "[Function: Array]",
+                "string_name": "function Array() { [native code] }",
                 "length": 1,
                 "docstring": "The JavaScript Array global object is a constructor for arrays, which are high-level, list-like objects.",
                 "namespace": "builtin",
@@ -970,7 +970,7 @@
                 "found": true,
                 "ismagic": false,
                 "isalias": false,
-                "string_name": "[Function: apply]",
+                "string_name": "function apply() { [native code] }",
                 "length": 2,
                 "docstring": "The apply() method calls a function with a given this value and arguments provided as an array (or an array-like object).",
                 "namespace": "builtin"

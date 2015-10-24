@@ -1,20 +1,39 @@
-# IJavascript: A Javascript Kernel for IPython's Graphical Notebook
+<nav style="float: left;
+            padding: 2em;
+            margin: 0 2em 2em 0;
+            border: 1px solid;
+            border-radius: 10px;
+            text-align: center;">
+<h1><img alt="Links" src="images/logo-128x128.png"></h1>
+<a href="http://n-riesco.github.io/ijavascript"
+   style="display: block;">IJavascript Home Page</a>
+<a href="http://github.com/n-riesco/ijavascript"
+   style="display: block;">IJavascript Repository</a>
+<a href="http://github.com/n-riesco/jp-babel"
+   style="display: block;">jp-babel Repository</a>
+<a href="http://github.com/n-riesco/jp-coffeescript"
+   style="display: block;">jp-coffeescript Repository</a>
+</nav>
+
+# IJavascript
 
 IJavascript is an [`npm` package](https://www.npmjs.com/) that implements a
-Javascript kernel for [IPython's graphical
-notebook](http://ipython.org/notebook.html) (also known as
-[Jupyter](http://jupyter.org/)). An IPython notebook combines the creation of
-rich-text documents (including equations, plots and videos) with the execution
-of code in a number of programming languages.
+Javascript kernel for the [Jupyter notebook](http://jupyter.org/) (formerly
+known as [IPython notebook](http://ipython.org/notebook.html)). A Jupyter
+notebook combines the creation of rich-text documents (including equations,
+graphs and videos) with the execution of code in a number of programming
+languages.
 
 The execution of code is carried out by means of a kernel that implements the
-[IPython messaging
+[IPython/Jupyter messaging
 protocol](http://ipython.org/ipython-doc/stable/development/messaging.html).
 There are kernels available for [Python](http://ipython.org/notebook.html),
 [Julia](https://github.com/JuliaLang/IJulia.jl),
 [Ruby](https://github.com/minad/iruby),
 [Haskell](https://github.com/gibiansky/IHaskell) and [many
 other languages](https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages).
+
+<div style="clear: both;" />
 
 ## Main Features
 
@@ -78,14 +97,14 @@ requests, submission of tutorials...
 
 # TO DO
 
-- Use Mocha test framework
-- Update tutorial on globals to discuss the use of `var`
-- Add tutorial to demonstrate animated graphs and javascript injection
-- Complete the implementation of IPython's messaging protocol v4.1
-- Complete the implementation of IPython's messaging protocol v5.0
 - Split kernel into Jupyter and Javascript frameworks to help reuse code in the
   [CoffeeScript](https://github.com/n-riesco/jp-coffeescript) and
   [Babel](https://github.com/n-riesco/jp-babel) kernels.
+- Use Mocha test framework
+- Update tutorial on global variables to discuss the use of `var`
+- Add tutorial to demonstrate animated graphs and javascript injection
+- Complete the implementation of IPython's messaging protocol v4.1
+- Complete the implementation of IPython's messaging protocol v5.0
 
 See TODO list in package [NEL](https://github.com/n-riesco/nel) for additional
 items.

@@ -58,7 +58,7 @@ Ubuntu 14.04, IJavascript and its prerequisites can be installed simply by
 running:
 
 ```sh
-sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq-dev
+sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq3-dev
 sudo npm install -g ijavascript
 ```
 

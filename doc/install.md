@@ -15,7 +15,7 @@ dependencies are available from their repositories and can be installed by a
 user with administrator rights:
 
 ```sh
-sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq-dev
+sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq3-dev
 ```
 
 Note, however, that the versions available in the repositories are fairly old.

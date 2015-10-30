@@ -5,14 +5,10 @@
             border-radius: 10px;
             text-align: center;">
 <h1><img alt="Links" src="images/logo-128x128.png"></h1>
-<a href="http://n-riesco.github.io/ijavascript"
-   style="display: block;">IJavascript Home Page</a>
-<a href="http://github.com/n-riesco/ijavascript"
-   style="display: block;">IJavascript Repository</a>
-<a href="http://github.com/n-riesco/jp-babel"
-   style="display: block;">jp-babel Repository</a>
-<a href="http://github.com/n-riesco/jp-coffeescript"
-   style="display: block;">jp-coffeescript Repository</a>
+<a href="http://n-riesco.github.io/ijavascript">IJavascript Home Page</a><br>
+<a href="http://github.com/n-riesco/ijavascript">IJavascript Repository</a><br>
+<a href="http://github.com/n-riesco/jp-babel">jp-babel Repository</a><br>
+<a href="http://github.com/n-riesco/jp-coffeescript">jp-coffeescript Repository</a><br>
 </nav>
 
 # IJavascript

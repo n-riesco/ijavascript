@@ -43,13 +43,67 @@
 
 
     <section>
-        <article><p>The <a href="../index.html">IJavascript kernel</a> is implemented by class <code>Kernel</code> in
-<a href="kernel.js.html"><code>kernel.js</code></a> and the message handlers in
-<a href="handlers_v4.js.html"><code>handlers_v4.js</code></a> and
-<a href="handlers_v5.js.html"><code>handlers_v5.js</code></a>.</p>
-<p>The kernel makes use of <a href="https://www.npmjs.com/package/jmp">package <code>jmp</code></a> to
-parse messages in the IPython/Jupyter messaging protocol, and <a href="https://www.npmjs.com/package/nel">package
-<code>nel</code></a> to provide Javascript REPL sessions.</p></article>
+        <article><h1>Source Code Overview</h1><p>This overview starts with a section to describe the purpose of the main files in
+this project. Followed by another section to describe the purpose of the most
+important classes. The overview finishes with a section to help create a kernel
+for other languages. To this end, the final section describes the interface
+implemented by <a href="https://github.com/n-riesco/nel">package <code>NEL</code></a>.</p>
+<p><a href="https://github.com/n-riesco/jp-babel">jp-babel</a> and
+<a href="https://github.com/n-riesco/jp-coffeescript">jp-coffeescript</a> are examples of
+kernels that have modified the <code>NEL</code> package and reused the code in IJavascript.</p>
+<h2>Main Files</h2><p><code>bin/ijavascript.js</code><br>    Script to install the IJavascript kernel and/or launch the notebook
+    dashboard.</p>
+<p><code>lib/kernel.js</code><br>    IJavascript kernel.</p>
+<p><code>lib/handlers_v4.js</code><br>    Kernel methods to handle messages of protocol v4.</p>
+<p><code>lib/handlers_v5.js</code><br>    Kernel methods to handle messages of protocol v5.</p>
+<h2>Main Classes</h2><p><code>Kernel</code><br>    IJavascript kernel. The constructor of this class is passed an object with
+    the configuration. See <a href="Kernel.html#Kernel">the documentation generated using
+    JSDoc</a> for more details.</p>
+<p><code>nel~Session</code><br>    The class <code>nel~Session</code> is used to launch a Node.js session and make
+    execution, inspection and completion requests.</p>
+<p><code>jmp~Socket</code><br>    ZMQ socket that transparently encodes/decodes Jupyter-protocol messages. See
+    <a href="http://n-riesco.github.io/jmp/module-jmp-Socket.html">the documentation generated using
+    JSDoc</a> for more
+    details.</p>
+<p><code>jmp~Message</code><br>    Jupyter-protocol Message. See <a href="http://n-riesco.github.io/jmp/module-jmp-Message.html">the documentation generated using
+    JSDoc</a> for more
+    details.</p>
+<h2>Overview of the interface between <code>Kernel</code> and <code>nel~Session</code></h2><p>(This section corresponds to <code>NEL v0.1</code>. The interface will be simplified in
+<code>NEL v0.2</code>.)</p>
+<p>To develop a kernel for another language, a new <code>NEL</code> package that implements
+the following interface with the <code>Kernel</code> class should be developed:  </p>
+<p><code>nel~Task</code><br>    This object represents an execution, completion or inspection request. See
+    <a href="http://n-riesco.github.io/nel/module-nel.html#~Task">the documentation generated using
+    JSDoc</a> for more
+    details.</p>
+<p><code>nel~Session.run</code><br>    Method to make execution requests. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#run">the documentation generated using
+    JSDoc</a> for more
+    details.</p>
+<p><code>nel~Session.complete</code><br>    Method to make completion requests. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#complete">the documentation generated using
+    JSDoc</a> for
+    more details.</p>
+<p><code>nel~Session.inspect</code><br>    Method to make inspection requests. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#inspect">the documentation generated using
+    JSDoc</a> for
+    more details.</p>
+<p><code>nel~Session.kill</code><br>    Method to kill the session. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#kill">the documentation generated using
+    JSDoc</a> for more
+    details.</p>
+<p><code>nel~Session.restart</code><br>    Method to restart the session. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#restart">the documentation generated using
+    JSDoc</a> for
+    more details.</p>
+<p><code>nel~Session.result</code><br>    This property stores the results of an action. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#result">the documentation
+    generated using
+    JSDoc</a> for
+    more details.</p>
+<p><code>nel~Session.stdin</code><br>    A writable stream that represents the session <code>stdin</code>. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#stdin">the
+    documentation generated using
+    JSDoc</a>.</p>
+<p><code>nel~Session.stdout</code><br>    A readable stream that represents the session <code>stdout</code>. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#stdout">the
+    documentation generated using
+    JSDoc</a>.</p>
+<p><code>nel~Session.stderr</code><br>    A readable stream that represents the session <code>stderr</code>. See <a href="http://n-riesco.github.io/nel/module-nel-Session.html#stderr">the
+    documentation generated using
+    JSDoc</a>.</p></article>
     </section>
 
 
@@ -66,7 +120,7 @@ parse messages in the IPython/Jupyter messaging protocol, and <a href="https://w
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Fri Oct 02 2015 23:56:51 GMT+0100 (BST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Fri Oct 30 2015 11:58:40 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

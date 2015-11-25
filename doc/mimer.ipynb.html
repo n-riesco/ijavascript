@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<link rel="shortcut icon" href="../images/favicon.ico" />
+
+<title>Customised output</title>
+
+<script src="../js/require.min.js"></script>
+<script src="../js/jquery.min.js"></script>
+
+<!-- nbconvert styles -->
+<link rel="stylesheet" href="../css/nb.css">
+
+<!-- Bootstrap -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="../js/html5shiv.min.js"></script>
+<script src="../js/respond.min.js"></script>
+<![endif]-->
+
+<!-- Custom stylesheet, it must be in the same directory as the html file -->
+<link rel="stylesheet" href="../css/custom.css">
+
+<!-- Load mathjax -->
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<!-- MathJax configuration -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true }
+    }
+});
+</script>
+<!-- End of mathjax configuration -->
+</head>
+<body>
+<!-- Bootstrap navigation bar -->
+<nav id="menubar" class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="sr-only">Toggle navigation</span>
+	<!-- 3-bar icon -->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">
+        <img min-height="50px" height="50px" width="50px" alt="IJS" src="../images/logo-50x50.png">
+      </a>
+    </div>
+
+    <div id="navbar" class="collapse navbar-collapse">
+      <!-- navbar -->
+      <ul class="nav navbar-nav">
+	<!-- dropdown: Getting started -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Getting started <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	    <li><a href="../doc/install.md.html">Installation</a></li>
+	    <li><a href="../doc/usage.md.html">Usage</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Main features</li>
+	    
+	    <li><a href="../doc/hello.ipynb.html">Text output</a></li>
+	    
+	    <li><a href="../doc/graphics.ipynb.html">Graphical output</a></li>
+	    
+	    <li><a href="../doc/async.ipynb.html">Asynchronous output</a></li>
+	    
+	    <li><a href="../doc/mimer.ipynb.html">Customised output</a></li>
+	    
+	    <li><a href="../doc/complete.md.html">TAB completion</a></li>
+	    
+	    <li><a href="../doc/inspect.md.html">Shift-TAB inspection</a></li>
+	    
+          </ul>
+        </li>
+	<!-- dropdown: Tutorials -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tutorials <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+	  
+	    
+	    
+            <li class="dropdown-header">By N. Riesco</li>
+	    
+	    <li><a href="../doc/n-riesco.global.ipynb.html">Global object</a></li>
+	    
+	    <li><a href="../doc/n-riesco.this.ipynb.html">Keyword this</a></li>
+	    
+	  
+          </ul>
+        </li>
+	<!-- dropdown: Get involved -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Get involved <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="../contributing.html">Contribution guidelines</a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header">Source code documentation</li>
+            <li><a href="../jsdoc/index.html">IJavascript</a></li>
+            <li><a href="https://n-riesco.github.io/jmp/index.html">JMP</a></li>
+            <li><a href="https://n-riesco.github.io/nel/index.html">NEL</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- navbar-right -->
+      <ul class="nav navbar-nav navbar-right">
+	<!-- Github -->
+        <li><a href="https://github.com/n-riesco/ijavascript">Github</a></li>
+	<!-- npm -->
+        <li><a href="https://www.npmjs.com/package/ijavascript">npm</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
+</nav>
+
+  <!-- notebook -->
+  
+  <div id="notebook" class="border-box-sizing" tabindex="-1">
+    <div id="notebook-container" class="container">
+      
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="customised-output">Customised Output</h1>
+<p>By default, the IJavascript kernel returns plain text outputs. The function used to convert a result into a MIME representation is available via the global variable <code>$$mimer$$</code>. The below code illustrates how it works:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[1]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[1]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+<pre>
+{ &apos;text/plain&apos;: &apos;\&apos;Hello, world!\&apos;&apos; }
+</pre>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>$$mimer$$</code> can be redefined to return alternative MIME representations. The following examples progress from a simple <code>$$mimer$$</code> that adds a <code>text/html</code> MIME representation to a <code>$$mimer$$</code> that customises the output of specific class instances.</p>
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="simple-texthtml-mimer">Simple <code>text/html</code> <code>$$mimer$$</code></h2>
+<p>This <code>$$mimer$$</code> invokes the default <code>$$mimer$$</code>. If the default <code>$$mimer$$</code> doesn't return a <code>text/html</code> MIME representation, it generates one by surrounding the <code>text/plain</code> MIME representation within a <code>&lt;pre&gt;</code> tag.</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[2]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">var</span> <span class="n">defaultMimer</span> <span class="o">=</span> <span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span><span class="p">;</span>
+
+<span class="n">function</span> <span class="n">htmlMimer</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="n">mime</span>  <span class="o">=</span> <span class="n">defaultMimer</span><span class="p">(</span><span class="nb">object</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="err">!</span><span class="p">(</span><span class="s">&quot;text/html&quot;</span> <span class="ow">in</span> <span class="n">mime</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="s">&quot;text/plain&quot;</span> <span class="ow">in</span> <span class="n">mime</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">mime</span><span class="p">[</span><span class="s">&quot;text/html&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&quot;&lt;pre&gt;&quot;</span> <span class="o">+</span>
+            <span class="n">mime</span><span class="p">[</span><span class="s">&quot;text/plain&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">/</span>\\<span class="n">n</span><span class="o">/</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span><span class="o">.</span>
+                               <span class="n">replace</span><span class="p">(</span><span class="o">/&amp;/</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;&amp;amp;&#39;</span><span class="p">)</span><span class="o">.</span>
+                               <span class="n">replace</span><span class="p">(</span><span class="o">/&lt;/</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;&amp;lt;&#39;</span><span class="p">)</span><span class="o">.</span>
+                               <span class="n">replace</span><span class="p">(</span><span class="o">/&gt;/</span><span class="n">g</span><span class="p">,</span> <span class="s">&#39;&amp;gt;&#39;</span><span class="p">)</span><span class="o">.</span>
+                               <span class="n">replace</span><span class="p">(</span><span class="o">/</span>\<span class="s">&quot;/g, &#39;&amp;quot;&#39;).</span>
+                               <span class="n">replace</span><span class="p">(</span><span class="o">/</span>\<span class="s">&#39;/g, &#39;</span><span class="o">&amp;</span><span class="c">#39;&#39;) +</span>
+            <span class="s">&quot;&lt;/pre&gt;&quot;</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">mime</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span> <span class="o">=</span> <span class="n">htmlMimer</span><span class="p">;</span>
+
+<span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[2]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<div class="output_html rendered_html">
+<pre>{ &#39;text/plain&#39;: &#39;\&#39;Hello, World!\&#39;&#39;,
+  &#39;text/html&#39;: &#39;&lt;pre&gt;&amp;#39;Hello, World!&amp;#39;&lt;/pre&gt;&#39; }</pre>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="defaultmimer"><code>$$defaultMimer$$</code></h2>
+<p>For convenience, the default <code>$$mimer$$</code> is always accessible via the immutable global <code>$$defaultMimer$$</code>. This allows the default <code>$$mimer$$</code> to be restored by running:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span> <span class="o">=</span> <span class="err">$$</span><span class="n">defaultMimer</span><span class="err">$$</span><span class="p">;</span>
+
+<span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[3]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+<pre>
+{ &apos;text/plain&apos;: &apos;\&apos;Hello, World!\&apos;&apos; }
+</pre>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="styled-texthtml-mimer">Styled <code>text/html</code> <code>$$mimer$$</code></h2>
+<p>Here's another example that extends <code>htmlMimer()</code> to produce styled <code>text.html</code> outputs:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[4]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">function</span> <span class="n">styledMimer</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="n">mime</span>  <span class="o">=</span> <span class="n">htmlMimer</span><span class="p">(</span><span class="nb">object</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="s">&quot;text/html&quot;</span> <span class="ow">in</span> <span class="n">mime</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mime</span><span class="p">[</span><span class="s">&quot;text/html&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&lt;div style=&#39;border: 1px solid grey; &quot;</span> <span class="o">+</span>
+                                        <span class="s">&quot;border-radius: .3em; &quot;</span> <span class="o">+</span>
+                                        <span class="s">&quot;padding: .3em; &quot;</span> <span class="o">+</span>
+                                        <span class="s">&quot;background-color: gainsboro; &quot;</span> <span class="o">+</span>
+                                        <span class="s">&quot;font-weight: bold; &quot;</span> <span class="o">+</span>
+                                        <span class="s">&quot;font-style: italic;&#39;&gt;&quot;</span> <span class="o">+</span>
+                            <span class="n">mime</span><span class="p">[</span><span class="s">&quot;text/html&quot;</span><span class="p">]</span> <span class="o">+</span>
+                            <span class="s">&quot;&lt;/div&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">mime</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span> <span class="o">=</span> <span class="n">styledMimer</span><span class="p">;</span>
+
+<span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[4]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<div class="output_html rendered_html">
+<div style='border: 1px solid grey; border-radius: .3em; padding: .3em; background-color: gainsboro; font-weight: bold; font-style: italic;'><pre>{ &#39;text/plain&#39;: &#39;\&#39;Hello, World!\&#39;&#39;,
+  &#39;text/html&#39;: &#39;&lt;div style=\&#39;border: 1px solid grey; border-radius: .3em; padding: .3em; background-color: gainsboro; font-weight: bold; font-style: italic;\&#39;&gt;&lt;pre&gt;&amp;#39;Hello, World!&amp;#39;&lt;/pre&gt;&lt;/div&gt;&#39; }</pre></div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="customised-output-for-specific-instances">Customised output for specific instances</h2>
+<p>This last example implements a <code>$$mimer$$</code> that generates a customised output for instances of class <code>Person</code>:</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[5]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">function</span> <span class="n">Person</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">surname</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">this</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+    <span class="n">this</span><span class="o">.</span><span class="n">surname</span> <span class="o">=</span> <span class="n">surname</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">var</span> <span class="n">person</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Person</span><span class="p">(</span><span class="s">&quot;Edwin&quot;</span><span class="p">,</span> <span class="s">&quot;Jaynes&quot;</span><span class="p">);</span>
+
+<span class="n">function</span> <span class="n">personMimer</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">var</span> <span class="n">mime</span> <span class="o">=</span> <span class="n">personMimer</span><span class="o">.</span><span class="n">previousMimer</span><span class="p">(</span><span class="nb">object</span><span class="p">);</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="nb">object</span> <span class="n">instanceof</span> <span class="n">Person</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">mime</span><span class="p">[</span><span class="s">&quot;text/html&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;&lt;table style=</span><span class="se">\&quot;</span><span class="s">border: 1px solid black;&quot;</span> <span class="o">+</span>
+                                           <span class="s">&quot;border-spacing: .3em;&quot;</span> <span class="o">+</span> 
+                                           <span class="s">&quot;border-collapse: separate;</span><span class="se">\&quot;</span><span class="s">&gt;&quot;</span> <span class="o">+</span>
+                            <span class="s">&quot;&lt;tr&gt;&lt;th&gt;Name&lt;td&gt;&quot;</span> <span class="o">+</span> <span class="nb">object</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span>
+                            <span class="s">&quot;&lt;tr&gt;&lt;th&gt;Surname&lt;td&gt;&quot;</span> <span class="o">+</span> <span class="nb">object</span><span class="o">.</span><span class="n">surname</span> <span class="o">+</span>
+                            <span class="s">&quot;&lt;/table&gt;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">mime</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">personMimer</span><span class="o">.</span><span class="n">previousMimer</span> <span class="o">=</span> <span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span><span class="p">;</span>
+
+<span class="err">$$</span><span class="n">mimer</span><span class="err">$$</span> <span class="o">=</span> <span class="n">personMimer</span><span class="p">;</span>
+
+<span class="n">person</span><span class="p">;</span>
+</pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[5]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+<div class="output_html rendered_html">
+<table style="border: 1px solid black;border-spacing: .3em;border-collapse: separate;"><tr><th>Name<td>Edwin<tr><th>Surname<td>Jaynes</table>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    </div>
+  </div>
+  
+  
+  <script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

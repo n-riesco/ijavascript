@@ -140,12 +140,12 @@ MathJax.Hub.Config({
   
   <div id="markdown" class="container">
     <h1 id="usage">Usage</h1>
-<p>To start an IPython notebook session with the IJavascript kernel, simply run:</p>
+<p>To start an IJavascript session in the Jupyter notebook, simply run:</p>
 <pre class="sh"><code>ijs</code></pre>
-<p>This command should open the IPython notebook dashboard in your default web browser:</p>
+<p>This command will open the Jupyter dashboard in your default web browser:</p>
 <p><img src="../images/screenshot-dashboard-home.png" alt="Screenshot: IPython Notebook Dashboard" /></p>
 <h2 id="register-ijavascript-with-the-dashboard">Register IJavascript with the dashboard</h2>
-<p>The IJavascript kernel can be registered with IPython v3 without opening the dashboard. To register the kernel for all users, run:</p>
+<p>The IJavascript kernel can be registered with Jupyter (and IPython v3) without opening the dashboard. To register the kernel for all users, run:</p>
 <pre class="sh"><code>ijs --ijs-install=global</code></pre>
 <p>and for the current user only:</p>
 <pre class="sh"><code>ijs --ijs-install=local</code></pre>
@@ -153,9 +153,15 @@ MathJax.Hub.Config({
 <p>By default, the dashboard lists the notebooks in the current working folder. The flag <code>--notebook-dir=path/to/another/folder</code> can be used to open the dashboard at a different folder:</p>
 <pre class="sh"><code>ijs --notebook-dir=path/to/another/folder</code></pre>
 <p><img src="../images/screenshot-dashboard-dir.png" alt="Screenshot: IPython Notebook --notebook-dir" /></p>
-<h2 id="set-the-working-folder">Set the working folder</h2>
+<h2 id="set-the-kernel-working-folder">Set the kernel working folder</h2>
 <p>Also by default, the IJavascript kernel runs a <code>node.js</code> session in the current working folder. The flag <code>--ijs-working-dir=path/to/another/folder</code> can be used to run the <code>node.js</code> session at a different folder.</p>
 <p><img src="../images/screenshot-notebook-dir.png" alt="Screenshot: IPython Notebook --ijs_working-dir" /></p>
+<h2 id="run-startup-scripts">Run startup scripts</h2>
+<p>It is possible to run one or more scripts at the startup of an IJavascript session. This can be useful to preload an <code>npm</code> package (e.g. <a href="https://www.npmjs.com/package/d3">d3</a>) or a <a href="http://n-riesco.github.io/ijavascript/doc/mimer.ipynb.html">custom <code>$$mimer$$</code></a>.</p>
+<p>To preload a script:</p>
+<pre class="sh"><code>ijs --ijs-startup-script=path/to/script.js</code></pre>
+<p>For convenience, it is also possible to preload all the Javascript files in a folder. The execution order is determined by the alphabetical order of their filenames; for example: <code>50-package-d3.js</code>, <code>60-mimer-d3.js</code>.</p>
+<pre class="sh"><code>ijs --ijs-startup-script=path/to/folder</code></pre>
 <h2 id="other-command-flags">Other command flags</h2>
 <p>Documentation on other flags can be found by running:</p>
 <pre class="sh"><code>ijs --ijs-help</code></pre>

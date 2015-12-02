@@ -66,6 +66,7 @@ var DEBUG = false;
 
 var console = require("console");
 var fs = require("fs");
+var path = require("path");
 var util = require("util");
 
 // Parse command arguments
@@ -78,20 +79,25 @@ var config = {
 var usage = (
     "Usage: node kernel.js " +
     "[--debug] " +
-    "[--protocol=Major[.minor[.patch]]] " +
-    "[--session-working-dir=path " +
     "[--hide-undefined] " +
+    "[--protocol=Major[.minor[.patch]]] " +
+    "[--session-working-dir=path] " +
+    "[--startup-script=path] " +
     "connection_file"
 );
 
 var FLAG_DEBUG = "--debug";
+var FLAG_HIDE_UNDEFINED = "--hide-undefined";
 var FLAG_PROTOCOL = "--protocol=";
 var FLAG_CWD = "--session-working-dir=";
-var FLAG_HIDE_UNDEFINED = "--hide-undefined";
+var FLAG_STARTUP_SCRIPT = "--startup-script=";
 try {
     process.argv.slice(2).forEach(function(arg) {
         if (arg === FLAG_DEBUG) {
             DEBUG = true;
+
+        } else if (arg === FLAG_HIDE_UNDEFINED) {
+            config.hideUndefined = true;
 
         } else if (arg.slice(0, FLAG_PROTOCOL.length) === FLAG_PROTOCOL) {
             config.protocolVersion = arg.slice(FLAG_PROTOCOL.length);
@@ -99,8 +105,9 @@ try {
         } else if (arg.slice(0, FLAG_CWD.length) === FLAG_CWD) {
             config.nel.cwd = arg.slice(FLAG_CWD.length);
 
-        } else if (arg === FLAG_HIDE_UNDEFINED) {
-            config.hideUndefined = true;
+        } else if (
+            arg.slice(0, FLAG_STARTUP_SCRIPT.length) === FLAG_STARTUP_SCRIPT) {
+            config.startupScript = arg.slice(FLAG_STARTUP_SCRIPT.length);
 
         } else if (!config.connection) {
             config.connection = fs.readFileSync(arg);
@@ -140,6 +147,12 @@ var zmq = require("jmp").zmq; // ZMQ bindings
  * @param {module:nel~Config} config.nel   Javascript session configuration.
  *
  * @param {String}  config.protocolVersion IPython/Jupyter protocol version.
+ *
+ * @param {String}  config.startupScript   Path to a Javascript file to be run
+ *                                         on session startup. Path to a folder
+ *                                         also accepted, in which case all the
+ *                                         Javascript files in the folder will
+ *                                         be run.
  */
 function Kernel(config) {
     /**
@@ -187,6 +200,14 @@ function Kernel(config) {
     this.session = new Session(config.nel);
 
     /**
+     * Path to a Javascript file to be run on session startup. Path to a folder
+     * also accepted, in which case all the Javascript files in the folder will
+     * be run.
+     * @member {String}
+     */
+    this.startupScript = config.startupScript;
+
+    /**
      * Number of visible execution requests
      * @member {Number}
      */
@@ -216,80 +237,10 @@ function Kernel(config) {
         require("./handlers_v4.js") :
         require("./handlers_v5.js");
 
-    this._relayStandardStreams();
-
     this._bindSockets();
+
+    this._initSession();
 }
-
-/**
- * Hook listeners to relay the standard streams onto the IOPub socket
- *
- * @private
- */
-Kernel.prototype._relayStandardStreams = function() {
-    var majorVersion = parseInt(this.protocolVersion.split(".")[0]);
-
-    var onStdout = (majorVersion &lt;= 4) ? onStdoutV4 : onStdoutV5;
-    var onStderr = (majorVersion &lt;= 4) ? onStderrV4 : onStderrV5;
-    this.session.stdout.on("data", onStdout.bind(this));
-    this.session.stderr.on("data", onStderr.bind(this));
-
-    function onStdoutV4(data) {
-        if (DEBUG) console.log("KERNEL: STDOUT: ", data.toString());
-
-        if (this.lastExecuteRequest) {
-            this.lastExecuteRequest.respond(
-                this.iopubSocket,
-                "stream", {
-                    name: "stdout",
-                    data: data.toString(),
-                }
-            );
-        }
-    }
-
-    function onStderrV4(data) {
-        if (DEBUG) console.log("KERNEL: STDERR: ", data.toString());
-
-        if (this.lastExecuteRequest) {
-            this.lastExecuteRequest.respond(
-                this.iopubSocket,
-                "stream", {
-                    name: "stderr",
-                    data: data.toString(),
-                }
-            );
-        }
-    }
-
-    function onStdoutV5(data) {
-        if (DEBUG) console.log("KERNEL: STDOUT: ", data.toString());
-
-        if (this.lastExecuteRequest) {
-            this.lastExecuteRequest.respond(
-                this.iopubSocket,
-                "stream", {
-                    name: "stdout",
-                    text: data.toString(),
-                }
-            );
-        }
-    }
-
-    function onStderrV5(data) {
-        if (DEBUG) console.log("KERNEL: STDERR: ", data.toString());
-
-        if (this.lastExecuteRequest) {
-            this.lastExecuteRequest.respond(
-                this.iopubSocket,
-                "stream", {
-                    name: "stderr",
-                    text: data.toString(),
-                }
-            );
-        }
-    }
-};
 
 /**
  * Bind kernel sockets and hook listeners
@@ -365,6 +316,142 @@ Kernel.prototype._bindSockets = function() {
 };
 
 /**
+ * Initialise session
+ *
+ * @private
+ */
+Kernel.prototype._initSession = function() {
+    this._relayStandardStreams();
+    this._runStartupScripts();
+};
+
+/**
+ * Hook listeners to relay the standard streams onto the IOPub socket
+ *
+ * @private
+ */
+Kernel.prototype._relayStandardStreams = function() {
+    var majorVersion = parseInt(this.protocolVersion.split(".")[0]);
+
+    var onStdout = (majorVersion &lt;= 4) ? onStdoutV4 : onStdoutV5;
+    var onStderr = (majorVersion &lt;= 4) ? onStderrV4 : onStderrV5;
+    this.session.stdout.on("data", onStdout.bind(this));
+    this.session.stderr.on("data", onStderr.bind(this));
+
+    function onStdoutV4(data) {
+        if (DEBUG) console.log("KERNEL: STDOUT: ", data.toString());
+
+        if (this.lastExecuteRequest) {
+            this.lastExecuteRequest.respond(
+                this.iopubSocket,
+                "stream", {
+                    name: "stdout",
+                    data: data.toString(),
+                }
+            );
+        }
+    }
+
+    function onStderrV4(data) {
+        if (DEBUG) console.log("KERNEL: STDERR: ", data.toString());
+
+        if (this.lastExecuteRequest) {
+            this.lastExecuteRequest.respond(
+                this.iopubSocket,
+                "stream", {
+                    name: "stderr",
+                    data: data.toString(),
+                }
+            );
+        }
+    }
+
+    function onStdoutV5(data) {
+        if (DEBUG) console.log("KERNEL: STDOUT: ", data.toString());
+
+        if (this.lastExecuteRequest) {
+            this.lastExecuteRequest.respond(
+                this.iopubSocket,
+                "stream", {
+                    name: "stdout",
+                    text: data.toString(),
+                }
+            );
+        }
+    }
+
+    function onStderrV5(data) {
+        if (DEBUG) console.log("KERNEL: STDERR: ", data.toString());
+
+        if (this.lastExecuteRequest) {
+            this.lastExecuteRequest.respond(
+                this.iopubSocket,
+                "stream", {
+                    name: "stderr",
+                    text: data.toString(),
+                }
+            );
+        }
+    }
+};
+
+/**
+ * Run startup scripts
+ *
+ * @private
+ */
+Kernel.prototype._runStartupScripts = function() {
+    var startupScripts;
+
+    if (this.startupScript) {
+        var stats = fs.lstatSync(this.startupScript);
+        if (stats.isDirectory()) {
+            var dir = this.startupScript;
+            startupScripts = fs.readdirSync(dir).filter(function(filename) {
+                var ext = filename.slice(filename.length - 3).toLowerCase();
+                return ext === ".js";
+            }).sort().map(function(filename) {
+                return path.join(dir, filename);
+            });
+
+        } else if (stats.isFile()) {
+            startupScripts = [this.startupScript];
+
+        } else {
+            startupScripts = [];
+        }
+    }
+
+    if (DEBUG) console.log("KERNEL: STARTUP: " + startupScripts);
+
+    startupScripts.forEach((function(script) {
+        var code;
+
+        try {
+            code = fs.readFileSync(script).toString();
+        } catch (e) {
+            var msg = "KERNEL: STARTUP: Cannot read '" + script + "'";
+            if (DEBUG) console.log(msg);
+            return;
+        }
+
+        var task = {
+            action: "run",
+            code: code,
+            onSuccess: function() {
+                var msg = "KERNEL: STARTUP: '" + script + "' run successfuly";
+                if (DEBUG) console.log(msg);
+            },
+            onError: function() {
+                var msg = "KERNEL: STARTUP: '" + script + "' failed to run";
+                if (DEBUG) console.log(msg);
+            },
+        };
+        this.session.run(task);
+    }).bind(this));
+};
+
+/**
  * Destroy kernel
  *
  * @param {DestroyCB} [destroyCB] Callback run after the session server has been
@@ -410,7 +497,7 @@ Kernel.prototype.restart = function(restartCB) {
     if (DEBUG) console.log("KERNEL: Being restarted");
 
     this.session.restart("SIGTERM", (function() {
-        this._relayStandardStreams();
+        this._initSession();
         if (restartCB) {
             restartCB();
         }
@@ -457,7 +544,7 @@ process.on("SIGINT", function() {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Nov 25 2015 21:13:59 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Dec 02 2015 22:14:26 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

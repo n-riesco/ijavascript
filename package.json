@@ -27,7 +27,7 @@
     },
     "dependencies": {
         "jmp": "0.2.x",
-        "nel": "0.1.x",
+        "nel": "0.2.x",
         "node-uuid": "^1.4.2"
     },
     "devDependencies": {

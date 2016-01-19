@@ -40,6 +40,8 @@ other languages](https://github.com/ipython/ipython/wiki/IPython-kernels-for-oth
   `HTML`, `SVG`, `PNG`, ...
 - [Asynchronous
   output](http://n-riesco.github.io/ijavascript/doc/async.ipynb.html)
+- [Customised
+  output](http://n-riesco.github.io/ijavascript/doc/mimer.ipynb.html)
 - [Autocompletion](http://n-riesco.github.io/ijavascript/doc/complete.md.html):
   press `TAB` to complete keywords and object properties
 - [Object

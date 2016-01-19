@@ -60,10 +60,12 @@ var usage = (
     "    --ijs-install=[local|global]  install IJavascript kernel\n" +
     "    --ijs-install-kernel          same as --ijs-install=local\n" +
     "                                  (for backwards-compatibility)\n" +
-    "    --ijs-protocol=version  set protocol version, e.g. 4.1\n" +
+    "    --ijs-protocol=version        set protocol version, e.g. 4.1\n" +
+    "    --ijs-startup-script=path     run script on startup\n" +
+    "                                  (path can be a file or a folder)\n" +
     "    --ijs-working-dir=path  set Javascript session working directory\n" +
     "                            (default = current working directory)\n" +
-    "    --version               show IJavascript version\n" +
+    "    --version                     show IJavascript version\n" +
     "\n" +
     "and any other options recognised by the IPython notebook; run:\n" +
     "\n" +
@@ -86,6 +88,7 @@ var usage = (
  * @property {Boolean}  context.flag.debug    --ijs-debug
  * @property {String}   context.flag.install  --ijs-install=[local|global]
  * @property {String}   context.flag.cwd      --ijs-working-dir=path
+ * @property {String}   context.flag.startup  --ijs-startup-script=path
  * @property            context.args
  * @property {String[]} context.args.kernel   Command arguments to run kernel
  * @property {String[]} context.args.frontend Command arguments to run frontend
@@ -182,6 +185,9 @@ function parseCommandArgs(context) {
                 context.protocol.version.split(".", 1)[0]
             );
 
+        } else if (e.lastIndexOf("--ijs-startup-script=", 0) === 0) {
+            context.flag.startup = fs.realpathSync(e.slice(21));
+
         } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
             context.flag.cwd = fs.realpathSync(e.slice(18));
 
@@ -201,6 +207,10 @@ function parseCommandArgs(context) {
             context.args.frontend.push(e);
         }
     });
+
+    if (context.flag.startup) {
+        context.args.kernel.push("--startup-script=" + context.flag.startup);
+    }
 
     if (context.flag.cwd) {
         context.args.kernel.push("--session-working-dir=" + context.flag.cwd);

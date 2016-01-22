@@ -294,9 +294,9 @@ function installKernelAsync(context, callback) {
     fs.writeFileSync(specFile, JSON.stringify(spec));
 
     // Copy logo files
-    var logo32Src = path.join(context.path.images, "logo-32x32.png");
+    var logo32Src = path.join(context.path.images, "node-logo-32x32.png");
     var logo32Dst = path.join(specDir, "logo-32x32.png");
-    var logo64Src = path.join(context.path.images, "logo-64x64.png");
+    var logo64Src = path.join(context.path.images, "node-logo-64x64.png");
     var logo64Dst = path.join(specDir, "logo-64x64.png");
     copyAsync(logo32Src, logo32Dst, function() {
         copyAsync(logo64Src, logo64Dst, function() {

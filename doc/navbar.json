@@ -10,8 +10,9 @@
     },
     "Tutorials": {
         "N. Riesco": {
-            "01. Global object": "n-riesco.global.ipynb",
-            "02. Keyword this": "n-riesco.this.ipynb"
+            "01. IJavascript source code overview": "overview.md",
+            "02. Global object": "n-riesco.global.ipynb",
+            "03. Keyword this": "n-riesco.this.ipynb"
         }
     }
 }

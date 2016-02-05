@@ -831,8 +831,6 @@ function testKernelInfoRequest(context) {
             return false;
         }
 
-        assert(response.signatureOK, "Error: invalid signature");
-
         assert.deepEqual(
             response.metadata, {},
             "Error: no metadata"

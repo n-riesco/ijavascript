@@ -35,6 +35,21 @@
  */
 var DEBUG = false;
 
+var log;
+if (DEBUG) {
+    var console = require("console");
+    log = function log() {
+        process.stderr.write("IJS: ");
+        console.error.apply(this, arguments);
+    };
+} else {
+    try {
+        log = require("debug")("IJS:");
+    } catch (err) {
+        log = function noop() {};
+    }
+}
+
 var console = require("console");
 var exec = require("child_process").exec;
 var fs = require("fs");
@@ -119,9 +134,9 @@ parseCommandArgs(context);
 setFrontendInfoAsync(context, function() {
     setProtocol(context);
 
-    if (DEBUG) console.log("CONTEXT:", context);
-
     installKernelAsync(context, function() {
+        log("CONTEXT:", context);
+
         if (!context.flag.install) {
             spawnFrontend(context);
         }
@@ -225,7 +240,7 @@ function setFrontendInfoAsync(context, callback) {
             console.error("Error running `ipython --version`");
             console.error(error.toString());
             if (stderr) console.error(stderr.toString());
-            if (DEBUG) console.log("CONTEXT:", context);
+            log("CONTEXT:", context);
             process.exit(1);
         }
 
@@ -238,7 +253,7 @@ function setFrontendInfoAsync(context, callback) {
                 "Error parsing IPython version:",
                 context.version.frontend
             );
-            if (DEBUG) console.log("CONTEXT:", context);
+            log("CONTEXT:", context);
             process.exit(1);
         }
 
@@ -330,7 +345,7 @@ function installKernelAsync(context, callback) {
                     console.error(util.format("Error running `%s`", cmd));
                     console.error(error.toString());
                     if (stderr) console.error(stderr.toString());
-                    if (DEBUG) console.log("CONTEXT:", context);
+                    log("CONTEXT:", context);
                     process.exit(1);
                 }
 

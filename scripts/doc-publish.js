@@ -79,12 +79,13 @@ try {
 var scriptGitInit = [
     ["git", "init"],
     ["git", "remote", "add", "origin", config.repository],
-    ["git", "pull", "origin", "gh-pages:master"],
+    ["git", "fetch", "origin", "gh-pages"],
+    ["git", "reset", "origin/gh-pages"],
     ["git", "branch", "-m", "master", "gh-pages"],
     ["git", "branch", "-u", "origin/gh-pages"],
 ];
 var scriptGitUpdate = [
-    ["git", "add", "."],
+    ["git", "add", "--all", "."],
     ["git", "commit", "-m", "Update"],
     ["git", "push"],
 ];

@@ -132,16 +132,17 @@ def render_css(outfilename):
 
 
 def make_folders():
-    paths = [
+    if os.path.exists(config["out"]):
+        shutil.rmtree(config["out"])
+
+    for path in [
         config["out"],
         config["out_doc"],
         config["out_jsdoc"],
         config["out_js"],
         config["out_css"],
-    ]
-    for path in paths:
-        if not os.path.exists(path):
-            os.mkdir(path)
+    ]:
+        os.mkdir(path)
 
 
 def copy_images():

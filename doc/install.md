@@ -75,7 +75,7 @@ instructions below work as intended:
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install pkg-config node zeromq
 sudo easy_install pip
-sudo pip install --upgrade ipython jinja2 tornado jsonschema pyzmq
+sudo pip install -U jupyter  # Refer http://jupyter.readthedocs.org/en/latest/install.html
 ```
 
 Once the dependencies have been installed, `npm` can be used to install

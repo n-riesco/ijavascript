@@ -70,7 +70,20 @@ module.exports = {
 
 var DEBUG = global.DEBUG || false;
 
-var console = require("console");
+var log;
+if (DEBUG) {
+    var console = require("console");
+    log = function log() {
+        process.stderr.write("KERNEL: ");
+        console.error.apply(this, arguments);
+    };
+} else {
+    try {
+        log = require("debug")("KERNEL:");
+    } catch (err) {
+        log = function noop() {};
+    }
+}
 
 /**
  * IPython protocol version
@@ -94,12 +107,38 @@ var nodeVersion = process.versions.node;
 var ijsVersion = "5.0.0";
 
 /**
+ * Send `status_busy` message
+ *
+ * @param {module:jmp~Message} request Request message
+ * @this Kernel
+ */
+function status_busy(request) {
+    request.respond(this.iopubSocket, 'status', {
+        execution_state: 'busy'
+    });
+}
+
+/**
+ * Send for `status_idle` message
+ *
+ * @param {module:jmp~Message} request Request message
+ * @this Kernel
+ */
+function status_idle(request) {
+    request.respond(this.iopubSocket, 'status', {
+        execution_state: 'idle'
+    });
+}
+
+/**
  * Handler for `kernel_info_request` messages
  *
  * @param {module:jmp~Message} request Request message
  * @this Kernel
  */
 function kernel_info_request(request) {
+    status_busy.call(this, request);
+
     // Ensure response uses protocolVersion,
     // otherwise the response will be ignored.
     request.respond(
@@ -112,7 +151,7 @@ function kernel_info_request(request) {
                 "name": "javascript",
                 "version": nodeVersion,
                 "mimetype": "application/javascript",
-                "file_extension": "js",
+                "file_extension": ".js",
             },
             "banner": (
                 "IJavascript v" + ijsVersion + "\n" +
@@ -125,6 +164,8 @@ function kernel_info_request(request) {
         }, {},
         protocolVersion
     );
+
+    status_idle.call(this, request);
 }
 
 /**
@@ -134,21 +175,20 @@ function kernel_info_request(request) {
  * @this Kernel
  */
 function execute_request(request) {
-    // Ensure stdin, stdout and stderr streams are sent to this request
-    this.lastExecuteRequest = request;
-
-    var task = {
-        action: "run",
-        code: request.content.code,
+    this.session.execute(request.content.code, {
+        onSuccess: onSuccess.bind(this),
+        onError: onError.bind(this),
         beforeRun: beforeRun.bind(this),
         afterRun: afterRun.bind(this),
-        onSuccess: onSuccess.bind(this),
-        onError: onError.bind(this)
-    };
-    this.session.run(task);
+        onStdout: onStdout.bind(this),
+        onStderr: onStderr.bind(this),
+    });
 
-    function beforeRun(session) {
+    function beforeRun() {
+        status_busy.call(this, request);
+
         this.executionCount++;
+
         request.respond(
             this.iopubSocket,
             "execute_input", {
@@ -158,9 +198,11 @@ function execute_request(request) {
         );
     }
 
-    function afterRun(session) {}
+    function afterRun() {
+        status_idle.call(this, request);
+    }
 
-    function onSuccess(session) {
+    function onSuccess(result) {
         request.respond(
             this.shellSocket,
             "execute_reply", {
@@ -172,7 +214,7 @@ function execute_request(request) {
         );
 
         if (this.hideUndefined &amp;&amp;
-            session.result.mime["text/plain"] === "undefined") {
+            result.mime["text/plain"] === "undefined") {
             return;
         }
 
@@ -180,31 +222,53 @@ function execute_request(request) {
             this.iopubSocket,
             "execute_result", {
                 execution_count: this.executionCount,
-                data: session.result.mime,
+                data: result.mime,
                 metadata: {},
             }
         );
     }
 
-    function onError(session) {
+    function onError(result) {
         request.respond(
             this.shellSocket,
             "execute_reply", {
                 status: "error",
                 execution_count: this.executionCount,
-                ename: session.result.error.ename,
-                evalue: session.result.error.evalue,
-                traceback: session.result.error.traceback,
-            });
+                ename: result.error.ename,
+                evalue: result.error.evalue,
+                traceback: result.error.traceback,
+            }
+        );
 
         request.respond(
             this.iopubSocket,
             "error", {
                 execution_count: this.executionCount,
-                ename: session.result.error.ename,
-                evalue: session.result.error.evalue,
-                traceback: session.result.error.traceback,
-            });
+                ename: result.error.ename,
+                evalue: result.error.evalue,
+                traceback: result.error.traceback,
+            }
+        );
+    }
+
+    function onStdout(data) {
+        request.respond(
+            this.iopubSocket,
+            "stream", {
+                name: "stdout",
+                text: data.toString(),
+            }
+        );
+    }
+
+    function onStderr(data) {
+        request.respond(
+            this.iopubSocket,
+            "stream", {
+                name: "stderr",
+                text: data.toString(),
+            }
+        );
     }
 }
 
@@ -215,25 +279,33 @@ function execute_request(request) {
  * @this Kernel
  */
 function complete_request(request) {
-    this.session.complete(
-        request.content.code,
-        request.content.cursor_pos,
-        onSuccess.bind(this),
-        onError.bind(this)
-    );
+    this.session.complete(request.content.code, request.content.cursor_pos, {
+        beforeRun: beforeRun.bind(this),
+        onSuccess: onSuccess.bind(this),
+        onError: onError.bind(this),
+        afterRun: afterRun.bind(this),
+    });
     return;
 
-    function onSuccess(session) {
+    function beforeRun() {
+        status_busy.call(this, request);
+    }
+
+    function afterRun() {
+        status_idle.call(this, request);
+    }
+
+    function onSuccess(result) {
         var content = {
-            matches: session.result.completion.list,
-            cursor_start: session.result.completion.cursorStart,
-            cursor_end: session.result.completion.cursorEnd,
+            matches: result.completion.list,
+            cursor_start: result.completion.cursorStart,
+            cursor_end: result.completion.cursorEnd,
             status: "ok",
         };
         request.respond(this.shellSocket, "complete_reply", content);
     }
 
-    function onError(session) {
+    function onError(result) {
         var content = {
             matches: [],
             cursor_start: request.content.cursor_pos,
@@ -251,29 +323,35 @@ function complete_request(request) {
  * @this Kernel
  */
 function inspect_request(request) {
-    this.session.inspect(
-        request.content.code,
-        request.content.cursor_pos,
-        onSuccess.bind(this),
-        onError.bind(this)
-    );
+    this.session.inspect(request.content.code, request.content.cursor_pos, {
+        beforeRun: beforeRun.bind(this),
+        onSuccess: onSuccess.bind(this),
+        onError: onError.bind(this),
+        afterRun: afterRun.bind(this),
+    });
     return;
 
-    function onSuccess(session) {
+    function beforeRun() {
+        status_busy.call(this, request);
+    }
+
+    function afterRun() {
+        status_idle.call(this, request);
+    }
+
+    function onSuccess(result) {
         var docstring;
 
-        if (session.result.inspection) {
+        if (result.inspection) {
             docstring = (
-                session.result.inspection.type +
-                ": " +
-                session.result.inspection.string
+                result.inspection.type + ": " + result.inspection.string
             );
         }
 
-        if (session.result.doc) {
-            docstring = session.result.doc.usage;
-            if (session.result.doc.usage) {
-                docstring += "\n\n" + session.result.doc.description;
+        if (result.doc) {
+            docstring = result.doc.usage;
+            if (result.doc.usage) {
+                docstring += "\n\n" + result.doc.description;
             }
         }
 
@@ -289,13 +367,13 @@ function inspect_request(request) {
         request.respond(this.shellSocket, "inspect_reply", content);
     }
 
-    function onError(session) {
+    function onError(result) {
         var content = {
             status: "error",
             execution_count: this.executionCount,
-            ename: session.result.error.ename,
-            evalue: session.result.error.evalue,
-            traceback: session.result.error.traceback,
+            ename: result.error.ename,
+            evalue: result.error.evalue,
+            traceback: result.error.traceback,
         };
         request.respond(this.shellSocket, "inspect_reply", content);
     }
@@ -308,6 +386,8 @@ function inspect_request(request) {
  * @this Kernel
  */
 function shutdown_request(request) {
+    status_busy.call(this, request);
+
     function respond(code, signal) {
         request.respond(
             this.controlSocket, "shutdown_reply", request.content
@@ -319,6 +399,8 @@ function shutdown_request(request) {
     } else {
         this.destroy(respond.bind(this));
     }
+
+    status_idle.call(this, request);
 }
 </code></pre>
         </article>
@@ -330,13 +412,13 @@ function shutdown_request(request) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#inspect_request">inspect_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#object_info_request">object_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#inspect_request">inspect_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#object_info_request">object_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li><li><a href="global.html#status_busy">status_busy</a></li><li><a href="global.html#status_idle">status_idle</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Thu Dec 03 2015 22:49:57 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Mar 05 2016 14:01:28 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

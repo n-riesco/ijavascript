@@ -64,6 +64,21 @@
 
 var DEBUG = false;
 
+var log;
+if (DEBUG) {
+    var console = require("console");
+    log = function log() {
+        process.stderr.write("KERNEL: ");
+        console.error.apply(this, arguments);
+    };
+} else {
+    try {
+        log = require("debug")("KERNEL:");
+    } catch (err) {
+        log = function noop() {};
+    }
+}
+
 var console = require("console");
 var fs = require("fs");
 var path = require("path");
@@ -123,7 +138,7 @@ try {
     config.connection = JSON.parse(config.connection);
 
 } catch (e) {
-    console.error("ARGV:", process.argv);
+    console.error("KERNEL: ARGV:", process.argv);
     console.error(usage);
     throw e;
 }
@@ -214,12 +229,6 @@ function Kernel(config) {
     this.executionCount = 0;
 
     /**
-     * Last execute request (to which stdin, stdout and stderr streams are sent)
-     * @member {?module:jmp~Message}
-     */
-    this.lastExecuteRequest = null;
-
-    /**
      * IPython/Jupyter protocol version
      * @member {String}
      */
@@ -266,19 +275,8 @@ Kernel.prototype._bindSockets = function() {
     }
 
     function onShellMessage(msg) {
-        if (!msg.signatureOK) {
-            console.error(
-                "KERNEL: Bad message signature: %s", util.inspect(msg)
-            );
-            return;
-        }
-
         var msg_type = msg.header.msg_type;
         if (this.handlers.hasOwnProperty(msg_type)) {
-            msg.respond(this.iopubSocket, 'status', {
-                execution_state: 'busy'
-            });
-
             try {
                 this.handlers[msg_type].call(this, msg);
             } catch (e) {
@@ -286,10 +284,6 @@ Kernel.prototype._bindSockets = function() {
                     "KERNEL: Exception in %s handler: %s", msg_type, e.stack
                 );
             }
-
-            msg.respond(this.iopubSocket, 'status', {
-                execution_state: 'idle'
-            });
         } else {
             // Ignore unimplemented msg_type requests
             console.warn(
@@ -299,13 +293,6 @@ Kernel.prototype._bindSockets = function() {
     }
 
     function onControlMessage(msg) {
-        if (!msg.signatureOK) {
-            console.error(
-                "KERNEL: Bad message signature: %s", util.inspect(msg)
-            );
-            return;
-        }
-
         if (msg.header.msg_type === "shutdown_request") {
             this.handlers.shutdown_request.call(this, msg);
         } else {
@@ -321,78 +308,7 @@ Kernel.prototype._bindSockets = function() {
  * @private
  */
 Kernel.prototype._initSession = function() {
-    this._relayStandardStreams();
     this._runStartupScripts();
-};
-
-/**
- * Hook listeners to relay the standard streams onto the IOPub socket
- *
- * @private
- */
-Kernel.prototype._relayStandardStreams = function() {
-    var majorVersion = parseInt(this.protocolVersion.split(".")[0]);
-
-    var onStdout = (majorVersion &lt;= 4) ? onStdoutV4 : onStdoutV5;
-    var onStderr = (majorVersion &lt;= 4) ? onStderrV4 : onStderrV5;
-    this.session.stdout.on("data", onStdout.bind(this));
-    this.session.stderr.on("data", onStderr.bind(this));
-
-    function onStdoutV4(data) {
-        if (DEBUG) console.log("KERNEL: STDOUT: ", data.toString());
-
-        if (this.lastExecuteRequest) {
-            this.lastExecuteRequest.respond(
-                this.iopubSocket,
-                "stream", {
-                    name: "stdout",
-                    data: data.toString(),
-                }
-            );
-        }
-    }
-
-    function onStderrV4(data) {
-        if (DEBUG) console.log("KERNEL: STDERR: ", data.toString());
-
-        if (this.lastExecuteRequest) {
-            this.lastExecuteRequest.respond(
-                this.iopubSocket,
-                "stream", {
-                    name: "stderr",
-                    data: data.toString(),
-                }
-            );
-        }
-    }
-
-    function onStdoutV5(data) {
-        if (DEBUG) console.log("KERNEL: STDOUT: ", data.toString());
-
-        if (this.lastExecuteRequest) {
-            this.lastExecuteRequest.respond(
-                this.iopubSocket,
-                "stream", {
-                    name: "stdout",
-                    text: data.toString(),
-                }
-            );
-        }
-    }
-
-    function onStderrV5(data) {
-        if (DEBUG) console.log("KERNEL: STDERR: ", data.toString());
-
-        if (this.lastExecuteRequest) {
-            this.lastExecuteRequest.respond(
-                this.iopubSocket,
-                "stream", {
-                    name: "stderr",
-                    text: data.toString(),
-                }
-            );
-        }
-    }
 };
 
 /**
@@ -421,10 +337,10 @@ Kernel.prototype._runStartupScripts = function() {
             startupScripts = [];
         }
     } else {
-            startupScripts = [];
+        startupScripts = [];
     }
 
-    if (DEBUG) console.log("KERNEL: STARTUP: " + startupScripts);
+    log("STARTUP: " + startupScripts);
 
     startupScripts.forEach((function(script) {
         var code;
@@ -432,24 +348,18 @@ Kernel.prototype._runStartupScripts = function() {
         try {
             code = fs.readFileSync(script).toString();
         } catch (e) {
-            var msg = "KERNEL: STARTUP: Cannot read '" + script + "'";
-            if (DEBUG) console.log(msg);
+            log("STARTUP: Cannot read '" + script + "'");
             return;
         }
 
-        var task = {
-            action: "run",
-            code: code,
-            onSuccess: function() {
-                var msg = "KERNEL: STARTUP: '" + script + "' run successfuly";
-                if (DEBUG) console.log(msg);
+        this.session.execute(code, {
+            onSuccess: function onSuccess() {
+                log("STARTUP: '" + script + "' run successfuly");
             },
-            onError: function() {
-                var msg = "KERNEL: STARTUP: '" + script + "' failed to run";
-                if (DEBUG) console.log(msg);
-            },
-        };
-        this.session.run(task);
+            onError: function onError() {
+                log("STARTUP: '" + script + "' failed to run");
+            }
+        });
     }).bind(this));
 };
 
@@ -460,7 +370,7 @@ Kernel.prototype._runStartupScripts = function() {
  *                                killed and before closing the sockets
  */
 Kernel.prototype.destroy = function(destroyCB) {
-    if (DEBUG) console.log("KERNEL: Being destroyed");
+    log("Destroying kernel");
 
     // TODO(NR) Handle socket `this.stdin` once it is implemented
     this.controlSocket.removeAllListeners();
@@ -496,7 +406,7 @@ Kernel.prototype.destroy = function(destroyCB) {
  *                                restarted
  */
 Kernel.prototype.restart = function(restartCB) {
-    if (DEBUG) console.log("KERNEL: Being restarted");
+    log("Restarting kernel");
 
     this.session.restart("SIGTERM", (function() {
         this._initSession();
@@ -519,16 +429,8 @@ var kernel = new Kernel(config);
 
 // Interpret a SIGINT signal as a request to interrupt the kernel
 process.on("SIGINT", function() {
-    if (DEBUG) console.log("KERNEL: Interrupting kernel");
-
-    // TODO(NR) Implement kernel interruption
-    kernel.restart(function() {
-        if (kernel.lastExecuteRequest) {
-            kernel.lastExecuteRequest.respond(kernel.iopubSocket, 'status', {
-                execution_state: 'idle'
-            });
-        }
-    });
+    log("Interrupting kernel");
+    kernel.restart(); // TODO(NR) Implement kernel interruption
 });
 </code></pre>
         </article>
@@ -540,13 +442,13 @@ process.on("SIGINT", function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#inspect_request">inspect_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#object_info_request">object_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Kernel.html">Kernel</a></li></ul><h3>Global</h3><ul><li><a href="global.html#complete_request">complete_request</a></li><li><a href="global.html#execute_request">execute_request</a></li><li><a href="global.html#inspect_request">inspect_request</a></li><li><a href="global.html#kernel_info_request">kernel_info_request</a></li><li><a href="global.html#object_info_request">object_info_request</a></li><li><a href="global.html#shutdown_request">shutdown_request</a></li><li><a href="global.html#status_busy">status_busy</a></li><li><a href="global.html#status_idle">status_idle</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Thu Dec 03 2015 22:49:57 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Mar 05 2016 14:01:28 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

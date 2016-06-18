@@ -34,7 +34,7 @@
  *
  */
 
-DEBUG = false;
+DEBUG = !!process.env.DEBUG;;
 
 var assert = require("assert");
 var console = require("console");
@@ -306,6 +306,7 @@ MessagingTestEngine.prototype.initAsync = function(callback) {
     this._initVersionsAsync((function() {
         this._initSockets();
         this._initKernel();
+        if (DEBUG) console.log("MTE:", this);
         callback();
     }).bind(this));
 };

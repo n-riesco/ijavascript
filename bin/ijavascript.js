@@ -69,8 +69,9 @@ var usage = (
     "\n" +
     "The recognised options are:\n" +
     "\n" +
+    "    --help                        show IJavascript and notebook help\n" +
     "    --ijs-debug                   enable debug log level\n" +
-    "    --ijs-help                    show this help\n" +
+    "    --ijs-help                    show IJavascript help\n" +
     "    --ijs-hide-undefined          do not show undefined results\n" +
     "    --ijs-install=[local|global]  install IJavascript kernel\n" +
     "    --ijs-install-kernel          same as --ijs-install=local\n" +
@@ -169,7 +170,11 @@ function parseCommandArgs(context) {
     ];
 
     process.argv.slice(2).forEach(function(e) {
-        if (e === "--ijs-debug") {
+        if (e === "--help") {
+            console.log(usage);
+            context.args.frontend.push(e);
+
+        } else if (e === "--ijs-debug") {
             context.flag.debug = DEBUG = true;
             context.args.kernel.push("--debug");
 

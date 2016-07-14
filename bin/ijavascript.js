@@ -61,6 +61,7 @@ var usage = [
     "    --ijs-install-kernel          same as --ijs-install=local",
     "                                  (for backwards-compatibility)",
     "    --ijs-protocol=version        set protocol version, e.g. 4.1",
+    "    --ijs-show-undefined          show undefined results",
     "    --ijs-startup-script=path     run script on startup",
     "                                  (path can be a file or a folder)",
     "    --ijs-working-dir=path        set session working directory",
@@ -75,10 +76,12 @@ var usage = [
     "for a full list.",
 ].join("\n");
 
-var DEBUG = false;
 
-function dontLog() {}
+// Setup logging helpers
+var DEBUG;
 
+var log;
+var dontLog = function dontLog() {};
 var doLog = function doLog() {
     process.stderr.write("IJS: ");
     console.error.apply(this, arguments);
@@ -92,7 +95,8 @@ if (process.env.DEBUG) {
     } catch (err) {}
 }
 
-var log = DEBUG ? doLog : dontLog;
+log = DEBUG ? doLog : dontLog;
+
 
 /**
  * @typedef Context
@@ -212,6 +216,9 @@ function parseCommandArgs(context) {
             context.protocol.majorVersion = parseInt(
                 context.protocol.version.split(".", 1)[0]
             );
+
+        } else if (e === "--ijs-show-undefined") {
+            context.args.kernel.push("--show-undefined");
 
         } else if (e.lastIndexOf("--ijs-startup-script=", 0) === 0) {
             context.flag.startup = fs.realpathSync(e.slice(21));

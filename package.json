@@ -1,6 +1,6 @@
 {
     "name": "ijavascript",
-    "version": "5.0.11-beta.5",
+    "version": "5.0.11",
     "description": "IJavascript is a Javascript kernel for the Jupyter notebook",
     "keywords": [
         "javascript",
@@ -27,7 +27,7 @@
     },
     "dependencies": {
         "jmp": "0.4.x",
-        "nel": ">=0.4.0-beta.0",
+        "nel": "0.4.x",
         "node-uuid": "^1.4.2"
     },
     "devDependencies": {

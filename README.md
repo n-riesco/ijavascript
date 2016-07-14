@@ -97,8 +97,6 @@ requests, submission of tutorials...
   [CoffeeScript](https://github.com/n-riesco/jp-coffeescript) and
   [Babel](https://github.com/n-riesco/jp-babel) kernels.
 - Use Mocha test framework
-- Update tutorial on global variables to discuss the use of `var`
-- Add tutorial to demonstrate animated graphs and javascript injection
 - Complete the implementation of IPython's messaging protocol v4.1
 - Complete the implementation of IPython's messaging protocol v5.0
 

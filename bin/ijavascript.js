@@ -44,35 +44,36 @@ var util = require("util");
 
 var uuid = require("node-uuid");
 
-var usage = (
-    "IJavascript Notebook\n" +
-    "\n" +
-    "Usage:\n" +
-    "\n" +
-    "    ijs <options>\n" +
-    "\n" +
-    "The recognised options are:\n" +
-    "\n" +
-    "    --help                        show IJavascript and notebook help\n" +
-    "    --ijs-debug                   enable debug log level\n" +
-    "    --ijs-help                    show IJavascript help\n" +
-    "    --ijs-hide-undefined          do not show undefined results\n" +
-    "    --ijs-install=[local|global]  install IJavascript kernel\n" +
-    "    --ijs-install-kernel          same as --ijs-install=local\n" +
-    "                                  (for backwards-compatibility)\n" +
-    "    --ijs-protocol=version        set protocol version, e.g. 4.1\n" +
-    "    --ijs-startup-script=path     run script on startup\n" +
-    "                                  (path can be a file or a folder)\n" +
-    "    --ijs-working-dir=path  set Javascript session working directory\n" +
-    "                            (default = current working directory)\n" +
-    "    --version                     show IJavascript version\n" +
-    "\n" +
-    "and any other options recognised by the Jupyter notebook; run:\n" +
-    "\n" +
-    "    jupyter notebook --help\n" +
-    "\n" +
-    "for a full list.\n"
-);
+var usage = [
+    "IJavascript Notebook",
+    "",
+    "Usage:",
+    "",
+    "    ijs <options>",
+    "",
+    "The recognised options are:",
+    "",
+    "    --help                        show IJavascript and notebook help",
+    "    --ijs-debug                   enable debug log level",
+    "    --ijs-help                    show IJavascript help",
+    "    --ijs-hide-undefined          do not show undefined results",
+    "    --ijs-install=[local|global]  install IJavascript kernel",
+    "    --ijs-install-kernel          same as --ijs-install=local",
+    "                                  (for backwards-compatibility)",
+    "    --ijs-protocol=version        set protocol version, e.g. 4.1",
+    "    --ijs-startup-script=path     run script on startup",
+    "                                  (path can be a file or a folder)",
+    "    --ijs-working-dir=path        set session working directory",
+    "                                  (default = current working directory)",
+    "    --version                     show IJavascript version",
+    "    --versions                    show IJavascript and library versions",
+    "",
+    "and any other options recognised by the Jupyter notebook; run:",
+    "",
+    "    jupyter notebook --help",
+    "",
+    "for a full list.",
+].join("\n");
 
 var DEBUG = false;
 
@@ -230,6 +231,13 @@ function parseCommandArgs(context) {
             console.log(context.packageJSON.version);
             process.exit(0);
 
+        } else if (e === "--versions") {
+            console.log("ijavascript", context.packageJSON.version);
+            console.log("jmp", getPackageVersion("jmp"));
+            console.log("nel", getPackageVersion("nel"));
+            console.log("node-uuid", getPackageVersion("node-uuid"));
+            process.exit(0);
+
         } else {
             context.args.frontend.push(e);
         }
@@ -244,6 +252,14 @@ function parseCommandArgs(context) {
     }
 
     context.args.kernel.push("{connection_file}");
+}
+
+function getPackageVersion(packageName) {
+    var packagePath = path.dirname(require.resolve(packageName));
+    var packageJSON = JSON.parse(
+        fs.readFileSync(path.join(packagePath, "package.json"))
+    );
+    return packageJSON.version;
 }
 
 function setJupyterInfoAsync(context, callback) {

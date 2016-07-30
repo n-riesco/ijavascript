@@ -33,22 +33,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  */
-var DEBUG = false;
-
-var log;
-if (DEBUG) {
-    var console = require("console");
-    log = function log() {
-        process.stderr.write("IJS: ");
-        console.error.apply(this, arguments);
-    };
-} else {
-    try {
-        log = require("debug")("IJS:");
-    } catch (err) {
-        log = function noop() {};
-    }
-}
 
 var console = require("console");
 var exec = require("child_process").exec;
@@ -89,6 +73,25 @@ var usage = (
     "\n" +
     "for a full list.\n"
 );
+
+var DEBUG = false;
+
+function dontLog() {}
+
+var doLog = function doLog() {
+    process.stderr.write("IJS: ");
+    console.error.apply(this, arguments);
+};
+
+if (process.env.DEBUG) {
+    DEBUG = true;
+
+    try {
+        doLog = require("debug")("IJS:");
+    } catch (err) {}
+}
+
+var log = DEBUG ? doLog : dontLog;
 
 /**
  * @typedef Context
@@ -176,7 +179,10 @@ function parseCommandArgs(context) {
             context.args.frontend.push(e);
 
         } else if (e === "--ijs-debug") {
-            context.flag.debug = DEBUG = true;
+            DEBUG = true;
+            log = doLog;
+
+            context.flag.debug = true;
             context.args.kernel.push("--debug");
 
         } else if (e === "--ijs-help") {

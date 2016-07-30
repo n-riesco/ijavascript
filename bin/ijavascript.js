@@ -372,10 +372,15 @@ function installKernelAsync(context, callback) {
         copyAsync(logo64Src, logo64Dst, function() {
 
             // Install kernel spec
-            var cmd = "ipython kernelspec install --replace " + specDir;
+            var args = [
+                context.args.frontend[0],
+                "kernelspec install --replace",
+                specDir,
+            ];
             if (context.flag.install !== "global") {
-                cmd += "  --user";
+                args.push("--user");
             }
+            var cmd = args.join(" ");
             exec(cmd, function(error, stdout, stderr) {
 
                 // Remove temporary spec folder

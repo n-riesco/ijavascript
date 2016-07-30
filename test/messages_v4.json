@@ -709,7 +709,7 @@
         }
     }]
 }, {
-    "description": "complete_request: b|reak",
+    "description": "complete_request: br|eak",
     "request": {
         "shell": {
             "header": {
@@ -717,9 +717,9 @@
             },
             "content": {
                 "text": "",
-                "line": "b",
+                "line": "br",
                 "block": null,
-                "cursor_pos": 1
+                "cursor_pos": 2
             }
         }
     },
@@ -730,7 +730,7 @@
             },
             "content": {
                 "matches": ["break"],
-                "matched_text": "b",
+                "matched_text": "br",
                 "status": "ok"
             }
         }

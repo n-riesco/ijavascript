@@ -709,15 +709,15 @@
         }
     }]
 }, {
-    "description": "complete_request: b|reak",
+    "description": "complete_request: br|eak",
     "request": {
         "shell": {
             "header": {
                 "msg_type": "complete_request"
             },
             "content": {
-                "code": "b",
-                "cursor_pos": 1
+                "code": "br",
+                "cursor_pos": 2
             }
         }
     },
@@ -729,7 +729,7 @@
             "content": {
                 "matches": ["break"],
                 "cursor_start": 0,
-                "cursor_end": 1,
+                "cursor_end": 2,
                 "status": "ok"
             }
         }

@@ -131,6 +131,7 @@ MathJax.Hub.Config({
             <li class="dropdown-header">Source code documentation</li>
             <li><a href="{{path_jsdoc ~ "index.html"}}">IJavascript</a></li>
             <li><a href="https://n-riesco.github.io/jmp/index.html">JMP</a></li>
+            <li><a href="https://n-riesco.github.io/jp-kernel/index.html">jp-kernel</a></li>
             <li><a href="https://n-riesco.github.io/nel/index.html">NEL</a></li>
           </ul>
         </li>

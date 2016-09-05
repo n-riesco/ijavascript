@@ -884,7 +884,7 @@ function testKernelInfoRequest(context) {
 
             assert.strictEqual(
                 response.content.implementation_version,
-                JSON.parse(fs.readFileSync("package.json")).version,
+                JSON.parse(fs.readFileSync(path.join(__dirname, ".." , "package.json"))).version;
                 "Error in content.implementation_version: " +
                 util.inspect(response.content)
             );

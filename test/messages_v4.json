@@ -117,17 +117,6 @@
                 "status": "ok"
             }
         }
-    }, {
-        "iopub": {
-            "header": {
-                "msg_type": "pyout"
-            },
-            "content": {
-                "data": {
-                    "text/plain": "undefined"
-                }
-            }
-        }
     }]
 }, {
     "description": "execute_request: a",
@@ -311,17 +300,6 @@
             },
             "content": {
                 "status": "ok"
-            }
-        }
-    }, {
-        "iopub": {
-            "header": {
-                "msg_type": "pyout"
-            },
-            "content": {
-                "data": {
-                    "text/plain": "undefined"
-                }
             }
         }
     }]

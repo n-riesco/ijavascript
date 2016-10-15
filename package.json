@@ -31,14 +31,14 @@
     "devDependencies": {
         "debug": "latest",
         "jsdoc": "latest",
-        "jshint": "latest"
+        "jshint": "latest",
+        "mocha": "3.x"
     },
     "scripts": {
         "doc": "python scripts/doc-build.py",
         "doc:publish": "node scripts/doc-publish.js gh-pages https://github.com/n-riesco/ijavascript",
         "lint": "jshint bin lib",
-        "test": "npm run lint && npm run test:4 && npm run test:5",
-        "test:4": "node test/index.js --protocol=4.1",
-        "test:5": "node test/index.js --protocol=5.0"
+        "test:mocha": "mocha",
+        "test": "npm run lint && npm run test:mocha"
     }
 }

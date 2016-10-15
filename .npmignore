@@ -1,7 +1,8 @@
 doc/
+gh-pages/
+test/
 
 *.swp
-gh-pages/
 misc/
 node_modules/
 npm-debug.log

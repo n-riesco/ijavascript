@@ -26,6 +26,7 @@
         "ijs": "bin/ijavascript.js"
     },
     "dependencies": {
+        "esprima": "^3.0.0",
         "jp-kernel": "0.0.x"
     },
     "devDependencies": {

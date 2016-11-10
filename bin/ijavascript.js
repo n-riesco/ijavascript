@@ -62,6 +62,7 @@ var usage = [
     "                                  (for backwards-compatibility)",
     "    --ijs-protocol=version        set protocol version, e.g. 4.1",
     "    --ijs-show-undefined          show undefined results",
+    "    --ijs-spec-path=[none|full]   set whether kernel spec uses full paths",
     "    --ijs-startup-script=path     run script on startup",
     "                                  (path can be a file or a folder)",
     "    --ijs-working-dir=path        set session working directory",
@@ -111,8 +112,9 @@ log = DEBUG ? doLog : dontLog;
  * @property            context.flag
  * @property {Boolean}  context.flag.debug    --ijs-debug
  * @property {String}   context.flag.install  --ijs-install=[local|global]
- * @property {String}   context.flag.cwd      --ijs-working-dir=path
+ * @property {String}   context.flag.specPath --ijs-spec-path=[none|full]
  * @property {String}   context.flag.startup  --ijs-startup-script=path
+ * @property {String}   context.flag.cwd      --ijs-working-dir=path
  * @property            context.args
  * @property {String[]} context.args.kernel   Command arguments to run kernel
  * @property {String[]} context.args.frontend Command arguments to run frontend
@@ -169,10 +171,7 @@ function readPackageJson(context) {
 }
 
 function parseCommandArgs(context) {
-    context.args.kernel = [
-        context.path.node,
-        context.path.kernel,
-    ];
+    context.args.kernel = [];
     context.args.frontend = [
         "jupyter",
         "notebook",
@@ -220,6 +219,17 @@ function parseCommandArgs(context) {
         } else if (e === "--ijs-show-undefined") {
             context.args.kernel.push("--show-undefined");
 
+        } else if (e.lastIndexOf("--ijs-spec-path=", 0) === 0) {
+            context.flag.specPath = e.slice(16);
+            if (context.flag.specPath !== "none" &&
+                context.flag.specPath !== "full") {
+                console.error(
+                    util.format("Error: Unknown flag option '%s'\n", e)
+                );
+                console.error(usage);
+                process.exit(1);
+            }
+
         } else if (e.lastIndexOf("--ijs-startup-script=", 0) === 0) {
             context.flag.startup = fs.realpathSync(e.slice(21));
 
@@ -249,6 +259,17 @@ function parseCommandArgs(context) {
             context.args.frontend.push(e);
         }
     });
+
+    if (context.flag.specPath === "full") {
+        context.args.kernel = [
+            context.path.node,
+            context.path.kernel,
+        ].concat(context.args.kernel);
+    } else {
+        context.args.kernel = [
+            (process.platform === 'win32') ? 'ijskernel.cmd' : 'ijskernel',
+        ].concat(context.args.kernel);
+    }
 
     if (context.flag.startup) {
         context.args.kernel.push("--startup-script=" + context.flag.startup);

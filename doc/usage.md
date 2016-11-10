@@ -69,6 +69,24 @@ filenames; for example: `50-package-d3.js`, `60-mimer-d3.js`.
 ijs --ijs-startup-script=path/to/folder
 ```
 
+## Register a kernel spec with full paths
+
+By default, `ijs` installs a kernel spec with no paths. For this kernel spec to
+work, it's necessary that the executable `ijskernel` is located in one of the
+folders listed in the environment variable PATH (this is usually the case when
+IJavascript was installed by running `npm install -g ijavascript`).
+
+IJavascript can be instructed to install a kernel spec with full paths by
+running:
+
+```sh
+ijs --ijs-spec-path=full
+```
+
+In this case, the full path to `node` and the kernel will be included in the
+kernel spec (and thus the kernel spec needs reinstalling whenever the location
+of either `node` or `ijavascript` changes).
+
 ## Other command flags
 
 Documentation on other flags can be found by running:

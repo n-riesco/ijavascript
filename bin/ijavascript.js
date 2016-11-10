@@ -170,8 +170,7 @@ function readPackageJson(context) {
 
 function parseCommandArgs(context) {
     context.args.kernel = [
-        context.path.node,
-        context.path.kernel,
+        (process.platform === 'win32') ? 'ijskernel.cmd' : 'ijskernel',
     ];
     context.args.frontend = [
         "jupyter",

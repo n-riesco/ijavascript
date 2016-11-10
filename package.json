@@ -27,13 +27,13 @@
         "ijskernel": "lib/kernel.js"
     },
     "dependencies": {
-        "jp-kernel": "0.0.x"
+        "jp-kernel": "0.1.x"
     },
     "devDependencies": {
         "debug": "latest",
         "jsdoc": "latest",
         "jshint": "latest",
-        "mocha": "3.x"
+        "mocha": "3"
     },
     "scripts": {
         "doc": "python scripts/doc-build.py",

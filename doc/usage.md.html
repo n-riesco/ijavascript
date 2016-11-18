@@ -163,6 +163,11 @@ MathJax.Hub.Config({
 <pre class="sh"><code>ijs --ijs-startup-script=path/to/script.js</code></pre>
 <p>For convenience, it is also possible to preload all the Javascript files in a folder. The execution order is determined by the alphabetical order of their filenames; for example: <code>50-package-d3.js</code>, <code>60-mimer-d3.js</code>.</p>
 <pre class="sh"><code>ijs --ijs-startup-script=path/to/folder</code></pre>
+<h2 id="register-a-kernel-spec-with-full-paths">Register a kernel spec with full paths</h2>
+<p>By default, <code>ijs</code> installs a kernel spec with no paths. For this kernel spec to work, it's necessary that the executable <code>ijskernel</code> is located in one of the folders listed in the environment variable PATH (this is usually the case when IJavascript was installed by running <code>npm install -g ijavascript</code>).</p>
+<p>IJavascript can be instructed to install a kernel spec with full paths by running:</p>
+<pre class="sh"><code>ijs --ijs-spec-path=full</code></pre>
+<p>In this case, the full path to <code>node</code> and the kernel will be included in the kernel spec (and thus the kernel spec needs reinstalling whenever the location of either <code>node</code> or <code>ijavascript</code> changes).</p>
 <h2 id="other-command-flags">Other command flags</h2>
 <p>Documentation on other flags can be found by running:</p>
 <pre class="sh"><code>ijs --ijs-help</code></pre>

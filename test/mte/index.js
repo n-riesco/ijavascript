@@ -43,7 +43,7 @@ var fs = require("fs");
 var path = require("path");
 var util = require("util");
 var spawn = require("child_process").spawn;
-var uuid = require("node-uuid");
+var uuid = require("uuid");
 
 var jmp = require("jmp");
 var zmq = jmp.zmq;

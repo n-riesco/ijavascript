@@ -42,7 +42,7 @@ var path = require("path");
 var spawn = require("child_process").spawn;
 var util = require("util");
 
-var uuid = require("node-uuid");
+var uuid = require("uuid");
 
 var usage = [
     "IJavascript Notebook",
@@ -252,7 +252,7 @@ function parseCommandArgs(context) {
             console.log("ijavascript", context.packageJSON.version);
             console.log("jmp", getPackageVersion("jmp"));
             console.log("nel", getPackageVersion("nel"));
-            console.log("node-uuid", getPackageVersion("node-uuid"));
+            console.log("uuid", getPackageVersion("uuid"));
             process.exit(0);
 
         } else {

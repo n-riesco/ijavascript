@@ -27,7 +27,8 @@
         "ijskernel": "lib/kernel.js"
     },
     "dependencies": {
-        "jp-kernel": "0.1.x"
+        "jp-kernel": "0.1.x",
+        "node-uuid": "^1.4.7"
     },
     "devDependencies": {
         "debug": "latest",

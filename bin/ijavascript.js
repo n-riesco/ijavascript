@@ -250,8 +250,10 @@ function parseCommandArgs(context) {
         } else if (e === "--versions") {
             console.log("ijavascript", context.packageJSON.version);
             console.log("jmp", getPackageVersion("jmp"));
+            console.log("jp-kernel", getPackageVersion("jp-kernel"));
             console.log("nel", getPackageVersion("nel"));
             console.log("uuid", getPackageVersion("uuid"));
+            console.log("zeromq", getPackageVersion("zeromq"));
             process.exit(0);
 
         } else {

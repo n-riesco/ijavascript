@@ -27,14 +27,14 @@
         "ijskernel": "lib/kernel.js"
     },
     "dependencies": {
-        "jp-kernel": "0.1.x",
-        "uuid": "^3.0.1"
+        "jp-kernel": "0.1.x"
     },
     "devDependencies": {
         "debug": "latest",
         "jsdoc": "latest",
         "jshint": "latest",
-        "mocha": "3"
+        "mocha": "3",
+        "uuid": "^3.0.1"
     },
     "scripts": {
         "doc": "python scripts/doc-build.py",

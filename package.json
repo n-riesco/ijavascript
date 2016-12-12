@@ -40,7 +40,7 @@
         "doc": "python scripts/doc-build.py",
         "doc:publish": "node scripts/doc-publish.js gh-pages https://github.com/n-riesco/ijavascript",
         "lint": "jshint bin lib",
-        "test:mocha": "mocha",
-        "test": "npm run lint && npm run test:mocha"
+        "test:ijskernel": "mocha test/ijskernel.js",
+        "test": "npm run lint && npm run test:ijskernel"
     }
 }

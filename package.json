@@ -26,6 +26,7 @@
         "ijs": "bin/ijavascript.js",
         "ijskernel": "lib/kernel.js"
     },
+    "main": "lib/kernel.js",
     "dependencies": {
         "jp-kernel": "0.1.x"
     },

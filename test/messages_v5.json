@@ -1,4 +1,26 @@
 [{
+    "description": "is_complete_request: console.log()",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "is_complete_request"
+            },
+            "content": {
+                "code": "console.log()"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "is_complete_reply"
+            },
+            "content": {
+                "status": "complete"
+            }
+        }
+    }]
+}, {
     "description": "is_complete_request: console.log(",
     "request": {
         "shell": {
@@ -7,6 +29,51 @@
             },
             "content": {
                 "code": "console.log("
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "is_complete_reply"
+            },
+            "content": {
+                "status": "incomplete",
+                "indent": ""
+            }
+        }
+    }]
+}, {
+    "description": "is_complete_request: while(true) {}",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "is_complete_request"
+            },
+            "content": {
+                "code": "while(true) {}"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "is_complete_reply"
+            },
+            "content": {
+                "status": "complete"
+            }
+        }
+    }]
+}, {
+    "description": "is_complete_request: while(true)",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "is_complete_request"
+            },
+            "content": {
+                "code": "while(true)"
             }
         }
     },

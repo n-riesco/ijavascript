@@ -142,8 +142,12 @@ MathJax.Hub.Config({
   <div id="notebook" class="border-box-sizing" tabindex="-1">
     <div id="notebook-container" class="container">
       
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="keyword-this">Keyword <code>this</code></h1>
+<h1 id="keyword-this-">Keyword <code>this</code></h1>
 <p>In Javascript, the keyword <code>this</code> is sometimes misunderstood. Although its use within the context of Object Oriented Programming (OOP) is clear, Javascript sometimes goes beyond. In this short tutorial, I will present a number of examples to help the reader identify three contexts in which the keyword <code>this</code> is used:</p>
 <ul>
 <li>Object Oriented Programming</li>
@@ -151,16 +155,23 @@ MathJax.Hub.Config({
 <li>Bound functions</li>
 </ul>
 </div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="use-of-this-in-object-oriented-programming">Use of <code>this</code> in Object Oriented Programming</h2>
 <p>The main purpose of <code>this</code> in Javascript is to serve Object Oriented Programming. It is used by the methods of a class to access the properties of a class instance. The following example illustrates this use:</p>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[1]:
 </div>
-<div class="input_area box-flex1">
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="o">/**</span>
  <span class="o">*</span> <span class="n">Person</span> <span class="n">represents</span> <span class="n">a</span> <span class="n">person</span> <span class="n">that</span> <span class="n">has</span> <span class="n">been</span> <span class="n">given</span> <span class="n">a</span> <span class="n">name</span>
  <span class="o">*</span> <span class="nd">@class</span>
@@ -175,104 +186,114 @@ In&nbsp;[1]:
  <span class="o">*</span> <span class="nd">@method</span>
  <span class="o">*/</span>
 <span class="n">Person</span><span class="o">.</span><span class="n">prototype</span><span class="o">.</span><span class="n">sayName</span> <span class="o">=</span>  <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s">&quot;My name is &quot;</span> <span class="o">+</span> <span class="n">this</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">return</span> <span class="s2">&quot;My name is &quot;</span> <span class="o">+</span> <span class="n">this</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">var</span> <span class="n">john</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Person</span><span class="p">(</span><span class="s">&quot;John&quot;</span><span class="p">);</span>
+<span class="n">var</span> <span class="n">john</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Person</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">);</span>
 <span class="n">john</span><span class="o">.</span><span class="n">sayName</span><span class="p">();</span>                       
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[1]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area"><div class="prompt output_prompt">Out[1]:</div>
 
-<div class="output_html rendered_html">
+<div class="output_html rendered_html output_subarea output_pyout">
 <pre>&#39;My name is John&#39;</pre>
 </div>
 
 </div>
-</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The above snippet defines class <code>Person</code> with a constructor that takes a name and the method <code>sayName()</code> that prints the name by using the keyword <code>this</code>.</p>
 </div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="use-of-this-in-unbound-functions">Use of <code>this</code> in unbound functions</h2>
 <p>Things start getting complicated if we take full advantage of Javascript. The following snippet uses the method <code>sayName()</code> to define an unbound function. Within unbound functions, the keyword <code>this</code> is set to the <code>global</code> object. See in the below snippet that the property <code>name</code> is undefined in the <code>global</code> object:</p>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
 </div>
-<div class="input_area box-flex1">
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="n">var</span> <span class="n">unboundFunction</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">prototype</span><span class="o">.</span><span class="n">sayName</span><span class="p">;</span>
 <span class="n">unboundFunction</span><span class="p">();</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[2]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area"><div class="prompt output_prompt">Out[2]:</div>
 
-<div class="output_html rendered_html">
+<div class="output_html rendered_html output_subarea output_pyout">
 <pre>&#39;My name is undefined&#39;</pre>
 </div>
 
 </div>
-</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="use-of-this-in-bound-functions">Use of <code>this</code> in bound functions</h2>
 <p>Javascript lets you bind an unbound function to an object. A bound function sets the keyword <code>this</code> to the bound object. Below is an example:</p>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
 </div>
-<div class="input_area box-flex1">
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="n">var</span> <span class="n">boundFunction</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">prototype</span><span class="o">.</span><span class="n">sayName</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">john</span><span class="p">);</span>
 <span class="n">boundFunction</span><span class="p">();</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[3]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
 
-<div class="output_html rendered_html">
+<div class="output_html rendered_html output_subarea output_pyout">
 <pre>&#39;My name is John&#39;</pre>
 </div>
 
-</div>
 </div>
 
 </div>

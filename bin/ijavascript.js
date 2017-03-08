@@ -307,7 +307,7 @@ function setJupyterInfoAsync(context, callback) {
         if (isNaN(context.frontend.majorVersion)) {
             console.error(
                 "Error parsing Jupyter version:",
-                context.version.frontend
+                context.frontend.version
             );
             log("CONTEXT:", context);
             process.exit(1);
@@ -340,7 +340,7 @@ function setIPythonInfoAsync(context, callback) {
         if (isNaN(context.frontend.majorVersion)) {
             console.error(
                 "Error parsing IPython version:",
-                context.version.frontend
+                context.frontend.version
             );
             log("CONTEXT:", context);
             process.exit(1);

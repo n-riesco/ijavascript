@@ -956,14 +956,14 @@
         }
     }]
 }, {
-    "description": "object_info_request: util.inspect",
+    "description": "object_info_request: window",
     "request": {
         "shell": {
             "header": {
                 "msg_type": "object_info_request"
             },
             "content": {
-                "oname": "util.inspect",
+                "oname": "window",
                 "detail_level": 0
             }
         }
@@ -974,7 +974,7 @@
                 "msg_type": "object_info_reply"
             },
             "content": {
-                "oname": "util.inspect",
+                "oname": "window",
                 "found": false
             }
         }

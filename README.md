@@ -55,7 +55,7 @@ running:
 
 ```sh
 sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq3-dev
-sudo npm install -g ijavascript
+npm install -g ijavascript
 ```
 
 For other platforms, please, refer to the [installation

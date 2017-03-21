@@ -44,7 +44,7 @@ var spawn = require("child_process").spawn;
 var util = require("util");
 
 var usage = [
-    "IJavascript Notebook",
+    "IJavascript Notebook/Console",
     "",
     "Usage:",
     "",
@@ -52,7 +52,8 @@ var usage = [
     "",
     "The recognised options are:",
     "",
-    "    --help                        show IJavascript and notebook help",
+    "    console                       run jupyter console instead of notebook",
+    "    --help                        show IJavascript and jupyter help",
     "    --ijs-debug                   enable debug log level",
     "    --ijs-help                    show IJavascript help",
     "    --ijs-hide-undefined          do not show undefined results",
@@ -69,9 +70,9 @@ var usage = [
     "    --version                     show IJavascript version",
     "    --versions                    show IJavascript and library versions",
     "",
-    "and any other options recognised by the Jupyter notebook; run:",
+    "and any other options recognised by the Jupyter console or notebook; run:",
     "",
-    "    jupyter notebook --help",
+    "    jupyter (console|notebook) --help",
     "",
     "for a full list.",
 ].join("\n");
@@ -102,6 +103,7 @@ log = DEBUG ? doLog : dontLog;
  * @typedef Context
  *
  * @property            context
+ * @property {String}   context.kernelName    Name of the kernel ("javascript")
  * @property            context.path
  * @property {String}   context.path.node     Path to Node.js shell
  * @property {String}   context.path.root     Path to IJavascript root folder
@@ -131,6 +133,7 @@ log = DEBUG ? doLog : dontLog;
  * @type Context
  */
 var context = {
+    kernelName: "javascript",
     path: {},
     packageJSON: undefined,
     flag: {},
@@ -191,6 +194,11 @@ function parseCommandArgs(context) {
         } else if (e === "--ijs-help") {
             console.log(usage);
             process.exit(0);
+
+        } else if (e === "console") {
+            context.args.frontend.splice(1, 1,
+                "console",
+                "--kernel=" + context.kernelName);
 
         } else if (e === "--ijs-hide-undefined") {
             context.args.kernel.push("--hide-undefined");
@@ -395,7 +403,7 @@ function installKernelAsync(context, callback) {
 
     // Create temporary spec folder
     var tmpdir = makeTmpdir();
-    var specDir = path.join(tmpdir, "javascript");
+    var specDir = path.join(tmpdir, context.kernelName);
     fs.mkdirSync(specDir);
 
     // Create spec file

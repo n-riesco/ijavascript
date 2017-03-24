@@ -142,10 +142,6 @@ MathJax.Hub.Config({
   <div id="notebook" class="border-box-sizing" tabindex="-1">
     <div id="notebook-container" class="container">
       
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="asynchronous-output">Asynchronous output</h1>
 <p>Javascript and Node.JS make heavy use of asynchronous execution. IJavascript lets you exercise these asynchronous capabilities, both:</p>
@@ -154,30 +150,23 @@ MathJax.Hub.Config({
 <li>by updating the IJavascript output asynchronously.</li>
 </ul>
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="updating-stdout-and-stderr-asynchronously">Updating <code>stdout</code> and <code>stderr</code> asynchronously</h2>
 <p>Both streams <code>stdout</code> and <code>stderr</code> can be written asynchronously. Any text written to these streams will be forwarded back to the latest request from the frontend:</p>
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[1]:
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+<div class="input_area box-flex1">
 <div class="highlight"><pre><span class="n">function</span> <span class="n">countTo</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">milliseconds</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">var</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">_n</span><span class="o">++</span><span class="p">);</span>
         
         <span class="k">if</span> <span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">_n</span> <span class="o">&gt;</span> <span class="n">number</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">clearInterval</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">_intervalObject</span><span class="p">);</span>
-            <span class="n">console</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Done!&quot;</span><span class="p">);</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&quot;Done!&quot;</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">};</span>
     <span class="n">counter</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -189,22 +178,24 @@ MathJax.Hub.Config({
 
 </div>
 </div>
-</div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="vbox output_wrapper">
+<div class="output vbox">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[1]:</div>
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[1]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html">
 <pre>undefined</pre>
 </div>
 
 </div>
+</div>
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
 <pre>
 1
 2
@@ -216,8 +207,8 @@ MathJax.Hub.Config({
 </div>
 </div>
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stderr output_text">
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stderr">
 <pre>
 Done!
 
@@ -229,29 +220,24 @@ Done!
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="updating-the-ijavascript-output-asynchronously">Updating the IJavascript output asynchronously</h2>
 <p>IJavascript offers two global definitions to help produce an output asynchronously: <code>$$async$$</code> and <code>$$done$$()</code>.</p>
 <p>When <code>$$async$$</code> is set to <code>true</code>, the IJavascript kernel is instructed not to produce an output. Instead, an output can be produced by calling <code>$$done$$()</code>.</p>
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[2]:
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+<div class="input_area box-flex1">
 <div class="highlight"><pre><span class="err">$$</span><span class="n">async</span><span class="err">$$</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
 
-<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">);</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello!&quot;</span><span class="p">);</span>
 
 <span class="n">setTimeout</span><span class="p">(</span>
     <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="err">$$</span><span class="n">done</span><span class="err">$$</span><span class="p">(</span><span class="s2">&quot;And good bye!&quot;</span><span class="p">);</span>
+        <span class="err">$$</span><span class="n">done</span><span class="err">$$</span><span class="p">(</span><span class="s">&quot;And good bye!&quot;</span><span class="p">);</span>
     <span class="p">},</span>
     <span class="mi">1000</span>
 <span class="p">);</span>
@@ -259,14 +245,13 @@ Done!
 
 </div>
 </div>
-</div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="vbox output_wrapper">
+<div class="output vbox">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
 <pre>
 Hello!
 
@@ -274,39 +259,37 @@ Hello!
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[2]:</div>
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[2]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html">
 <pre>&#39;And good bye!&#39;</pre>
 </div>
 
 </div>
-
-</div>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
 </div>
-<div class="inner_cell">
+
+</div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It is also possible to produce a graphical output asynchronously, the same way it is done synchronously, with the difference that <code>$$done$$()</code> has to be called to instruct the IJavascript kernel that the output is ready:</p>
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
+<div class="input_area box-flex1">
 <div class="highlight"><pre><span class="err">$$</span><span class="n">async</span><span class="err">$$</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
 
-<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;Hello!&quot;</span><span class="p">);</span>
+<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello!&quot;</span><span class="p">);</span>
 
 <span class="n">setTimeout</span><span class="p">(</span>
     <span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="err">$$</span><span class="n">svg</span><span class="err">$$</span> <span class="o">=</span> <span class="s2">&quot;&lt;svg&gt;&lt;circle cx=&#39;30px&#39; cy=&#39;30px&#39; r=&#39;20px&#39;/&gt;&lt;/svg&gt;&quot;</span><span class="p">;</span>
+        <span class="err">$$</span><span class="n">svg</span><span class="err">$$</span> <span class="o">=</span> <span class="s">&quot;&lt;svg&gt;&lt;circle cx=&#39;30px&#39; cy=&#39;30px&#39; r=&#39;20px&#39;/&gt;&lt;/svg&gt;&quot;</span><span class="p">;</span>
         <span class="err">$$</span><span class="n">done</span><span class="err">$$</span><span class="p">();</span>
     <span class="p">},</span>
     <span class="mi">1000</span>
@@ -315,14 +298,13 @@ Hello!
 
 </div>
 </div>
-</div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="vbox output_wrapper">
+<div class="output vbox">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
 <pre>
 Hello!
 
@@ -330,12 +312,13 @@ Hello!
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[3]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
-<div class="output_svg output_subarea output_pyout">
 <svg><circle cx='30px' cy='30px' r='20px'/></svg>
-</div>
 
+</div>
 </div>
 
 </div>

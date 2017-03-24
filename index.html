@@ -147,41 +147,133 @@ MathJax.Hub.Config({
             border-radius: 10px;
             text-align: center;"> <h1><img alt="Links" src="images/logo-128x128.png"></h1> <a href="http://n-riesco.github.io/ijavascript">IJavascript Home Page</a><br> <a href="http://github.com/n-riesco/ijavascript">IJavascript Repository</a><br> <a href="http://github.com/n-riesco/jp-babel">jp-babel Repository</a><br> <a href="http://github.com/n-riesco/jp-coffeescript">jp-coffeescript Repository</a><br> </nav></p>
 <h1 id="ijavascript">IJavascript</h1>
-<p>IJavascript is an <a href="https://www.npmjs.com/"><code>npm</code> package</a> that implements a Javascript kernel for the <a href="http://jupyter.org/">Jupyter notebook</a> (formerly known as <a href="http://ipython.org/notebook.html">IPython notebook</a>). A Jupyter notebook combines the creation of rich-text documents (including equations, graphs and videos) with the execution of code in a number of programming languages.</p>
-<p>The execution of code is carried out by means of a kernel that implements the <a href="http://ipython.org/ipython-doc/stable/development/messaging.html">IPython/Jupyter messaging protocol</a>. There are kernels available for <a href="http://ipython.org/notebook.html">Python</a>, <a href="https://github.com/JuliaLang/IJulia.jl">Julia</a>, <a href="https://github.com/minad/iruby">Ruby</a>, <a href="https://github.com/gibiansky/IHaskell">Haskell</a> and <a href="https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages">many other languages</a>.</p>
+<p>IJavascript is a Javascript kernel for the <a href="http://jupyter.org/">Jupyter notebook</a>. The Jupyter notebook combines the creation of rich-text documents (including equations, graphs and videos) with the execution of code in a number of programming languages. The execution of code is carried out by means of a kernel that implements the <a href="http://jupyter-client.readthedocs.io/en/latest/messaging.html">Jupyter messaging protocol</a>.</p>
+<p>The IJavascript kernel executes Javascript code inside a <a href="https://nodejs.org/">Node.js</a> session. And thus, it behaves as the Node.js REPL does, providing access to the Node.js library and to any installed <a href="https://www.npmjs.com/">npm</a> modules.</p>
+<p>There are kernels available for <a href="http://ipython.org/notebook.html">Python</a>, <a href="https://github.com/JuliaLang/IJulia.jl">Julia</a>, <a href="https://github.com/minad/iruby">Ruby</a>, <a href="https://github.com/gibiansky/IHaskell">Haskell</a> and <a href="https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages">many other languages</a>.</p>
 <div style="clear: both;" />
+
+
+<p>Here's a sample notebook that makes use of the IJavascript kernel:</p>
+<p><img src="images/screenshot-notebook-hello.png" alt="Screenshot: Notebook Hello Sample" /></p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#announcements">Announcements</a></li>
+<li><a href="#features">Main Features</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#contributions">Contributions</a></li>
+<li><a href="#todo">TODO</a></li>
+</ul>
+<h2 id="announcements">Announcements</h2>
+<ul>
+<li>Starting with IJavascript v5.0.11, it is possible to customise the output of an object based on its type. See the documentation on <a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb">custom output</a> for details.</li>
+<li>The use of <code>$$mimer$$</code> and <code>$$defaultMimer$$</code> to customise output is now deprecated.</li>
+<li>To avoid clutter in the global context, the use of <code>$$async$$</code>, <code>$$done$$</code>, <code>$$mime$$</code>, <code>$$html$$</code>, <code>$$svg$$</code>, <code>$$png$$</code> and <code>$$jpeg$$</code> has also been deprecated and replaced with the global object <code>$$</code>. For usage, see the documentation <a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/async.ipynb">here</a> and <a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb">here</a>.</li>
+</ul>
 <h2 id="main-features">Main Features</h2>
 <ul>
-<li>Run Javascript code within a <code>node.js</code> session</li>
+<li>Run Javascript code inside a <code>Node.js</code> session</li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html">Hello, World!</a></li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/graphics.ipynb.html">Graphical output</a> for <code>HTML</code>, <code>SVG</code>, <code>PNG</code>, ...</li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/async.ipynb.html">Asynchronous output</a></li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/complete.md.html">Autocompletion</a>: press <code>TAB</code> to complete keywords and object properties</li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/inspect.md.html">Object inspection</a>: press <code>Shift-TAB</code> to inspect an object and show its content or, if available, its documentation</li>
 </ul>
+<p>There are also a number of experimental features documented <a href="http://github.com/n-riesco/ijavascript/tree/dev/doc">here</a>:</p>
+<ul>
+<li><a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/async.ipynb">Asynchronous output</a></li>
+<li><a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb">Custom output</a></li>
+</ul>
 <h2 id="installation">Installation</h2>
-<p>The instructions to install IJavascript are platform-dependent. For example, in Ubuntu 14.04, IJavascript and its prerequisites can be installed simply by running:</p>
-<pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq3-dev
+<p>IJavascript is distributed as an <a href="https://www.npmjs.com/">npm</a> package and thus it requires:</p>
+<ul>
+<li><a href="http://nodejs.org/">Node.js</a></li>
+<li><a href="https://www.npmjs.com/">npm</a></li>
+</ul>
+<p>Depending on your use, other <a href="http://jupyter.org/">Jupyter tools</a> will be necessary (e.g. Jupyter notebook). Note that IJavascript has been kept backwards-compatibility with IPython v1, so that it's possible to use the IPython notebook distributed in Ubuntu 14.04 LTS and Ubuntu 16.04 LTS.</p>
+<p>To install IJavascript in Ubuntu 16.04 LTS, run:</p>
+<pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook
 sudo npm install -g ijavascript</code></pre>
-<p>For other platforms, please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/install.md.html">installation notes</a>.</p>
+<p>In Windows, <a href="http://continuum.io/downloads">Anaconda</a> offers a convenient distribution to install Python and many other packages, such as Jupyter and IJavascript.</p>
+<p>In OS X, <a href="http://brew.sh/">Homebrew</a> and <a href="https://pip.pypa.io/en/latest/installing">pip</a> can be used to install IJavascript and its prerequisites:</p>
+<pre class="sh"><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+brew install pkg-config node zeromq
+sudo easy_install pip
+sudo pip install --upgrade pyzmq jupyter
+sudo npm install -g ijavascript</code></pre>
+<p>For other platforms or if you find any problems with the instructions above, please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/install.md.html">installation notes</a>.</p>
 <h2 id="usage">Usage</h2>
-<p>To start an IPython notebook session with the IJavascript kernel, run:</p>
-<pre class="sh"><code>ijs</code></pre>
-<p>This command should open the IPython notebook dashboard in your default web browser:</p>
-<p><img src="images/screenshot-dashboard-home.png" alt="Screenshot: IPython Notebook Dashboard" /></p>
-<p>Here's a sample notebook that makes use of the IJavascript kernel:</p>
-<p><img src="images/screenshot-notebook-hello.png" alt="Screenshot: Notebook Hello Sample" /></p>
-<p>Please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/usage.md.html">usage notes</a> for further details.</p>
+<p>IJavascript provides 5 executables: <code>ijsinstall</code>, <code>ijsnotebook</code>, <code>ijsconsole</code>, <code>ijskernel</code> and <code>ijs</code>. Their purpose and basic use is described in the sections below. Please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/usage.md.html">usage notes</a> for further details.</p>
+<h3 id="ijsinstall-ijavascript-kernel-spec-installer"><code>ijsinstall</code>: IJavascript kernel spec installer</h3>
+<p>'ijsinstall` registers the IJavascript kernel with Jupyter, so that other tools (e.g. the Jupyter notebook) can invoke it. The following command flags are recognised:</p>
+<pre><code>--debug                   enable debug messages
+--help                    show this help
+--hide-undefined          do not show undefined results
+--install=[local|global]  install kernel for current user or globally
+--protocol=version        set messaging protocol version, e.g. 5.0
+--show-undefined          show undefined results
+--spec-path=[none|full]   set whether kernel spec uses full paths
+--startup-script=path     run script on kernel startup
+                          (path can be a file or a folder)
+--version                 show kernel version
+--versions                show kernel and library versions
+--working-dir=path        set kernel working directory
+                          (default = current working directory)</code></pre>
+<h3 id="ijsnotebook-ijavascript-notebook"><code>ijsnotebook</code>: IJavascript notebook</h3>
+<p>After running <code>ijsinstall</code>, Jupyter notebook users can invoke the Jupyter notebook as usual. <code>ijsnotebook</code> is provided for convenience to users of the IPython notebook prior to version 3. <code>ijsnotebook</code> is a wrapper around <code>ipython notebook</code>. It extends the command flags accepted by <code>ipython notebook</code> with the following:</p>
+<pre><code>--help                        show IJavascript and notebook help
+--ijs-debug                   enable debug messages
+--ijs-help                    show this help
+--ijs-hide-undefined          do not show undefined results
+--ijs-install=[local|global]  install kernel for current user or globally
+--ijs-protocol=version        set protocol version, e.g. 5.0
+--ijs-show-undefined          show undefined results
+--ijs-spec-path=[none|full]   set whether kernel spec uses full paths
+--ijs-startup-script=path     run script on startup
+                              (path can be a file or a folder)
+--ijs-working-dir=path        set kernel working directory
+                              (default = current working directory)
+--version                     show kernel version
+--versions                    show kernel and library versions</code></pre>
+<h3 id="ijsconsole-ijavascript-console"><code>ijsconsole</code>: IJavascript console</h3>
+<p><code>ijsconsole</code> is provided for convenience to users as a wrapper around <code>ipython console</code>. The following command flags are recognised:</p>
+<pre><code>--help                        show IJavascript and notebook help
+--ijs-debug                   enable debug messages
+--ijs-help                    show this help
+--ijs-hide-undefined          do not show undefined results
+--ijs-install=[local|global]  install kernel for current user or globally
+--ijs-protocol=version        set protocol version, e.g. 5.0
+--ijs-show-undefined          show undefined results
+--ijs-spec-path=[none|full]   set whether kernel spec uses full paths
+--ijs-startup-script=path     run script on startup
+                              (path can be a file or a folder)
+--ijs-working-dir=path        set kernel working directory
+                              (default = current working directory)
+--version                     show kernel version
+--versions                    show kernel and library versions</code></pre>
+<h3 id="ijskernel-ijavascript-kernel"><code>ijskernel</code>: IJavascript kernel</h3>
+<p><code>ijskernel</code> is the executable invoked by Jupyter tools (e.g. the notebook) and that appears in the kernel spec that <code>ijsintall</code> creates for IJavascript. You won't need this command, unless you want to create a custom kernel spec.</p>
+<pre><code>Usage:
+    ijskernel [options] connection_file
+
+Options:
+    --debug                           enable debug messages
+    --hide-undefined                  do not show undefined results
+    --protocol=Major[.minor[.patch]]  set protocol version, e.g. 5.0
+    --session-working-dir=path        set session working directory
+    --show-undefined                  show undefined results
+    --startup-script=path             run script on startup
+                      (path can be a file or a folder)</code></pre>
+<h3 id="ijs-deprecated-cli"><code>ijs</code>: Deprecated CLI</h3>
+<p><code>ijs</code> is provided for backwards-compatibility. It will be removed in the next major-version update. Please, use <code>ijsinstall</code> or <code>ijsnotebook</code> instead.</p>
 <h1 id="contributions">Contributions</h1>
 <p>First of all, thank you for taking the time to contribute. Please, read <a href="http://n-riesco.github.io/ijavascript/contributing.html">CONTRIBUTING</a> and use the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> for any contributions: support requests, bug reports, enhancement requests, pull requests, submission of tutorials...</p>
-<h1 id="to-do">TO DO</h1>
+<h1 id="todo">TODO</h1>
 <ul>
-<li>Split kernel into Jupyter and Javascript frameworks to help reuse code in the <a href="https://github.com/n-riesco/jp-coffeescript">CoffeeScript</a> and <a href="https://github.com/n-riesco/jp-babel">Babel</a> kernels.</li>
-<li>Use Mocha test framework</li>
-<li>Complete the implementation of IPython's messaging protocol v4.1</li>
-<li>Complete the implementation of IPython's messaging protocol v5.0</li>
+<li>Complete the implementation of the Jupyter messaging protocol v4.1</li>
+<li>Complete the implementation of the Jupyter messaging protocol v5.0</li>
 </ul>
-<p>See TODO list in package <a href="https://github.com/n-riesco/nel">NEL</a> for additional items.</p>
+<p>See TODO list in packages <a href="https://github.com/n-riesco/jp-kernel">jp-kernel</a> and <a href="https://github.com/n-riesco/jp-kernel">NEL</a> for additional items.</p>
 
   </div>
   

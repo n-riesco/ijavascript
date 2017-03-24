@@ -141,42 +141,39 @@ MathJax.Hub.Config({
   
   <div id="markdown" class="container">
     <h1 id="usage">Usage</h1>
-<p>To start an IJavascript session in the Jupyter notebook, simply run:</p>
-<pre class="sh"><code>ijs</code></pre>
-<p>This command will open the Jupyter dashboard in your default web browser:</p>
-<p><img src="../images/screenshot-dashboard-home.png" alt="Screenshot: IPython Notebook Dashboard" /></p>
-<h2 id="register-ijavascript-with-the-dashboard">Register IJavascript with the dashboard</h2>
-<p>The IJavascript kernel can be registered with Jupyter (and IPython v3) without opening the dashboard. To register the kernel for all users, run:</p>
-<pre class="sh"><code>ijs --ijs-install=global</code></pre>
-<p>and for the current user only:</p>
-<pre class="sh"><code>ijs --ijs-install=local</code></pre>
-<h2 id="set-the-dashboard-home-folder">Set the dashboard home folder</h2>
-<p>By default, the dashboard lists the notebooks in the current working folder. The flag <code>--notebook-dir=path/to/another/folder</code> can be used to open the dashboard at a different folder:</p>
-<pre class="sh"><code>ijs --notebook-dir=path/to/another/folder</code></pre>
-<p><img src="../images/screenshot-dashboard-dir.png" alt="Screenshot: IPython Notebook --notebook-dir" /></p>
-<h2 id="set-the-kernel-working-folder">Set the kernel working folder</h2>
-<p>Also by default, the IJavascript kernel runs a <code>node.js</code> session in the current working folder. The flag <code>--ijs-working-dir=path/to/another/folder</code> can be used to run the <code>node.js</code> session at a different folder.</p>
-<p><img src="../images/screenshot-notebook-dir.png" alt="Screenshot: IPython Notebook --ijs_working-dir" /></p>
-<h2 id="run-startup-scripts">Run startup scripts</h2>
-<p>It is possible to run one or more scripts at the startup of an IJavascript session. This can be useful to preload an <code>npm</code> package (e.g. <a href="https://www.npmjs.com/package/d3">d3</a>) or a <a href="http://n-riesco.github.io/ijavascript/doc/mimer.ipynb.html">custom <code>$$mimer$$</code></a>.</p>
-<p>To preload a script:</p>
-<pre class="sh"><code>ijs --ijs-startup-script=path/to/script.js</code></pre>
-<p>For convenience, it is also possible to preload all the Javascript files in a folder. The execution order is determined by the alphabetical order of their filenames; for example: <code>50-package-d3.js</code>, <code>60-mimer-d3.js</code>.</p>
-<pre class="sh"><code>ijs --ijs-startup-script=path/to/folder</code></pre>
-<h2 id="register-a-kernel-spec-with-full-paths">Register a kernel spec with full paths</h2>
-<p>By default, <code>ijs</code> installs a kernel spec with no paths. For this kernel spec to work, it's necessary that the executable <code>ijskernel</code> is located in one of the folders listed in the environment variable PATH (this is usually the case when IJavascript was installed by running <code>npm install -g ijavascript</code>).</p>
-<p>IJavascript can be instructed to install a kernel spec with full paths by running:</p>
-<pre class="sh"><code>ijs --ijs-spec-path=full</code></pre>
-<p>In this case, the full path to <code>node</code> and the kernel will be included in the kernel spec (and thus the kernel spec needs reinstalling whenever the location of either <code>node</code> or <code>ijavascript</code> changes).</p>
-<h2 id="other-command-flags">Other command flags</h2>
-<p>Documentation on other flags can be found by running:</p>
-<pre class="sh"><code>ijs --ijs-help</code></pre>
-<p>and</p>
-<pre class="sh"><code>ipython notebook --help-all</code></pre>
-<h2 id="sample-notebooks">Sample notebooks</h2>
-<p>Here's a sample notebook that makes use of the Javascript kernel:</p>
-<p><img src="../images/screenshot-notebook-hello.png" alt="Screenshot: Notebook Hello Sample" /></p>
-<p>More examples of use can be found on the <a href="https:///n-riesco.github.io/ijavascript/index.html">IJavascript website</a>.</p>
+<p>This documentation illustrates some of the flags supported by the IJavascript executables. To get the full list of command flags, run:</p>
+<pre class="sh"><code>ijsinstall --help</code></pre>
+<pre class="sh"><code>ijsnotebook --help</code></pre>
+<pre class="sh"><code>ijsconsole --help</code></pre>
+<pre class="sh"><code>ijskernel --help</code></pre>
+<h2 id="install-the-ijavascript-kernel-globally">Install the IJavascript Kernel Globally</h2>
+<p>By default, the IJavascript kernel is installed locally; i.e. for the current user only. To install the kernel for all users, run:</p>
+<pre class="sh"><code>ijsinstall --install=global</code></pre>
+<h2 id="install-the-ijavascript-kernel-using-full-paths">Install the IJavascript Kernel Using Full Paths</h2>
+<p>By default, <code>ijsinstall</code> creates a kernel spec with no paths. For this kernel spec to work, it is necessary that the executable <code>ijskernel</code> is located in one of the folders listed in the environment variable <code>PATH</code> (this is usually the case when IJavascript was installed by running <code>npm install -g ijavascript</code>).</p>
+<p>Alternatively, <code>ijsinstall</code> can be instructed to create a kernel spec with full paths:</p>
+<pre class="sh"><code>ijsinstall --spec-path=full</code></pre>
+<p>In this case, the full path to <code>node</code> and <code>ijskernel</code> will be included in the kernel spec. Note also that in this case if either <code>node</code> or <code>ijskernel</code> change their location (e.g. when a new version of node is installed), then the command <code>ijsinstall --spec-path=full</code> would have to be rerun (to create a kernel spec with the updated paths).</p>
+<h2 id="set-the-kernel-working-folder">Set the Kernel Working Folder</h2>
+<p>The IJavascript kernel, also by default, runs a <code>Node.js</code> session in the current working folder. To run the <code>Node.js</code> session in a different folder:</p>
+<pre class="sh"><code>ijsinstall --working-dir=/path/to/working/dir</code></pre>
+<p><img src="../images/screenshot-notebook-dir.png" alt="Screenshot: Jupyter Notebook --ijs_working-dir" /></p>
+<h2 id="run-startup-scripts">Run Startup Scripts</h2>
+<p>It is possible to run one or more scripts at the startup of an IJavascript session. This can be useful to preload <code>npm</code> packages (e.g. <a href="https://www.npmjs.com/package/d3">d3</a> and <a href="https://www.npmjs.com/package/jsdom">jsdom</a>).</p>
+<p>To preload a script, use the flag <code>--startup-script=/path/to/script.js</code>:</p>
+<pre class="sh"><code>ijsinstall --startup-script=/path/to/script.js</code></pre>
+<p>For convenience, it is also possible to preload all the Javascript files in a folder. The execution order is determined by the alphabetical order of their filenames; i.e.: <code>50-jsdom.js</code> before <code>60-d3-ijavascript-wrapper.js</code>.</p>
+<pre class="sh"><code>ijsinstall --startup-script=/path/to/folder</code></pre>
+<h2 id="showhide-undefined-results">Show/Hide <code>undefined</code> results</h2>
+<p>The IJavascript kernel offers the option to show or hide the result of an execution request if it is <code>undefined</code>.</p>
+<p>By default, <code>ijsnotebook</code> installs an IJavascript kernel that hides <code>undefined</code> results, whereas <code>ijsconsole</code> installs a kernel that shows <code>undefined</code> results.</p>
+<p><code>ijsinstall</code> and <code>ijskernel</code> provide the flags <code>--hide-undefined</code> and <code>--show-undefined</code> to controls this behaviour.</p>
+<h2 id="other-command-flags">Other Command Flags</h2>
+<p><code>ijsnotebook</code> and <code>ijsconsole</code> are wrappers around <code>jupyter notebook</code> and <code>jupyter console</code> that install the IJavascript kernel before opening the notebook dashboard or a console.</p>
+<p>Both <code>ijsnotebook</code> and <code>ijsconsole</code> accept the same command flags <code>jupyter notebook</code> and <code>jupyter console</code> accept.</p>
+<p>For example, by default, <code>jupyter notebook</code> opens the notebook dashboard in the current working folder. To open the dashboard in a different folder, run:</p>
+<pre class="sh"><code>ijsnotebook --notebook-dir=/path/to/another/folder</code></pre>
+<p><img src="../images/screenshot-dashboard-dir.png" alt="Screenshot: Jupyter Notebook --notebook-dir" /></p>
 
   </div>
   

@@ -142,233 +142,183 @@ MathJax.Hub.Config({
   <div id="notebook" class="border-box-sizing" tabindex="-1">
     <div id="notebook-container" class="container">
       
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="graphical-output">Graphical output</h1>
 <p>IJavascript provides a number of global variables to produce a graphical output.</p>
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="text-formats">Text formats</h2>
 <p>IJavascript can output <code>HTML</code> and <code>SVG</code>.</p>
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="-html-"><code>$$html$$</code></h3>
-<p>To output <code>HTML</code> simply assign a string with the HTML to the global variable
-<code>$$html$$</code>. See the example below:</p>
+<h3 id="html"><code>$$html$$</code></h3>
+<p>To output <code>HTML</code> simply assign a string with the HTML to the global variable <code>$$html$$</code>. See the example below:</p>
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[1]:
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="err">$$</span><span class="n">html</span><span class="err">$$</span> <span class="o">=</span> <span class="s2">&quot;&lt;div style=&#39;background-color:olive;width:50px;height:50px&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">;</span>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="err">$$</span><span class="n">html</span><span class="err">$$</span> <span class="o">=</span> <span class="s">&quot;&lt;div style=&#39;background-color:olive;width:50px;height:50px&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">;</span>
 </pre></div>
 
 </div>
 </div>
-</div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="vbox output_wrapper">
+<div class="output vbox">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[1]:</div>
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[1]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html">
 <div style='background-color:olive;width:50px;height:50px'></div>
 </div>
 
 </div>
-
-</div>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
 </div>
-<div class="inner_cell">
+
+</div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="-svg-"><code>$$svg$$</code></h3>
-<p>Similarly, it is possible to output <code>SVG</code> by assigning a string to the global
-variable <code>$$svg$$</code>:</p>
+<h3 id="svg"><code>$$svg$$</code></h3>
+<p>Similarly, it is possible to output <code>SVG</code> by assigning a string to the global variable <code>$$svg$$</code>:</p>
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[2]:
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="err">$$</span><span class="n">svg</span><span class="err">$$</span> <span class="o">=</span> <span class="s2">&quot;&lt;svg&gt;&lt;rect width=80 height=80 style=&#39;fill: orange;&#39;/&gt;&lt;/svg&gt;&quot;</span><span class="p">;</span>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="err">$$</span><span class="n">svg</span><span class="err">$$</span> <span class="o">=</span> <span class="s">&quot;&lt;svg&gt;&lt;rect width=80 height=80 style=&#39;fill: orange;&#39;/&gt;&lt;/svg&gt;&quot;</span><span class="p">;</span>
 </pre></div>
 
 </div>
 </div>
-</div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="vbox output_wrapper">
+<div class="output vbox">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[2]:</div>
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[2]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
-<div class="output_svg output_subarea output_pyout">
 <svg><rect width=80 height=80 style='fill: orange;'/></svg>
-</div>
-
-</div>
 
 </div>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
 </div>
-<div class="inner_cell">
+
+</div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="binary-formats">Binary formats</h2>
-<p>IJavascript can also output pictures in <code>PNG</code> and <code>JPEG</code> formats. However, this
-formats are binary and need to be encoded in <code>base64</code>. See how in the following
-examples.</p>
+<p>IJavascript can also output pictures in <code>PNG</code> and <code>JPEG</code> formats. However, this formats are binary and need to be encoded in <code>base64</code>. See how in the following examples.</p>
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="-png-"><code>$$png$$</code></h3>
-<p>In the below example, a <code>PNG</code> file is read, then encoded in <code>base64</code> and finally
-assigned to the global variable <code>$$png$$</code>:</p>
+<h3 id="png"><code>$$png$$</code></h3>
+<p>In the below example, a <code>PNG</code> file is read, then encoded in <code>base64</code> and finally assigned to the global variable <code>$$png$$</code>:</p>
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="err">$$</span><span class="n">png</span><span class="err">$$</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;fs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s2">&quot;image.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="s2">&quot;base64&quot;</span><span class="p">);</span>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="err">$$</span><span class="n">png</span><span class="err">$$</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s">&quot;fs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s">&quot;image.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="s">&quot;base64&quot;</span><span class="p">);</span>
 </pre></div>
 
 </div>
 </div>
-</div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
+<div class="vbox output_wrapper">
+<div class="output vbox">
 
 
-<div class="output_png output_subarea output_pyout">
-<img src="data:image/png;base64,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"
->
-</div>
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[3]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
-</div>
+
+<img src="data:image/png;base64,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">
 
 </div>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
 </div>
-<div class="inner_cell">
+
+</div>
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="-jpeg-"><code>$$jpeg$$</code></h3>
+<h3 id="jpeg"><code>$$jpeg$$</code></h3>
 <p>Similarly with <code>JPEG</code> files and the global variable <code>$$jpeg$$</code>:</p>
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[4]:
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="err">$$</span><span class="n">jpeg</span><span class="err">$$</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s2">&quot;fs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="s2">&quot;base64&quot;</span><span class="p">);</span>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="err">$$</span><span class="n">jpeg</span><span class="err">$$</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s">&quot;fs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s">&quot;image.jpg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="s">&quot;base64&quot;</span><span class="p">);</span>
 </pre></div>
 
 </div>
 </div>
-</div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
+<div class="vbox output_wrapper">
+<div class="output vbox">
 
 
-<div class="output_png output_subarea output_pyout">
-<img src="data:image/png;base64,/9j/4AAQSkZJRgABAQIAAwADAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAyADIDASIAAhEBAxEB/8QAGwABAQEBAAMBAAAAAAAAAAAAAAcIBgIDBQn/xAA0EAABAwMDAwMBBAsBAAAAAAABAgMEBQYRAAcSEyExCBQiQRU4drQXGCMkMjNRUmFxhMP/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A/VPXO1/cbb61Kiij3RfdvUee4yJKIs+qMR3lMlRSHAhagopKkqHLGMpI+mui1nbcaNGkepciRHbdAsmHjmkHH77L/roL7SKzR7gpzNXoNVh1KBI5dGVDfS8y5xUUnitBKThQIOD5BGuS3F3u2r2ocjx78vGJTpcviWYTbbkqYtCueHBHYSt3p5bWOpx4chjOSBr3QK9TLJ2tl3TOjuewoUCbUX24yElZaZ6jiwhJIBUQk4BIGfqNZa2ktt25oUO77lnsT7qvF1uROqlRWhJW64QltsK8JSBxQhtIwAEoQnwnQWz9c702omxYEncJ6I7LfajNqmUKpR2wtxYQkrccjpQ2gFQKlrIQlOVKISCRVrauy1bzpv2zZ9y0qu0/qKa91TZrcpnmnGU82yU5GRkZz3GoxXvTxWHmecR+lTiGOa23UlCi5g5QjIII8YUSnz3A12uxFhStvLUn0iZQmKU5KqjkwtMlshfJppPM9MkZPDHfv8R/jQUjTTTQNZ63A+8wr8Ew/wA7M1oXWetwPvMK/BMP87M0FbotFplybfOW7Wook0+qRZUKWyVqT1WXVLQtOUkEZSojIIPfsdYrt+77j2IZhbdb3Ut+3KlS1BiBWGQ6umzggJUFxpRQgL4haO+EqBICkoVlI2Mu5TZe0dUvEQTNNCpc+p+2DnTL/RDrnT5YPHlxxnBxnwdS6xPV5t3ftuR4m6loVCz11xpEdUepRlVClym31LRx902goDfDj1DIQ0kdQj5JSpQD5Nub73AphmTRLpi1mG3yIS8Uvhec/wASxhw4JyPl9APHbV22+v2Df1JdnsRxEkxnS1Iil4OKRnulWcAlKh4JA7hQ74zrIm8Sdhn9xbaRsBCiNVqE+pmurtuMlmiKgForHUU2Aw6/1Fo4qa5EAOpcIKWwLt6a/wCZcv8Ax/8AtoLdpppoPiXleVu2Bbkq7LsnLh0uGppDzyI7r6gp11LSAG2kqWola0Dsk+c+MnUGiTqnfe6tf3Kepb0GjJgsUOie5YUy/IjtKW4p9aFElPN11ziCEq4cOSUq5DVr3Msj9ItnSbT+0/s/3EmFI9x0erx9vKafxx5Jzy6XHOe3LPfGCYsOIHEGZNW82jHwSjhnGPJye3kdsHv50HpjW1GurbOXaNVXJjxq3T5cB9bOEuoafDiCpBUCAeK8gkEeDgjU9j+nWTb1Jg25btXjTKdDaW0lVQyh1CAR0kngkpcPEq5KwjukYT8vjb0IQ2hLbaQlKQAlIGAAPoNeWgzXeG2cHbi3pl5X3c9JoduwOBmzI8d+StvmsNt4abb5LJcWhOB/dn6ao3p6uPba5bDck7Z3E7W4kacuNUZjkKREK5wabU5+xfSlSBwU1gAEYI7qPInot09t6Lu5YlS2+uGdUIcCpqjqcfp7iESG1MvtvIKFLQtI+bSc5Se2f965/YrYqgbF29OptOq0ytVSsyETKrVprTKHpLyWkN8U9NI4spKVKQ2orKS4v5HkSQpmmmmgaaaaBpppoGmmmgaaaaD/2Q=="
->
-</div>
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[4]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
-</div>
+
+<img src="data:image/png;base64,/9j/4AAQSkZJRgABAQIAAwADAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAyADIDASIAAhEBAxEB/8QAGwABAQEBAAMBAAAAAAAAAAAAAAcIBgIDBQn/xAA0EAABAwMDAwMBBAsBAAAAAAABAgMEBQYRAAcSEyExCBQiQRU4drQXGCMkMjNRUmFxhMP/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A/VPXO1/cbb61Kiij3RfdvUee4yJKIs+qMR3lMlRSHAhagopKkqHLGMpI+mui1nbcaNGkepciRHbdAsmHjmkHH77L/roL7SKzR7gpzNXoNVh1KBI5dGVDfS8y5xUUnitBKThQIOD5BGuS3F3u2r2ocjx78vGJTpcviWYTbbkqYtCueHBHYSt3p5bWOpx4chjOSBr3QK9TLJ2tl3TOjuewoUCbUX24yElZaZ6jiwhJIBUQk4BIGfqNZa2ktt25oUO77lnsT7qvF1uROqlRWhJW64QltsK8JSBxQhtIwAEoQnwnQWz9c702omxYEncJ6I7LfajNqmUKpR2wtxYQkrccjpQ2gFQKlrIQlOVKISCRVrauy1bzpv2zZ9y0qu0/qKa91TZrcpnmnGU82yU5GRkZz3GoxXvTxWHmecR+lTiGOa23UlCi5g5QjIII8YUSnz3A12uxFhStvLUn0iZQmKU5KqjkwtMlshfJppPM9MkZPDHfv8R/jQUjTTTQNZ63A+8wr8Ew/wA7M1oXWetwPvMK/BMP87M0FbotFplybfOW7Wook0+qRZUKWyVqT1WXVLQtOUkEZSojIIPfsdYrt+77j2IZhbdb3Ut+3KlS1BiBWGQ6umzggJUFxpRQgL4haO+EqBICkoVlI2Mu5TZe0dUvEQTNNCpc+p+2DnTL/RDrnT5YPHlxxnBxnwdS6xPV5t3ftuR4m6loVCz11xpEdUepRlVClym31LRx902goDfDj1DIQ0kdQj5JSpQD5Nub73AphmTRLpi1mG3yIS8Uvhec/wASxhw4JyPl9APHbV22+v2Df1JdnsRxEkxnS1Iil4OKRnulWcAlKh4JA7hQ74zrIm8Sdhn9xbaRsBCiNVqE+pmurtuMlmiKgForHUU2Aw6/1Fo4qa5EAOpcIKWwLt6a/wCZcv8Ax/8AtoLdpppoPiXleVu2Bbkq7LsnLh0uGppDzyI7r6gp11LSAG2kqWola0Dsk+c+MnUGiTqnfe6tf3Kepb0GjJgsUOie5YUy/IjtKW4p9aFElPN11ziCEq4cOSUq5DVr3Msj9ItnSbT+0/s/3EmFI9x0erx9vKafxx5Jzy6XHOe3LPfGCYsOIHEGZNW82jHwSjhnGPJye3kdsHv50HpjW1GurbOXaNVXJjxq3T5cB9bOEuoafDiCpBUCAeK8gkEeDgjU9j+nWTb1Jg25btXjTKdDaW0lVQyh1CAR0kngkpcPEq5KwjukYT8vjb0IQ2hLbaQlKQAlIGAAPoNeWgzXeG2cHbi3pl5X3c9JoduwOBmzI8d+StvmsNt4abb5LJcWhOB/dn6ao3p6uPba5bDck7Z3E7W4kacuNUZjkKREK5wabU5+xfSlSBwU1gAEYI7qPInot09t6Lu5YlS2+uGdUIcCpqjqcfp7iESG1MvtvIKFLQtI+bSc5Se2f965/YrYqgbF29OptOq0ytVSsyETKrVprTKHpLyWkN8U9NI4spKVKQ2orKS4v5HkSQpmmmmgaaaaBpppoGmmmgaaaaD/2Q==">
 
 </div>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
 </div>
-<div class="inner_cell">
+
+</div>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="mime-output">MIME output</h2>
-<p>IJavascript also provides the global variable <code>$$mime$$</code> to produce an output in
-any other format understood by the IPython frontend. Following is an example
-where instead of assigning an HTML string to the global variable <code>$$html$$</code>, the
-global variable <code>$$mime$$</code> is assigned an object with the HTML string assigned
-to the property <code>&quot;text/html&quot;</code>:</p>
+<p>IJavascript also provides the global variable <code>$$mime$$</code> to produce an output in any other format understood by the IPython frontend. Following is an example where instead of assigning an HTML string to the global variable <code>$$html$$</code>, the global variable <code>$$mime$$</code> is assigned an object with the HTML string assigned to the property <code>&quot;text/html&quot;</code>:</p>
 </div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[5]:
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class="highlight"><pre><span class="err">$$</span><span class="n">mime</span><span class="err">$$</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;text/html&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;div style=&#39;background-color:olive;width:50px;height:50px&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">};</span>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="err">$$</span><span class="n">mime</span><span class="err">$$</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;text/html&quot;</span><span class="p">:</span> <span class="s">&quot;&lt;div style=&#39;background-color:olive;width:50px;height:50px&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">};</span>
 </pre></div>
 
 </div>
 </div>
-</div>
 
-<div class="output_wrapper">
-<div class="output">
+<div class="vbox output_wrapper">
+<div class="output vbox">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[5]:</div>
+<div class="box-flex1 output_subarea output_pyout">
 
-<div class="output_html rendered_html output_subarea output_pyout">
+<div class="output_html rendered_html">
 <div style='background-color:olive;width:50px;height:50px'></div>
 </div>
 
+</div>
 </div>
 
 </div>

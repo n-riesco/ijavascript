@@ -24,6 +24,7 @@
     },
     "bin": {
         "ijs": "bin/ijavascript.js",
+        "ijsconsole": "bin/ijsconsole.js",
         "ijsnotebook": "bin/ijsnotebook.js",
         "ijskernel": "lib/kernel.js"
     },

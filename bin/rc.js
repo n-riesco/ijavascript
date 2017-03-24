@@ -74,11 +74,12 @@ log = DEBUG ? doLog : dontLog;
  * @property {String}   context.path.images   Path to IJavascript images folder
  * @property {Object}   context.packageJSON   Contents of npm package.json
  * @property            context.flag
- * @property {Boolean}  context.flag.debug    --ijs-debug
- * @property {String}   context.flag.install  --ijs-install=[local|global]
- * @property {String}   context.flag.specPath --ijs-spec-path=[none|full]
- * @property {String}   context.flag.startup  --ijs-startup-script=path
- * @property {String}   context.flag.cwd      --ijs-working-dir=path
+ * @property {Boolean}  context.flag.debug          --debug
+ * @property {Boolean}  context.flag.hideUndefined  --[hide|show]-undefined
+ * @property {String}   context.flag.install        --install=[local|global]
+ * @property {String}   context.flag.specPath       --spec-path=[none|full]
+ * @property {String}   context.flag.startup        --startup-script=path
+ * @property {String}   context.flag.cwd            --working-dir=path
  * @property            context.args
  * @property {String[]} context.args.kernel   Command arguments to run kernel
  * @property {String[]} context.args.frontend Command arguments to run frontend

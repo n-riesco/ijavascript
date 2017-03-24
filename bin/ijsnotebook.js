@@ -59,18 +59,16 @@ var usage = [
     "",
     "Usage:",
     "",
-    "    ijs <options>",
+    "    ijsnotebook <options>",
     "",
     "The recognised options are:",
     "",
-    "    --help                        show IJavascript and notebook help",
-    "    --ijs-debug                   enable debug log level",
-    "    --ijs-help                    show IJavascript help",
+    "    --help                        show all the help",
+    "    --ijs-debug                   enable debug messages",
+    "    --ijs-help                    show this help",
     "    --ijs-hide-undefined          do not show undefined results",
-    "    --ijs-install=[local|global]  install IJavascript kernel",
-    "    --ijs-install-kernel          same as --ijs-install=local",
-    "                                  (for backwards-compatibility)",
-    "    --ijs-protocol=version        set protocol version, e.g. 4.1",
+    "    --ijs-install=[local|global]  install kernel for user or globally",
+    "    --ijs-protocol=version        set protocol version, e.g. 5.0",
     "    --ijs-show-undefined          show undefined results",
     "    --ijs-spec-path=[none|full]   set whether kernel spec uses full paths",
     "    --ijs-startup-script=path     run script on startup",
@@ -93,7 +91,7 @@ function parseCommandArgs(context) {
         "jupyter",
         "notebook",
     ];
-    context.flag.hideUndefined = false;
+    context.flag.hideUndefined = true;
 
     process.argv.slice(2).forEach(function(e) {
         if (e === "--help") {
@@ -124,9 +122,6 @@ function parseCommandArgs(context) {
                 console.error(usage);
                 process.exit(1);
             }
-
-        } else if (e === "--ijs-install-kernel") {
-            context.flag.install = "local";
 
         } else if (e.lastIndexOf("--ijs-protocol=", 0) === 0) {
             context.protocol.version = e.slice(15);

@@ -1,111 +1,118 @@
 # Usage
 
-To start an IJavascript session in the Jupyter notebook, simply run:
+This documentation illustrates some of the flags supported by the IJavascript
+executables. To get the full list of command flags, run:
 
 ```sh
-ijs
+ijsinstall --help
 ```
-
-This command will open the Jupyter dashboard in your default web browser:
-
-![Screenshot: IPython Notebook
-Dashboard](../images/screenshot-dashboard-home.png)
-
-## Register IJavascript with the dashboard
-
-The IJavascript kernel can be registered with Jupyter (and IPython v3) without
-opening the dashboard. To register the kernel for all users, run:
 
 ```sh
-ijs --ijs-install=global
+ijsnotebook --help
 ```
-
-and for the current user only:
 
 ```sh
-ijs --ijs-install=local
+ijsconsole --help
 ```
-
-## Set the dashboard home folder
-
-By default, the dashboard lists the notebooks in the current working folder. The
-flag `--notebook-dir=path/to/another/folder` can be used to open the dashboard
-at a different folder:
 
 ```sh
-ijs --notebook-dir=path/to/another/folder
+ijskernel --help
 ```
 
-![Screenshot: IPython Notebook
---notebook-dir](../images/screenshot-dashboard-dir.png)
 
-## Set the kernel working folder
+## Install the IJavascript Kernel Globally
 
-Also by default, the IJavascript kernel runs a `node.js` session in the current
-working folder. The flag `--ijs-working-dir=path/to/another/folder` can be used
-to run the `node.js` session at a different folder.
+By default, the IJavascript kernel is installed locally; i.e. for the current
+user only. To install the kernel for all users, run:
 
-![Screenshot: IPython Notebook
+```sh
+ijsinstall --install=global
+```
+
+
+## Install the IJavascript Kernel Using Full Paths
+
+By default, `ijsinstall` creates a kernel spec with no paths. For this kernel
+spec to work, it is necessary that the executable `ijskernel` is located in one
+of the folders listed in the environment variable `PATH` (this is usually the
+case when IJavascript was installed by running `npm install -g ijavascript`).
+
+Alternatively, `ijsinstall` can be instructed to create a kernel spec with full
+paths:
+
+```sh
+ijsinstall --spec-path=full
+```
+
+In this case, the full path to `node` and `ijskernel` will be included in the
+kernel spec. Note also that in this case if either `node` or `ijskernel` change
+their location (e.g. when a new version of node is installed), then the command
+`ijsinstall --spec-path=full` would have to be rerun (to create a kernel spec
+with the updated paths).
+
+
+## Set the Kernel Working Folder
+
+The IJavascript kernel, also by default, runs a `Node.js` session in the current
+working folder. To run the `Node.js` session in a different folder:
+
+```sh
+ijsinstall --working-dir=/path/to/working/dir
+```
+
+![Screenshot: Jupyter Notebook
 --ijs_working-dir](../images/screenshot-notebook-dir.png)
 
-## Run startup scripts
+
+## Run Startup Scripts
 
 It is possible to run one or more scripts at the startup of an IJavascript
-session. This can be useful to preload an `npm` package (e.g.
-[d3](https://www.npmjs.com/package/d3)) or a [custom
-`$$mimer$$`](http://n-riesco.github.io/ijavascript/doc/mimer.ipynb.html).
+session. This can be useful to preload `npm` packages (e.g.
+[d3](https://www.npmjs.com/package/d3) and
+[jsdom](https://www.npmjs.com/package/jsdom)).
 
-To preload a script:
+To preload a script, use the flag `--startup-script=/path/to/script.js`:
 
 ```sh
-ijs --ijs-startup-script=path/to/script.js
+ijsinstall --startup-script=/path/to/script.js
 ```
 
 For convenience, it is also possible to preload all the Javascript files in a
 folder. The execution order is determined by the alphabetical order of their
-filenames; for example: `50-package-d3.js`, `60-mimer-d3.js`.
+filenames; i.e.: `50-jsdom.js` before `60-d3-ijavascript-wrapper.js`.
 
 ```sh
-ijs --ijs-startup-script=path/to/folder
+ijsinstall --startup-script=/path/to/folder
 ```
 
-## Register a kernel spec with full paths
 
-By default, `ijs` installs a kernel spec with no paths. For this kernel spec to
-work, it's necessary that the executable `ijskernel` is located in one of the
-folders listed in the environment variable PATH (this is usually the case when
-IJavascript was installed by running `npm install -g ijavascript`).
+## Show/Hide `undefined` results
 
-IJavascript can be instructed to install a kernel spec with full paths by
-running:
+The IJavascript kernel offers the option to show or hide the result of an
+execution request if it is `undefined`.
+
+By default, `ijsnotebook` installs an IJavascript kernel that hides `undefined`
+results, whereas `ijsconsole` installs a kernel that shows `undefined` results.
+
+`ijsinstall` and `ijskernel` provide the flags `--hide-undefined` and
+`--show-undefined` to controls this behaviour.
+
+
+## Other Command Flags
+
+`ijsnotebook` and `ijsconsole` are wrappers around `jupyter notebook` and
+`jupyter console` that install the IJavascript kernel before opening the
+notebook dashboard or a console.
+
+Both `ijsnotebook` and `ijsconsole` accept the same command flags `jupyter
+notebook` and `jupyter console` accept.
+
+For example, by default, `jupyter notebook` opens the notebook dashboard in the
+current working folder. To open the dashboard in a different folder, run:
 
 ```sh
-ijs --ijs-spec-path=full
+ijsnotebook --notebook-dir=/path/to/another/folder
 ```
 
-In this case, the full path to `node` and the kernel will be included in the
-kernel spec (and thus the kernel spec needs reinstalling whenever the location
-of either `node` or `ijavascript` changes).
-
-## Other command flags
-
-Documentation on other flags can be found by running:
-
-```sh
-ijs --ijs-help
-```
-
-and
-
-```sh
-ipython notebook --help-all
-```
-
-## Sample notebooks
-
-Here's a sample notebook that makes use of the Javascript kernel:
-
-![Screenshot: Notebook Hello Sample](../images/screenshot-notebook-hello.png)
-
-More examples of use can be found on the [IJavascript
-website](https:///n-riesco.github.io/ijavascript/index.html).
+![Screenshot: Jupyter Notebook
+--notebook-dir](../images/screenshot-dashboard-dir.png)

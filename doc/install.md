@@ -64,11 +64,11 @@ sudo pip install --upgrade ipython jinja2 tornado jsonschema pyzmq
 The instructions for upgrading `node.js` have been adapted from those found
 [here](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#debian-and-ubuntu-based-linux-distributions).
 
-## OS X
+## macOS
 
-I don't have access to a OS X machine, but I have been told that
+I don't have access to a macOS machine, but I have been told that
 [Homebrew](http://brew.sh/) may help with the installation of the IJavascript
-dependencies in OS X. I would be grateful if OS X users could confirm the
+dependencies in macOS. I would be grateful if macOS users could confirm the
 instructions below work as intended:
 
 ```sh

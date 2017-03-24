@@ -25,8 +25,9 @@
     "bin": {
         "ijs": "bin/ijavascript.js",
         "ijsconsole": "bin/ijsconsole.js",
-        "ijsnotebook": "bin/ijsnotebook.js",
-        "ijskernel": "lib/kernel.js"
+        "ijsinstall": "bin/ijsinstall.js",
+        "ijskernel": "lib/kernel.js",
+        "ijsnotebook": "bin/ijsnotebook.js"
     },
     "dependencies": {
         "jp-kernel": "0.1.x"

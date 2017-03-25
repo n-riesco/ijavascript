@@ -143,43 +143,74 @@ MathJax.Hub.Config({
     <h1 id="installation">Installation</h1>
 <p>The instructions to install IJavascript are platform-dependent and very much determined by the following dependencies:</p>
 <ul>
-<li><a href="http://zeromq.org/">ZeroMQ</a></li>
 <li><a href="http://nodejs.org/">Node.js</a></li>
 <li><a href="https://www.npmjs.com/">npm</a></li>
-<li><a href="http://ipython.org/notebook.html">IPython notebook</a></li>
+<li><a href="http://jupyter.org/">Jupyter notebook</a></li>
+</ul>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#debian-and-ubuntu">Debian and Ubuntu</a></li>
+<li><a href="#global-installation">Global installation</a></li>
+<li><a href="#local-installation">Local installation</a></li>
+<li><a href="#ppa-repository">PPA repository</a></li>
+<li><a href="#older-versions">Older versions</a></li>
+<li><a href="#macos">macOS</a></li>
+<li><a href="#windows">Windows</a></li>
+<li><a href="#nvm">nvm</a></li>
+<li><a href="#other-platforms">Other platforms</a></li>
 </ul>
 <h2 id="debian-and-ubuntu">Debian and Ubuntu</h2>
-<p>In recent distributions Debian and Ubuntu distributions, the IJavascript dependencies are available from their repositories and can be installed by a user with administrator rights:</p>
-<pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook libzmq3-dev</code></pre>
-<p>Note, however, that the versions available in the repositories are fairly old. If you wish to install the latest stable versions, see the section for Ubuntu 12.04 further below.</p>
+<p>The Jupyter notebook is not yet available in the Debian 8.3 and Ubuntu 16.04 LTS repositories. Instead, the IPython notebook can be installed:</p>
+<pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook</code></pre>
+<p>Alternatively, the Jupyter notebook can be installed via <code>pip</code> or <code>Anaconda</code>.</p>
+<p><code>pip</code> installs the latest Jupyter release from the <a href="https://pypi.python.org/pypi">Python Package Index</a>:</p>
+<pre class="sh"><code>sudo apt-get install nodejs-legacy npm g++ libzmq3-dev python-dev python-pip
+sudo pip install --upgrade jupyter</code></pre>
+<p>And <a href="http://continuum.io/downloads">Anaconda</a> provides a data science platform that distributes both <code>Jupyter</code> (by default) and <code>Node.js</code> (optionally). IJavascript can be installed in an Anaconda setup as follows:</p>
+<pre class="sh"><code>conda install nodejs
+npm install -g ijavascript</code></pre>
 <h3 id="global-installation">Global installation</h3>
-<p>IJavascript can be installed globally (i.e. for all users in the system) by a user with administrator rights by running:</p>
+<p>IJavascript can be installed globally (i.e. for all users in the system) by running:</p>
 <pre class="sh"><code>sudo npm install -g ijavascript</code></pre>
 <h3 id="local-installation">Local installation</h3>
-<p>It is possible to install IJavascript locally:</p>
-<pre class="sh"><code>npm install ijavascript</code></pre>
-<p>But note that the above command will install the executable <code>ijs</code> in the folder <code>~/node_modules/.bin/</code> and you may want to add this folder to your <code>PATH</code>:</p>
-<pre class="sh"><code>echo \&quot;PATH=\&quot;\$HOME/node_modules/.bin:\$PATH\&quot; &gt;&gt; ~/.profile</code></pre>
-<p>The above change won't take effect until you log out of the current session.</p>
-<h3 id="ubuntu-12.04">Ubuntu 12.04</h3>
-<p>To install IJavascript in Ubuntu 12.04, both <code>Node.js</code> and <code>IPython</code> need upgrading to a recent version. You can do so by running:</p>
-<pre class="sh"><code>sudo apt-get install libzmq-dev python-dev python-pip g++ curl
-curl -sL https://deb.nodesource.com/setup | sudo bash -
-sudo apt-get install -y nodejs
-sudo pip install --upgrade ipython jinja2 tornado jsonschema pyzmq</code></pre>
-<p>The instructions for upgrading <code>node.js</code> have been adapted from those found <a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#debian-and-ubuntu-based-linux-distributions">here</a>.</p>
+<p>It is also possible to install IJavascript locally, by setting the <code>npm</code> prefix to your home folder:</p>
+<pre class="sh"><code>npm config set prefix ~
+npm install -g ijavascript</code></pre>
+<p>Note that the above command will install all the IJavascript executables in the folder <code>~/bin/</code> and the ijavascript package in <code>~/lib/node_modules</code>.</p>
+<h3 id="ppa-repository">PPA repository</h3>
+<p>Gordon Ball has set up a <a href="https://launchpad.net/%7Echronitis/+archive/ubuntu/jupyter">PPA repository</a> that builds deb packages for IJavascript and other Jupyter kernels:</p>
+<pre class="sh"><code>sudo add-apt-repository ppa:chronitis/jupyter
+sudo apt update
+sudo apt install ijavascript</code></pre>
+<h3 id="older-versions">Older versions</h3>
+<p>To install IJavascript in older versions of Debian and Ubuntu, <code>Node.js</code> needs upgrading to a recent version. You can do so by running:</p>
+<pre class="sh"><code>sudo apt-get install curl
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+sudo apt-get install -y nodejs</code></pre>
+<p>The instructions for upgrading <code>Node.js</code> have been adapted from those found <a href="https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions">here</a>.</p>
 <h2 id="macos">macOS</h2>
-<p>I don't have access to a macOS machine, but I have been told that <a href="http://brew.sh/">Homebrew</a> may help with the installation of the IJavascript dependencies in macOS. I would be grateful if macOS users could confirm the instructions below work as intended:</p>
+<p><a href="http://brew.sh/">Homebrew</a> and <a href="https://pip.pypa.io/">pip</a> can be used to install the dependencies of IJavascript in macOS:</p>
 <pre class="sh"><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
 brew install pkg-config node zeromq
 sudo easy_install pip
-sudo pip install -U jupyter  # Refer http://jupyter.readthedocs.org/en/latest/install.html</code></pre>
+sudo pip install --upgrade pyzmq jupyter</code></pre>
 <p>Once the dependencies have been installed, <code>npm</code> can be used to install IJavascript as described above in the section for Ubuntu and Debian.</p>
+<p>Also note that the build tool <code>node-gyp</code> (which is part of Node.js and is used to compile native modules) requires Python 2.</p>
 <h2 id="windows">Windows</h2>
-<p><code>IPython</code> could be installed following the instructions at <a href="http://ipython.org/install.html">ipython.org/install</a>. I find more convenient to install a Python distribution such as <code>Anaconda</code>; see <a href="http://continuum.io/downloads">here</a>. <code>Anaconda</code> not only installs <code>IPython</code> and its requirements, but also a selection of frequently-used Python packages.</p>
+<p><code>Jupyter</code> could be installed following the instructions <a href="http://jupyter.readthedocs.org/en/latest/install.html">here</a>. I find more convenient to install a Python distribution such as <a href="http://continuum.io/downloads">Anaconda</a>. <code>Anaconda</code> not only installs <code>Jupyter</code> and its requirements, but also a selection of frequently-used Python packages.</p>
 <p><code>Node.js</code> provides a <a href="https://nodejs.org/download/">Windows installer</a>. However, the build tool <code>node-gyp</code> will not be functional unless one of the recognised C++ compilers is installed. See <a href="https://github.com/TooTallNate/node-gyp">here</a> for more details, <a href="http://www.microsoft.com/en-us/download/details.aspx?id=34673">here</a> for Visual Studio Express 2012 or <a href="https://www.visualstudio.com/products/visual-studio-express-vs">here</a> for a link to Visual Studio Express 2013.</p>
+<h2 id="nvm">nvm</h2>
+<p><code>nvm</code> is a popular Node Version Manager for users to install specific versions of Node in their own home folder. These types of installations do not require the use of <code>sudo</code> to install global packages, simply run:</p>
+<pre class="sh"><code>npm install -g ijavascript</code></pre>
+<p>Another consideration for <code>nvm</code> users is that IJavascript makes use of <a href="https://github.com/zeromq/zeromq.js">zeromq</a>, a native module that provides <a href="http://www.zeromq.org/">ZMQ</a> bindings. Native modules are specific to a Node version, and thus they need reinstalling whenever the Node version changes. To do so, run:</p>
+<pre class="sh"><code>nvm reinstall-packages</code></pre>
 <h2 id="other-platforms">Other platforms</h2>
-<p>For other platforms, instructions to install the IJavascript dependencies may be found at <a href="http://nodejs.org/download/">nodejs.org/download</a>, <a href="http://ipython.org/install.html">ipython.org/install</a> and <a href="http://zeromq.org/intro:get-the-software">zeromq.org/intro:get-the-software</a>.</p>
+<p>For other platforms, instructions to install the IJavascript dependencies may be found at:</p>
+<ul>
+<li><a href="http://nodejs.org/download/">http://nodejs.org/download/</a></li>
+<li><a href="http://jupyter.readthedocs.org/en/latest/install.html">http://jupyter.readthedocs.org/en/latest/install.html</a></li>
+<li><a href="http://zeromq.org/intro:get-the-software">http://zeromq.org/intro:get-the-software</a></li>
+</ul>
 
   </div>
   

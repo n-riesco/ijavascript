@@ -138,6 +138,8 @@ function MessagingTestEngine(protocolVersion) {
      * @private
      */
     this._testCases = [];
+
+    this._setupPaths();
 }
 
 /**
@@ -196,13 +198,31 @@ function MessagingTestEngine(protocolVersion) {
 
 /**
  * @method      init
+ * @param       {function} done
  * @description Initialise the messaging test engine
  */
-MessagingTestEngine.prototype.init = function() {
-    this._setupPaths();
+MessagingTestEngine.prototype.init = function(done) {
     this._initSockets();
     this._createConnectionFile();
     this._initKernel();
+
+    var socketNames = ["hb", "shell", "iopub", "control"];
+
+    var waitGroup = socketNames.length;
+    function onConnect() {
+        waitGroup--;
+        if (waitGroup === 0) {
+            for(var i = 0; i < socketNames.length; i++) {
+                this.socket[socketNames[i]].unmonitor();
+            }
+            if (done) done();
+        }
+    }
+
+    for(var j = 0; j < socketNames.length; j++) {
+        this.socket[socketNames[j]].on("connect", onConnect.bind(this));
+        this.socket[socketNames[j]].monitor();
+    }
 };
 
 /**

@@ -43,7 +43,10 @@ var MessagingTestEngine = require("./mte");
 describe("A Kernel instance", function() {
     describe("using protocol v4.1", function() {
         var mte = new MessagingTestEngine("4.1");
-        mte.init();
+
+        before(function(done) {
+            mte.init(done);
+        });
 
         after(function() {
             mte.dispose();
@@ -57,7 +60,10 @@ describe("A Kernel instance", function() {
 
     describe("using protocol v5.0", function() {
         var mte = new MessagingTestEngine("5.0");
-        mte.init();
+
+        before(function(done) {
+            mte.init(done);
+        });
 
         after(function() {
             mte.dispose();

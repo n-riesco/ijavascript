@@ -203,10 +203,15 @@ function testMessagingProtocol(mte) {
         ));
     }
 
+    var wait = 0;
     testCases.forEach(function(testCase) {
         it("replies correctly to " + testCase.description, function(done) {
             testCase.done = done;
-            mte.run(testCase);
+
+            wait += 0;
+            setTimeout(function() {
+                mte.run(testCase);
+            }, wait);
         });
     });
 }

@@ -34,7 +34,6 @@
     },
     "devDependencies": {
         "debug": "latest",
-        "jmp": "^0.7.5",
         "jsdoc": "latest",
         "jshint": "latest",
         "mocha": "3",

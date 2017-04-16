@@ -53,6 +53,17 @@ var setJupyterInfoAsync = rc.setJupyterInfoAsync;
 var setPaths = rc.setPaths;
 var setProtocol = rc.setProtocol;
 var spawnFrontend = rc.spawnFrontend;
+var FLAG_DEBUG = rc.FLAG_DEBUG;
+var FLAG_HELP = rc.FLAG_HELP;
+var FLAG_HIDE_UNDEFINED = rc.FLAG_HIDE_UNDEFINED;
+var FLAG_INSTALL = rc.FLAG_INSTALL;
+var FLAG_PROTOCOL = rc.FLAG_PROTOCOL;
+var FLAG_SHOW_UNDEFINED = rc.FLAG_SHOW_UNDEFINED;
+var FLAG_SPEC_PATH = rc.FLAG_SPEC_PATH;
+var FLAG_STARTUP_SCRIPT = rc.FLAG_STARTUP_SCRIPT;
+var FLAG_VERSION = rc.FLAG_VERSION;
+var FLAG_VERSIONS = rc.FLAG_VERSIONS;
+var FLAG_WORKING_DIR = rc.FLAG_WORKING_DIR;
 
 var usage = [
     "IJavascript Kernel Installer",
@@ -90,22 +101,22 @@ function parseCommandArgs(context) {
     context.flag.hideUndefined = true;
 
     process.argv.slice(2).forEach(function(e) {
-        if (e === "--debug") {
+        if (e === FLAG_DEBUG) {
             DEBUG = true;
             log = doLog;
 
             context.flag.debug = true;
             context.args.kernel.push("--debug");
 
-        } else if (e === "--help") {
+        } else if (e === FLAG_HELP) {
             console.log(usage);
             process.exit(0);
 
-        } else if (e === "--hide-undefined") {
+        } else if (e === FLAG_HIDE_UNDEFINED) {
             context.flag.hideUndefined = true;
 
-        } else if (e.lastIndexOf("--install=", 0) === 0) {
-            context.flag.install = e.slice(10);
+        } else if (e.lastIndexOf(FLAG_INSTALL, 0) === 0) {
+            context.flag.install = e.slice(FLAG_INSTALL.length);
             if (context.flag.install !== "local" &&
                 context.flag.install !== "global") {
                 console.error(
@@ -115,17 +126,17 @@ function parseCommandArgs(context) {
                 process.exit(1);
             }
 
-        } else if (e.lastIndexOf("--protocol=", 0) === 0) {
-            context.protocol.version = e.slice(11);
+        } else if (e.lastIndexOf(FLAG_PROTOCOL, 0) === 0) {
+            context.protocol.version = e.slice(FLAG_PROTOCOL.length);
             context.protocol.majorVersion = parseInt(
                 context.protocol.version.split(".", 1)[0]
             );
 
-        } else if (e === "--show-undefined") {
+        } else if (e === FLAG_SHOW_UNDEFINED) {
             context.flag.hideUndefined = false;
 
-        } else if (e.lastIndexOf("--spec-path=", 0) === 0) {
-            context.flag.specPath = e.slice(12);
+        } else if (e.lastIndexOf(FLAG_SPEC_PATH, 0) === 0) {
+            context.flag.specPath = e.slice(FLAG_SPEC_PATH.length);
             if (context.flag.specPath !== "none" &&
                 context.flag.specPath !== "full") {
                 console.error(
@@ -135,14 +146,16 @@ function parseCommandArgs(context) {
                 process.exit(1);
             }
 
-        } else if (e.lastIndexOf("--startup-script=", 0) === 0) {
-            context.flag.startup = fs.realpathSync(e.slice(17));
+        } else if (e.lastIndexOf(FLAG_STARTUP_SCRIPT, 0) === 0) {
+            context.flag.startup = fs.realpathSync(
+                e.slice(FLAG_STARTUP_SCRIPT.length)
+            );
 
-        } else if (e === "--version") {
+        } else if (e === FLAG_VERSION) {
             console.log(context.packageJSON.version);
             process.exit(0);
 
-        } else if (e === "--versions") {
+        } else if (e === FLAG_VERSIONS) {
             console.log("ijavascript", context.packageJSON.version);
             console.log("jmp", getPackageVersion("jmp"));
             console.log("jp-kernel", getPackageVersion("jp-kernel"));
@@ -151,8 +164,10 @@ function parseCommandArgs(context) {
             console.log("zeromq", getPackageVersion("zeromq"));
             process.exit(0);
 
-        } else if (e.lastIndexOf("--working-dir=", 0) === 0) {
-            context.flag.cwd = fs.realpathSync(e.slice(14));
+        } else if (e.lastIndexOf(FLAG_WORKING_DIR, 0) === 0) {
+            context.flag.cwd = fs.realpathSync(
+                e.slice(FLAG_WORKING_DIR.length)
+            );
 
         } else {
             unparsedArgs.push(e);

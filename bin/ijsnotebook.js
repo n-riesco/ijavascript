@@ -53,6 +53,19 @@ var setJupyterInfoAsync = rc.setJupyterInfoAsync;
 var setPaths = rc.setPaths;
 var setProtocol = rc.setProtocol;
 var spawnFrontend = rc.spawnFrontend;
+var FLAG_HELP = rc.FLAG_HELP;
+var FLAG_IJS_HELP = rc.FLAG_IJS_HELP;
+var FLAG_IJS_DEBUG = rc.FLAG_IJS_DEBUG;
+var FLAG_IJS_HIDE_UNDEFINED = rc.FLAG_IJS_HIDE_UNDEFINED;
+var FLAG_IJS_INSTALL = rc.FLAG_IJS_INSTALL;
+var FLAG_IJS_INSTALL_KERNEL = rc.FLAG_IJS_INSTALL_KERNEL;
+var FLAG_IJS_PROTOCOL = rc.FLAG_IJS_PROTOCOL;
+var FLAG_IJS_SHOW_UNDEFINED = rc.FLAG_IJS_SHOW_UNDEFINED;
+var FLAG_IJS_SPEC_PATH = rc.FLAG_IJS_SPEC_PATH;
+var FLAG_IJS_STARTUP_SCRIPT = rc.FLAG_IJS_STARTUP_SCRIPT;
+var FLAG_IJS_WORKING_DIR = rc.FLAG_IJS_WORKING_DIR;
+var FLAG_VERSION = rc.FLAG_VERSION;
+var FLAG_VERSIONS = rc.FLAG_VERSIONS;
 
 var usage = [
     "IJavascript Notebook",
@@ -94,26 +107,26 @@ function parseCommandArgs(context) {
     context.flag.hideUndefined = true;
 
     process.argv.slice(2).forEach(function(e) {
-        if (e === "--help") {
+        if (e === FLAG_HELP) {
             console.log(usage);
             context.args.frontend.push(e);
 
-        } else if (e === "--ijs-debug") {
+        } else if (e === FLAG_IJS_DEBUG) {
             DEBUG = true;
             log = doLog;
 
             context.flag.debug = true;
             context.args.kernel.push("--debug");
 
-        } else if (e === "--ijs-help") {
+        } else if (e === FLAG_IJS_HELP) {
             console.log(usage);
             process.exit(0);
 
-        } else if (e === "--ijs-hide-undefined") {
+        } else if (e === FLAG_IJS_HIDE_UNDEFINED) {
             context.flag.hideUndefined = true;
 
-        } else if (e.lastIndexOf("--ijs-install=", 0) === 0) {
-            context.flag.install = e.slice(14);
+        } else if (e.lastIndexOf(FLAG_IJS_INSTALL, 0) === 0) {
+            context.flag.install = e.slice(FLAG_IJS_INSTALL.length);
             if (context.flag.install !== "local" &&
                 context.flag.install !== "global") {
                 console.error(
@@ -123,17 +136,17 @@ function parseCommandArgs(context) {
                 process.exit(1);
             }
 
-        } else if (e.lastIndexOf("--ijs-protocol=", 0) === 0) {
-            context.protocol.version = e.slice(15);
+        } else if (e.lastIndexOf(FLAG_IJS_PROTOCOL, 0) === 0) {
+            context.protocol.version = e.slice(FLAG_IJS_PROTOCOL.length);
             context.protocol.majorVersion = parseInt(
                 context.protocol.version.split(".", 1)[0]
             );
 
-        } else if (e === "--ijs-show-undefined") {
+        } else if (e === FLAG_IJS_SHOW_UNDEFINED) {
             context.flag.hideUndefined = false;
 
-        } else if (e.lastIndexOf("--ijs-spec-path=", 0) === 0) {
-            context.flag.specPath = e.slice(16);
+        } else if (e.lastIndexOf(FLAG_IJS_SPEC_PATH, 0) === 0) {
+            context.flag.specPath = e.slice(FLAG_IJS_SPEC_PATH.length);
             if (context.flag.specPath !== "none" &&
                 context.flag.specPath !== "full") {
                 console.error(
@@ -143,11 +156,15 @@ function parseCommandArgs(context) {
                 process.exit(1);
             }
 
-        } else if (e.lastIndexOf("--ijs-startup-script=", 0) === 0) {
-            context.flag.startup = fs.realpathSync(e.slice(21));
+        } else if (e.lastIndexOf(FLAG_IJS_STARTUP_SCRIPT, 0) === 0) {
+            context.flag.startup = fs.realpathSync(
+                e.slice(FLAG_IJS_STARTUP_SCRIPT.length)
+            );
 
-        } else if (e.lastIndexOf("--ijs-working-dir=", 0) === 0) {
-            context.flag.cwd = fs.realpathSync(e.slice(18));
+        } else if (e.lastIndexOf(FLAG_IJS_WORKING_DIR, 0) === 0) {
+            context.flag.cwd = fs.realpathSync(
+                e.slice(FLAG_IJS_WORKING_DIR.length)
+            );
 
         } else if (e.lastIndexOf("--ijs-", 0) === 0) {
             console.error(util.format("Error: Unknown flag '%s'\n", e));
@@ -157,11 +174,11 @@ function parseCommandArgs(context) {
         } else if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
             console.warn(util.format("Warning: Flag '%s' skipped", e));
 
-        } else if (e === "--version") {
+        } else if (e === FLAG_VERSION) {
             console.log(context.packageJSON.version);
             process.exit(0);
 
-        } else if (e === "--versions") {
+        } else if (e === FLAG_VERSIONS) {
             console.log("ijavascript", context.packageJSON.version);
             console.log("jmp", getPackageVersion("jmp"));
             console.log("jp-kernel", getPackageVersion("jp-kernel"));

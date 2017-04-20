@@ -29,6 +29,7 @@
         "ijskernel": "lib/kernel.js",
         "ijsnotebook": "bin/ijsnotebook.js"
     },
+    "main": "lib/kernel.js",
     "dependencies": {
         "jp-kernel": "0.1.x"
     },

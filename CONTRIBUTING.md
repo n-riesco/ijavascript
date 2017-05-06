@@ -36,6 +36,15 @@ ipython --version
 lsb_release -sd
 ```
 
+You can use this template (copy, paste, insert values):
+
+> ##### Software versions:
+> 
+> - ijs:
+> - npm: 
+> - ipython:
+> - OS: 
+
 ## Code contributions
 
 - Please, open an issue in the [issue

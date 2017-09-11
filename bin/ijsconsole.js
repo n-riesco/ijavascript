@@ -234,6 +234,7 @@ setJupyterInfoAsync(context, function() {
         log("CONTEXT:", context);
 
         if (!context.flag.install) {
+            console.error("To quit press ctrl-d and confirm.\n");
             spawnFrontend(context);
         }
     });

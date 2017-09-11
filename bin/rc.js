@@ -207,6 +207,8 @@ function setProtocol(context) {
             "--KernelManager.kernel_cmd=['%s']",
             context.args.kernel.join("', '")
         ));
+    } else if (context.args.frontend[1] === "console") {
+        context.args.frontend.push("--kernel=javascript");
     }
 
     if (context.frontend.majorVersion < 3 &&

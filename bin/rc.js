@@ -195,7 +195,7 @@ function setProtocol(context) {
             context.protocol.version = "4.1";
             context.protocol.majorVersion = 4;
         } else {
-            context.protocol.version = "5.0";
+            context.protocol.version = "5.1";
             context.protocol.majorVersion = 5;
         }
     }

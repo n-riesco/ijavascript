@@ -30,7 +30,7 @@
         "ijsnotebook": "bin/ijsnotebook.js"
     },
     "dependencies": {
-        "jp-kernel": "0.1.x"
+        "jp-kernel": "^0.1.4"
     },
     "devDependencies": {
         "debug": "latest",

@@ -30,7 +30,7 @@ There are kernels available for [Python](http://ipython.org/notebook.html),
 [Julia](https://github.com/JuliaLang/IJulia.jl),
 [Ruby](https://github.com/minad/iruby),
 [Haskell](https://github.com/gibiansky/IHaskell) and [many
-other languages](https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages).
+other languages](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels).
 
 <div style="clear: both;" />
 

@@ -121,8 +121,8 @@ IJavascript and its prerequisites:
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install pkg-config node zeromq
 sudo easy_install pip
-sudo pip install --upgrade pyzmq jupyter
-sudo npm install -g ijavascript
+pip install --upgrade pyzmq jupyter
+npm install -g ijavascript
 ```
 
 For other platforms or if you find any problems with the instructions above,

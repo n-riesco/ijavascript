@@ -111,7 +111,7 @@ install the dependencies of IJavascript in macOS:
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 brew install pkg-config node zeromq
 sudo easy_install pip
-sudo pip install --upgrade pyzmq jupyter
+pip install --upgrade pyzmq jupyter
 ```
 
 Once the dependencies have been installed, `npm` can be used to install

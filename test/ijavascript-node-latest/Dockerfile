@@ -1,13 +1,15 @@
 FROM node:latest
 
 RUN apt-get update && \
-    apt-get install -yq --no-install-recommends libzmq-dev ipython-notebook && \
+    apt-get install -yq --no-install-recommends libzmq3-dev ipython-notebook && \
     apt-get clean
 
-RUN git clone https://github.com/n-riesco/ijavascript.git && \
-    cd ijavascript && \
-    npm i
+RUN mkdir -p ijavascript
+
+COPY . ijavascript
+
+RUN cd ijavascript && rm -rf node_modules && npm i --production
 
 WORKDIR ijavascript
 
-CMD git pull && npm run test:4 && npm run test:5
+CMD npm run test

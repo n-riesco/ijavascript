@@ -47,6 +47,7 @@ IJavascript can be installed in an Anaconda setup as follows:
 ```sh
 conda install nodejs
 npm install -g ijavascript
+ijsinstall
 ```
 
 
@@ -57,6 +58,7 @@ running:
 
 ```sh
 sudo npm install -g ijavascript
+sudo ijsinstall --install=global
 ```
 
 
@@ -68,6 +70,7 @@ to your home folder:
 ```sh
 npm config set prefix ~
 npm install -g ijavascript
+ijsinstall
 ```
 
 Note that the above command will install all the IJavascript executables in the
@@ -117,6 +120,11 @@ pip install --upgrade pyzmq jupyter
 Once the dependencies have been installed, `npm` can be used to install
 IJavascript as described above in the section for Ubuntu and Debian.
 
+```sh
+npm install -g ijavascript
+ijsinstall
+```
+
 Also note that the build tool `node-gyp` (which is part of Node.js and is used
 to compile native modules) requires Python 2.
 
@@ -148,6 +156,7 @@ the use of `sudo` to install global packages, simply run:
 
 ```sh
 npm install -g ijavascript
+ijsinstall
 ```
 
 Another consideration for `nvm` users is that IJavascript makes use of

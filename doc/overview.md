@@ -26,14 +26,15 @@ The `Kernel` class depends on the `npm` packages, `nel` and `jmp`.
 The `nel` package defines `Session`, a class that upon instantiation starts a
 small `Node.js` server, `lib/nel_server.js`. The `Session` instance and
 `lib/nel_server.js` communicate by means of an IPC channel. The `Session`
-instance sends `lib/nel_server.js` a pair of strings, `action` and `code`.
-`action` is a string that determines the type of request: execution, completion
-or inspection. And `code` is a string with the Javascript code to be executed,
-completed or inspected.  `lib/nel_server.js` responds to the request with either
-a
-[SuccessResult](http://n-riesco.github.io/nel/module-nel.html#~SuccessResult)
-or an
-[ErrorResult](http://n-riesco.github.io/nel/module-nel.html#~ErrorResult). 
+instance sends `lib/nel_server.js` three strings per request: `action`, `code`
+and `id`. `action` is a string that determines the type of request: execution,
+completion or inspection. `code` is a string with the Javascript code to be
+executed, completed or inspected. And `id` is a string that identifies the
+request.  `lib/nel_server.js` responds to the request with either a
+[SuccessResult](http://n-riesco.github.io/nel/module-nel.html#~SuccessResult) or
+an [ErrorResult](http://n-riesco.github.io/nel/module-nel.html#~ErrorResult).
+Each response contains the property `id` set to the request `id`, so that the
+`Session` instance can invoke the callbacks associated with the request.
 
 The interface between the classes `Kernel` and `Session` is documented
 [here](http://n-riesco.github.io/nel/module-nel-Session.html).

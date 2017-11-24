@@ -23,7 +23,7 @@ protocol](http://jupyter-client.readthedocs.io/en/latest/messaging.html).
 
 The IJavascript kernel executes Javascript code inside a
 [Node.js](https://nodejs.org/) session. And thus, it behaves as the Node.js REPL
-does, providing access to the Node.js library and to any installed
+does, providing access to the Node.js standard library and to any installed
 [npm](https://www.npmjs.com/) modules.
 
 There are kernels available for [Python](http://ipython.org/notebook.html),
@@ -48,45 +48,34 @@ Here's a sample notebook that makes use of the IJavascript kernel:
 - [Contributions](#contributions)
 - [TODO](#todo)
 
+
 ## Announcements
 
 - Starting with IJavascript v5.0.11, it is possible to customise the output of
   an object based on its type. See the documentation on [custom
-  output](http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb) for
+  output](http://n-riesco.github.io/ijavascript/doc/custom.ipynb.html) for
   details.
 - The use of `$$mimer$$` and `$$defaultMimer$$` to customise output is now
   deprecated.
 - To avoid clutter in the global context, the use of `$$async$$`, `$$done$$`,
   `$$mime$$`, `$$html$$`, `$$svg$$`, `$$png$$` and `$$jpeg$$` has also been
-  deprecated and replaced with the global object `$$`. For usage, see the
-  documentation
-  [here](http://github.com/n-riesco/ijavascript/tree/dev/doc/async.ipynb) and
-  [here](http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb).
+  deprecated and replaced with the global object `$$`.
 
 
 ## Main Features
 
 - Run Javascript code inside a `Node.js` session
 - [Hello, World!](http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html)
-- [Graphical
-  output](http://n-riesco.github.io/ijavascript/doc/graphics.ipynb.html) for
-  `HTML`, `SVG`, `PNG`, ...
 - [Asynchronous
   output](http://n-riesco.github.io/ijavascript/doc/async.ipynb.html)
+- [Custom output](http://n-riesco.github.io/ijavascript/doc/custom.ipynb.html)
+  for `HTML`, `SVG`, `PNG`, ...
 - [Autocompletion](http://n-riesco.github.io/ijavascript/doc/complete.md.html):
   press `TAB` to complete keywords and object properties
 - [Object
   inspection](http://n-riesco.github.io/ijavascript/doc/inspect.md.html): press
   `Shift-TAB` to inspect an object and show its content or, if available, its
   documentation
-
-There are also a number of experimental features documented
-[here](http://github.com/n-riesco/ijavascript/tree/dev/doc):
-
-- [Asynchronous
-  output](http://github.com/n-riesco/ijavascript/tree/dev/doc/async.ipynb)
-- [Custom
-  output](http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb)
 
 
 ## Installation
@@ -107,6 +96,7 @@ To install IJavascript in Ubuntu 16.04 LTS, run:
 ```sh
 sudo apt-get install nodejs-legacy npm ipython ipython-notebook
 sudo npm install -g ijavascript
+ijsinstall
 ```
 
 In Windows, [Anaconda](http://continuum.io/downloads) offers a convenient
@@ -123,6 +113,7 @@ brew install pkg-config node zeromq
 sudo easy_install pip
 pip install --upgrade pyzmq jupyter
 npm install -g ijavascript
+ijsinstall
 ```
 
 For other platforms or if you find any problems with the instructions above,
@@ -214,7 +205,7 @@ console`. The following command flags are recognised:
 ### `ijskernel`: IJavascript kernel
 
 `ijskernel` is the executable invoked by Jupyter tools (e.g. the notebook) and
-that appears in the kernel spec that `ijsintall` creates for IJavascript. You
+that appears in the kernel spec that `ijsinstall` creates for IJavascript. You
 won't need this command, unless you want to create a custom kernel spec.
 
 ```
@@ -249,8 +240,6 @@ requests, submission of tutorials...
 
 # TODO
 
-- Complete the implementation of the Jupyter messaging protocol v4.1
-- Complete the implementation of the Jupyter messaging protocol v5.0
-
-See TODO list in packages [jp-kernel](https://github.com/n-riesco/jp-kernel) and
+See the [issue tracker](https://github.com/n-riesco/ijavascript/issues) and the
+TODO list in the packages [jp-kernel](https://github.com/n-riesco/jp-kernel) and
 [NEL](https://github.com/n-riesco/jp-kernel) for additional items.

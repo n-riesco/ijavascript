@@ -3,8 +3,8 @@
     "Usage": "usage.md",
     "Features": {
         "01. Text output": "hello.ipynb",
-        "02. Graphical output": "graphics.ipynb",
-        "03. Asynchronous output": "async.ipynb",
+        "02. Asynchronous output": "async.ipynb",
+        "03. Custom output": "custom.ipynb",
         "04. TAB completion": "complete.md",
         "05. Shift-TAB inspection": "inspect.md"
     },

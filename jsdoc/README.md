@@ -1,8 +1,8 @@
 IJavascript is an `npm` package that provides:
 - a Javascript kernel for the [Jupyter](http://jupyter.org/) console and
   notebook, the [Hydrogen](https://atom.io/packages/hydrogen) Atom plugin, the
-  [composition](https://github.com/nteract/composition) frontend, ...
-- and the command, `ijs`, to install the kernel and invoke the Jupyter notebook.
+  [nteract](https://github.com/nteract/nteract) frontend, ...
+- and a command, `ijs`, to install the kernel and invoke the Jupyter notebook.
 
 IJavascript shares a significant portion of code with the CoffeeScript kernel,
 [jp-coffeescript](https://github.com/n-riesco/jp-coffeescript) and the Babel
@@ -15,7 +15,7 @@ purpose of the main classes.
 # Main Files
 
 `bin/ijavascript.js`  
-    Script to install the IJavascript kernel and/or launch the notebook
+    Script to install the IJavascript kernel and/or launch the Jupyter
     dashboard.
 
 `lib/kernel.js`  

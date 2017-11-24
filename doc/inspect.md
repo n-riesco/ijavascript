@@ -1,6 +1,6 @@
 # `Shift-TAB` object inspection
 
-IJavascript has the capability of inspection the value of an object or its
+IJavascript has the capability to inspect the value of an object or its
 documentation if available.
 
 To show the content of a variable, move the cursor to the end of that variable

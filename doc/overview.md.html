@@ -83,9 +83,9 @@ MathJax.Hub.Config({
 	    
 	    <li><a href="../doc/hello.ipynb.html">Text output</a></li>
 	    
-	    <li><a href="../doc/graphics.ipynb.html">Graphical output</a></li>
-	    
 	    <li><a href="../doc/async.ipynb.html">Asynchronous output</a></li>
+	    
+	    <li><a href="../doc/custom.ipynb.html">Custom output</a></li>
 	    
 	    <li><a href="../doc/complete.md.html">TAB completion</a></li>
 	    
@@ -147,7 +147,7 @@ MathJax.Hub.Config({
 <p>The Javascript kernel is implemented in <code>lib/kernel.js</code> by means of the <code>Kernel</code> class. The CoffeeScript kernel, <a href="https://github.com/n-riesco/jp-coffeescript">jp-coffeescript</a>, and the Babel kernel, <a href="https://github.com/n-riesco/jp-babel">jp-babel</a>, share a significant amount of the code with <code>lib/kernel.js</code>. To facilitate the reuse of this shared code, the <code>Kernel</code> class will be moved into its own <code>npm</code> package in the near future.</p>
 <p>The <code>Kernel</code> class depends on the <code>npm</code> packages, <code>nel</code> and <code>jmp</code>.</p>
 <h2 id="package-nel">Package <code>nel</code></h2>
-<p>The <code>nel</code> package defines <code>Session</code>, a class that upon instantiation starts a small <code>Node.js</code> server, <code>lib/nel_server.js</code>. The <code>Session</code> instance and <code>lib/nel_server.js</code> communicate by means of an IPC channel. The <code>Session</code> instance sends <code>lib/nel_server.js</code> a pair of strings, <code>action</code> and <code>code</code>. <code>action</code> is a string that determines the type of request: execution, completion or inspection. And <code>code</code> is a string with the Javascript code to be executed, completed or inspected. <code>lib/nel_server.js</code> responds to the request with either a <a href="http://n-riesco.github.io/nel/module-nel.html#~SuccessResult">SuccessResult</a> or an <a href="http://n-riesco.github.io/nel/module-nel.html#~ErrorResult">ErrorResult</a>.</p>
+<p>The <code>nel</code> package defines <code>Session</code>, a class that upon instantiation starts a small <code>Node.js</code> server, <code>lib/nel_server.js</code>. The <code>Session</code> instance and <code>lib/nel_server.js</code> communicate by means of an IPC channel. The <code>Session</code> instance sends <code>lib/nel_server.js</code> three strings per request: <code>action</code>, <code>code</code> and <code>id</code>. <code>action</code> is a string that determines the type of request: execution, completion or inspection. <code>code</code> is a string with the Javascript code to be executed, completed or inspected. And <code>id</code> is a string that identifies the request. <code>lib/nel_server.js</code> responds to the request with either a <a href="http://n-riesco.github.io/nel/module-nel.html#~SuccessResult">SuccessResult</a> or an <a href="http://n-riesco.github.io/nel/module-nel.html#~ErrorResult">ErrorResult</a>. Each response contains the property <code>id</code> set to the request <code>id</code>, so that the <code>Session</code> instance can invoke the callbacks associated with the request.</p>
 <p>The interface between the classes <code>Kernel</code> and <code>Session</code> is documented <a href="http://n-riesco.github.io/nel/module-nel-Session.html">here</a>.</p>
 <h2 id="package-jmp">Package <code>jmp</code></h2>
 <p>The <code>jmp</code> package is wrapper around the package <code>node-zmq</code> that transparently encodes/decodes Jupyter-protocol messages over a ZMQ socket. See the JSDoc-generated documentation <a href="http://n-riesco.github.io/jmp">here</a> for further details.</p>

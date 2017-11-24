@@ -83,9 +83,9 @@ MathJax.Hub.Config({
 	    
 	    <li><a href="doc/hello.ipynb.html">Text output</a></li>
 	    
-	    <li><a href="doc/graphics.ipynb.html">Graphical output</a></li>
-	    
 	    <li><a href="doc/async.ipynb.html">Asynchronous output</a></li>
+	    
+	    <li><a href="doc/custom.ipynb.html">Custom output</a></li>
 	    
 	    <li><a href="doc/complete.md.html">TAB completion</a></li>
 	    
@@ -148,8 +148,8 @@ MathJax.Hub.Config({
             text-align: center;"> <h1><img alt="Links" src="images/logo-128x128.png"></h1> <a href="http://n-riesco.github.io/ijavascript">IJavascript Home Page</a><br> <a href="http://github.com/n-riesco/ijavascript">IJavascript Repository</a><br> <a href="http://github.com/n-riesco/jp-babel">jp-babel Repository</a><br> <a href="http://github.com/n-riesco/jp-coffeescript">jp-coffeescript Repository</a><br> </nav></p>
 <h1 id="ijavascript">IJavascript</h1>
 <p>IJavascript is a Javascript kernel for the <a href="http://jupyter.org/">Jupyter notebook</a>. The Jupyter notebook combines the creation of rich-text documents (including equations, graphs and videos) with the execution of code in a number of programming languages. The execution of code is carried out by means of a kernel that implements the <a href="http://jupyter-client.readthedocs.io/en/latest/messaging.html">Jupyter messaging protocol</a>.</p>
-<p>The IJavascript kernel executes Javascript code inside a <a href="https://nodejs.org/">Node.js</a> session. And thus, it behaves as the Node.js REPL does, providing access to the Node.js library and to any installed <a href="https://www.npmjs.com/">npm</a> modules.</p>
-<p>There are kernels available for <a href="http://ipython.org/notebook.html">Python</a>, <a href="https://github.com/JuliaLang/IJulia.jl">Julia</a>, <a href="https://github.com/minad/iruby">Ruby</a>, <a href="https://github.com/gibiansky/IHaskell">Haskell</a> and <a href="https://github.com/ipython/ipython/wiki/IPython-kernels-for-other-languages">many other languages</a>.</p>
+<p>The IJavascript kernel executes Javascript code inside a <a href="https://nodejs.org/">Node.js</a> session. And thus, it behaves as the Node.js REPL does, providing access to the Node.js standard library and to any installed <a href="https://www.npmjs.com/">npm</a> modules.</p>
+<p>There are kernels available for <a href="http://ipython.org/notebook.html">Python</a>, <a href="https://github.com/JuliaLang/IJulia.jl">Julia</a>, <a href="https://github.com/minad/iruby">Ruby</a>, <a href="https://github.com/gibiansky/IHaskell">Haskell</a> and <a href="https://github.com/jupyter/jupyter/wiki/Jupyter-kernels">many other languages</a>.</p>
 <div style="clear: both;" />
 
 
@@ -166,23 +166,18 @@ MathJax.Hub.Config({
 </ul>
 <h2 id="announcements">Announcements</h2>
 <ul>
-<li>Starting with IJavascript v5.0.11, it is possible to customise the output of an object based on its type. See the documentation on <a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb">custom output</a> for details.</li>
+<li>Starting with IJavascript v5.0.11, it is possible to customise the output of an object based on its type. See the documentation on <a href="http://n-riesco.github.io/ijavascript/doc/custom.ipynb.html">custom output</a> for details.</li>
 <li>The use of <code>$$mimer$$</code> and <code>$$defaultMimer$$</code> to customise output is now deprecated.</li>
-<li>To avoid clutter in the global context, the use of <code>$$async$$</code>, <code>$$done$$</code>, <code>$$mime$$</code>, <code>$$html$$</code>, <code>$$svg$$</code>, <code>$$png$$</code> and <code>$$jpeg$$</code> has also been deprecated and replaced with the global object <code>$$</code>. For usage, see the documentation <a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/async.ipynb">here</a> and <a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb">here</a>.</li>
+<li>To avoid clutter in the global context, the use of <code>$$async$$</code>, <code>$$done$$</code>, <code>$$mime$$</code>, <code>$$html$$</code>, <code>$$svg$$</code>, <code>$$png$$</code> and <code>$$jpeg$$</code> has also been deprecated and replaced with the global object <code>$$</code>.</li>
 </ul>
 <h2 id="main-features">Main Features</h2>
 <ul>
 <li>Run Javascript code inside a <code>Node.js</code> session</li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/hello.ipynb.html">Hello, World!</a></li>
-<li><a href="http://n-riesco.github.io/ijavascript/doc/graphics.ipynb.html">Graphical output</a> for <code>HTML</code>, <code>SVG</code>, <code>PNG</code>, ...</li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/async.ipynb.html">Asynchronous output</a></li>
+<li><a href="http://n-riesco.github.io/ijavascript/doc/custom.ipynb.html">Custom output</a> for <code>HTML</code>, <code>SVG</code>, <code>PNG</code>, ...</li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/complete.md.html">Autocompletion</a>: press <code>TAB</code> to complete keywords and object properties</li>
 <li><a href="http://n-riesco.github.io/ijavascript/doc/inspect.md.html">Object inspection</a>: press <code>Shift-TAB</code> to inspect an object and show its content or, if available, its documentation</li>
-</ul>
-<p>There are also a number of experimental features documented <a href="http://github.com/n-riesco/ijavascript/tree/dev/doc">here</a>:</p>
-<ul>
-<li><a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/async.ipynb">Asynchronous output</a></li>
-<li><a href="http://github.com/n-riesco/ijavascript/tree/dev/doc/custom.ipynb">Custom output</a></li>
 </ul>
 <h2 id="installation">Installation</h2>
 <p>IJavascript is distributed as an <a href="https://www.npmjs.com/">npm</a> package and thus it requires:</p>
@@ -193,14 +188,16 @@ MathJax.Hub.Config({
 <p>Depending on your use, other <a href="http://jupyter.org/">Jupyter tools</a> will be necessary (e.g. Jupyter notebook). Note that IJavascript has been kept backwards-compatibility with IPython v1, so that it's possible to use the IPython notebook distributed in Ubuntu 14.04 LTS and Ubuntu 16.04 LTS.</p>
 <p>To install IJavascript in Ubuntu 16.04 LTS, run:</p>
 <pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook
-sudo npm install -g ijavascript</code></pre>
+sudo npm install -g ijavascript
+ijsinstall</code></pre>
 <p>In Windows, <a href="http://continuum.io/downloads">Anaconda</a> offers a convenient distribution to install Python and many other packages, such as Jupyter and IJavascript.</p>
 <p>In macOS, <a href="http://brew.sh/">Homebrew</a> and <a href="https://pip.pypa.io/en/latest/installing">pip</a> can be used to install IJavascript and its prerequisites:</p>
 <pre class="sh"><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
 brew install pkg-config node zeromq
 sudo easy_install pip
-sudo pip install --upgrade pyzmq jupyter
-sudo npm install -g ijavascript</code></pre>
+pip install --upgrade pyzmq jupyter
+npm install -g ijavascript
+ijsinstall</code></pre>
 <p>For other platforms or if you find any problems with the instructions above, please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/install.md.html">installation notes</a>.</p>
 <h2 id="usage">Usage</h2>
 <p>IJavascript provides 5 executables: <code>ijsinstall</code>, <code>ijsnotebook</code>, <code>ijsconsole</code>, <code>ijskernel</code> and <code>ijs</code>. Their purpose and basic use is described in the sections below. Please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/usage.md.html">usage notes</a> for further details.</p>
@@ -252,7 +249,7 @@ sudo npm install -g ijavascript</code></pre>
 --version                     show kernel version
 --versions                    show kernel and library versions</code></pre>
 <h3 id="ijskernel-ijavascript-kernel"><code>ijskernel</code>: IJavascript kernel</h3>
-<p><code>ijskernel</code> is the executable invoked by Jupyter tools (e.g. the notebook) and that appears in the kernel spec that <code>ijsintall</code> creates for IJavascript. You won't need this command, unless you want to create a custom kernel spec.</p>
+<p><code>ijskernel</code> is the executable invoked by Jupyter tools (e.g. the notebook) and that appears in the kernel spec that <code>ijsinstall</code> creates for IJavascript. You won't need this command, unless you want to create a custom kernel spec.</p>
 <pre><code>Usage:
     ijskernel [options] connection_file
 
@@ -269,11 +266,7 @@ Options:
 <h1 id="contributions">Contributions</h1>
 <p>First of all, thank you for taking the time to contribute. Please, read <a href="http://n-riesco.github.io/ijavascript/contributing.html">CONTRIBUTING</a> and use the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> for any contributions: support requests, bug reports, enhancement requests, pull requests, submission of tutorials...</p>
 <h1 id="todo">TODO</h1>
-<ul>
-<li>Complete the implementation of the Jupyter messaging protocol v4.1</li>
-<li>Complete the implementation of the Jupyter messaging protocol v5.0</li>
-</ul>
-<p>See TODO list in packages <a href="https://github.com/n-riesco/jp-kernel">jp-kernel</a> and <a href="https://github.com/n-riesco/jp-kernel">NEL</a> for additional items.</p>
+<p>See the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> and the TODO list in the packages <a href="https://github.com/n-riesco/jp-kernel">jp-kernel</a> and <a href="https://github.com/n-riesco/jp-kernel">NEL</a> for additional items.</p>
 
   </div>
   

@@ -83,9 +83,9 @@ MathJax.Hub.Config({
 	    
 	    <li><a href="doc/hello.ipynb.html">Text output</a></li>
 	    
-	    <li><a href="doc/graphics.ipynb.html">Graphical output</a></li>
-	    
 	    <li><a href="doc/async.ipynb.html">Asynchronous output</a></li>
+	    
+	    <li><a href="doc/custom.ipynb.html">Custom output</a></li>
 	    
 	    <li><a href="doc/complete.md.html">TAB completion</a></li>
 	    
@@ -148,30 +148,29 @@ MathJax.Hub.Config({
 <ul>
 <li>IJavascript version. Please, run the command:</li>
 </ul>
-<pre class="sh"><code>ijs --version</code></pre>
-<ul>
-<li>npm version:</li>
-</ul>
-<pre class="sh"><code>npm version</code></pre>
-<ul>
-<li>IPython version:</li>
-</ul>
-<pre class="sh"><code>ipython --version</code></pre>
-<ul>
-<li>Operating system. In most modern linux distributions, it is enough to run:</li>
-</ul>
-<pre class="sh"><code>lsb_release -sd</code></pre>
+<p><code>sh   ijs --version</code></p>
 <h2 id="code-contributions">Code contributions</h2>
 <ul>
-<li><p>Please, open an issue in the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a>.</p></li>
 <li><p>Pull requests will be distributed under the terms in the LICENSE file. Hence, before accepting any pull requests, it is important that the copyright holder of a pull request acknowledges their consent. To express this consent, please, ensure the AUTHORS file has been updated accordingly.</p></li>
+<li><p>If your contribution is more than a few lines, please, open an issue in the <a href="https://github.com/n-riesco/nel/issues">issue tracker</a>.</p></li>
+<li><p>This package uses Mocha for testing. The tests are located in folder <code>test/</code> and to run them:</p></li>
 </ul>
+<p><code>sh   npm test</code></p>
 <h2 id="coding-guidelines">Coding guidelines</h2>
 <ul>
-<li><p>For the sake of readability, please, ensure the coding style of your pull requests is consistent with this project: lowerCamelCaseNaming, CONSTANTS_NAMING, 4-space indent, collapsed brackets...</p></li>
-<li><p>The IPython protocol uses underscores (<code>_</code>) in their the naming convention (as recommended in <a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a>). For these names, I find more readable to keep the original naming (although, if possible limited to a local scope).</p></li>
-<li><p>The source code in IJavascript is annotated using <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a>. The generated documentation can be found <a href="http://n-riesco.github.io/ijavascript/jsdoc">here</a>.</p></li>
+<li><p>Do not change the coding style and ensure new code follows the coding style already present. In particular, for this project:</p></li>
+<li><p>use Javascript naming conventions; i.e. lowerCamelCaseForVariablesAndPackages, UpperCamelCaseForClasses and UPPERCASE_FOR_CONSTANTS.</p></li>
+<li><p>4-space indent</p></li>
+<li><p>collapsed brackets</p></li>
+<li><p>no space inside parentheses</p></li>
+<li><p>...</p></li>
+<li><p>Do not introduce new dependencies unless previously agreed.</p></li>
+<li><p>Do not break backwards-compatibility unless previously agreed.</p></li>
+<li><p>The Jupyter Messaging Protocol uses underscores (<code>_</code>) in their the naming convention (as recommended in <a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a>). For these names, I find more readable to keep the original naming (although, if possible limited to a local scope).</p></li>
+<li><p>The source code is annotated using <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a>. Run the command:</p></li>
 </ul>
+<p><code>sh   npm run doc</code></p>
+<p>to generate the JSDoc documentation in folder <code>doc</code>.</p>
 
   </div>
   

@@ -91,6 +91,11 @@ necessary (e.g. Jupyter notebook). Note that IJavascript has been kept
 backwards-compatibility with IPython v1, so that it's possible to use the
 IPython notebook distributed in Ubuntu 14.04 LTS and Ubuntu 16.04 LTS.
 
+For other platforms  not listed below, or if you find any problems with the instructions above,
+please, refer to the [installation
+notes](http://n-riesco.github.io/ijavascript/doc/install.md.html).
+
+### Ubuntu
 To install IJavascript in Ubuntu 16.04 LTS, run:
 
 ```sh
@@ -99,10 +104,35 @@ sudo npm install -g ijavascript
 ijsinstall
 ```
 
-In Windows, [Anaconda](http://continuum.io/downloads) offers a convenient
-distribution to install Python and many other packages, such as Jupyter and
-IJavascript.
+### Windows (Official Python Distribution)
+In the command line:
+```
+pip3 install --upgrade pip
+pip3 install jupyter
+npm install -g ijavascript
+ijsinstall
+# Or run: %appdata%\npm\ijsinstall
+```
 
+Then you can run `jupyter notebook` in your terminal to load Jupyter Notebook. 
+When you create a new Jupyter Notebook, you should see the Javascript (Node) 
+kernel available.
+
+
+### Windows (Anaconda Distribution)
+Open the *Anaconda prompt* and run:
+```
+conda install nodejs
+npm install -g ijavascript
+ijsinstall
+```
+
+Then you can run `jupyter notebook` in your terminal to load Jupyter Notebook. 
+When you create a new Jupyter Notebook, you should see the Javascript (Node) 
+kernel available.
+
+
+### OSX
 In macOS, [Homebrew](http://brew.sh/) and
 [pip](https://pip.pypa.io/en/latest/installing) can be used to install
 IJavascript and its prerequisites:
@@ -115,11 +145,6 @@ pip install --upgrade pyzmq jupyter
 npm install -g ijavascript
 ijsinstall
 ```
-
-For other platforms or if you find any problems with the instructions above,
-please, refer to the [installation
-notes](http://n-riesco.github.io/ijavascript/doc/install.md.html).
-
 
 ## Usage
 

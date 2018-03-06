@@ -132,7 +132,7 @@ When you create a new Jupyter Notebook, you should see the Javascript (Node)
 kernel available.
 
 
-### OSX
+### macOS
 In macOS, [Homebrew](http://brew.sh/) and
 [pip](https://pip.pypa.io/en/latest/installing) can be used to install
 IJavascript and its prerequisites:

@@ -56,6 +56,7 @@ var spawnFrontend = rc.spawnFrontend;
 var FLAG_HELP = rc.FLAG_HELP;
 var FLAG_IJS_HELP = rc.FLAG_IJS_HELP;
 var FLAG_IJS_DEBUG = rc.FLAG_IJS_DEBUG;
+var FLAG_IJS_HIDE_EXECUTION_RESULT = rc.FLAG_IJS_HIDE_EXECUTION_RESULT;
 var FLAG_IJS_HIDE_UNDEFINED = rc.FLAG_IJS_HIDE_UNDEFINED;
 var FLAG_IJS_INSTALL = rc.FLAG_IJS_INSTALL;
 var FLAG_IJS_INSTALL_KERNEL = rc.FLAG_IJS_INSTALL_KERNEL;
@@ -79,6 +80,7 @@ var usage = [
     "    --help                        show IJavascript and notebook help",
     "    --ijs-debug                   enable debug log level",
     "    --ijs-help                    show IJavascript help",
+    "    --ijs-hide-execution-result   do not show execution results",
     "    --ijs-hide-undefined          do not show undefined results",
     "    --ijs-install=[local|global]  install IJavascript kernel",
     "    --ijs-install-kernel          same as --ijs-install=local",
@@ -106,6 +108,7 @@ function parseCommandArgs(context) {
         "jupyter",
         "notebook",
     ];
+    context.flag.hideExecutionResult = false;
     context.flag.hideUndefined = false;
 
     process.argv.slice(2).forEach(function(e) {
@@ -123,6 +126,9 @@ function parseCommandArgs(context) {
         } else if (e === FLAG_IJS_HELP) {
             console.log(usage);
             process.exit(0);
+
+        } else if (e === FLAG_IJS_HIDE_EXECUTION_RESULT) {
+            context.flag.hideExecutionResult = true;
 
         } else if (e === FLAG_IJS_HIDE_UNDEFINED) {
             context.flag.hideUndefined = true;
@@ -214,6 +220,10 @@ function parseCommandArgs(context) {
 
     if (context.flag.cwd) {
         context.args.kernel.push("--session-working-dir=" + context.flag.cwd);
+    }
+
+    if (context.flag.hideExecutionResult) {
+        context.args.kernel.push("--hide-execution-result");
     }
 
     if (context.flag.hideUndefined) {

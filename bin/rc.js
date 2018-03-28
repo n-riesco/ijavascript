@@ -354,6 +354,7 @@ module.exports = {
 
     FLAG_IJS_HELP: "--ijs-help",
     FLAG_IJS_DEBUG: "--ijs-debug",
+    FLAG_IJS_HIDE_EXECUTION_RESULT: "--ijs-hide-execution-result",
     FLAG_IJS_HIDE_UNDEFINED: "--ijs-hide-undefined",
     FLAG_IJS_INSTALL: "--ijs-install=",
     FLAG_IJS_INSTALL_KERNEL: "--ijs-install-kernel",
@@ -365,6 +366,7 @@ module.exports = {
 
     FLAG_DEBUG: "--debug",
     FLAG_HELP: "--help",
+    FLAG_HIDE_EXECUTION_RESULT: "--hide-execution-result",
     FLAG_HIDE_UNDEFINED: "--hide-undefined",
     FLAG_INSTALL: "--install=",
     FLAG_PROTOCOL: "--protocol=",

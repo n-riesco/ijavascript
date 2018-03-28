@@ -55,6 +55,7 @@ var setProtocol = rc.setProtocol;
 var spawnFrontend = rc.spawnFrontend;
 var FLAG_DEBUG = rc.FLAG_DEBUG;
 var FLAG_HELP = rc.FLAG_HELP;
+var FLAG_HIDE_EXECUTION_RESULT = rc.FLAG_HIDE_EXECUTION_RESULT;
 var FLAG_HIDE_UNDEFINED = rc.FLAG_HIDE_UNDEFINED;
 var FLAG_INSTALL = rc.FLAG_INSTALL;
 var FLAG_PROTOCOL = rc.FLAG_PROTOCOL;
@@ -76,6 +77,7 @@ var usage = [
     "",
     "--debug                   show debug messages",
     "--help                    show this help",
+    "--hide-execution-result   do not show execution results",
     "--hide-undefined          do not show undefined results",
     "--install=[local|global]  install kernel for current user or globally",
     "--protocol=version        set messaging protocol version, e.g. 5.0",
@@ -98,6 +100,7 @@ function parseCommandArgs(context) {
         "notebook",
     ];
     context.flag.install = "local";
+    context.flag.hideExecutionResult = false;
     context.flag.hideUndefined = true;
 
     process.argv.slice(2).forEach(function(e) {
@@ -111,6 +114,9 @@ function parseCommandArgs(context) {
         } else if (e === FLAG_HELP) {
             console.log(usage);
             process.exit(0);
+
+        } else if (e === FLAG_HIDE_EXECUTION_RESULT) {
+            context.flag.hideExecutionResult = true;
 
         } else if (e === FLAG_HIDE_UNDEFINED) {
             context.flag.hideUndefined = true;
@@ -191,6 +197,10 @@ function parseCommandArgs(context) {
 
     if (context.flag.cwd) {
         context.args.kernel.push("--session-working-dir=" + context.flag.cwd);
+    }
+
+    if (context.flag.hideExecutionResult) {
+        context.args.kernel.push("--hide-execution-result");
     }
 
     if (context.flag.hideUndefined) {

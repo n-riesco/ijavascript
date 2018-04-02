@@ -34,11 +34,11 @@
     },
     "devDependencies": {
         "debug": "latest",
-        "jmp": "^0.7.5",
+        "jmp": "1",
         "jsdoc": "latest",
         "jshint": "latest",
         "mocha": "3",
-        "uuid": "^3.0.1"
+        "uuid": "3"
     },
     "scripts": {
         "doc": "python scripts/doc-build.py",

@@ -128,6 +128,289 @@ function getPackageVersion(packageName) {
     return packageJSON.version;
 }
 
+var FLAGS = [{
+        excludeIfInstaller: true,
+        flag: "help",
+        description: "show IJavascript and Jupyter/IPython help",
+        parse: function(context, arg) {
+            context.args.frontend.push(arg);
+        },
+        showUsage: true,
+    }, {
+        flag: "version",
+        description: "show IJavascript version",
+        parse: function(context, arg) {
+            console.log(context.packageJSON.version);
+        },
+        exit: true,
+    }, {
+        flag: "versions",
+        description: "show IJavascript and library versions",
+        parse: function(context, arg) {
+            console.log("ijavascript", context.packageJSON.version);
+            console.log("jmp", getPackageVersion("jmp"));
+            console.log("jp-kernel", getPackageVersion("jp-kernel"));
+            console.log("nel", getPackageVersion("nel"));
+            console.log("uuid", getPackageVersion("uuid"));
+            console.log("zeromq", getPackageVersion("zeromq"));
+        },
+        exit: true,
+    }, {
+        prefixedFlag: "debug",
+        description: "enable debug log level",
+        parse: function(context, arg) {
+            DEBUG = true;
+            log = doLog;
+
+            context.flag.debug = true;
+            context.args.kernel.push(arg);
+        },
+    }, {
+        prefixedFlag: "help",
+        description: "show IJavascript help",
+        parse: function(context, arg) {
+        },
+        showUsage: true,
+        exit: true,
+    }, {
+        prefixedFlag: "hide-execution-result",
+        description: "do not show execution results",
+        parse: function(context, arg) {
+            context.flag.hideExecutionResult = true;
+            context.args.kernel.push("--hide-execution-result");
+        },
+    }, {
+        prefixedFlag: "hide-undefined",
+        description: "do not show undefined results",
+        parse: function(context, arg) {
+            context.flag.hideUndefined = true;
+            context.args.kernel.push("--hide-undefined");
+        },
+    }, {
+        prefixedFlag: "install=[local|global]",
+        description: "install IJavascript kernel",
+        parse: function(context, arg) {
+            context.flag.install = getValue(arg);
+            if (context.flag.install !== "local" &&
+                context.flag.install !== "global") {
+                throw new Error(
+                    util.format("Unknown flag option '%s'\n", arg)
+                );
+            }
+        },
+    }, {
+        deprecated: true,
+        prefixedFlag: "install-kernel",
+        description:
+        "same as --PREFIX-install=local (for backwards-compatibility)",
+        parse: function(context, arg) {
+            context.flag.install = "local";
+        },
+    }, {
+        prefixedFlag: "protocol=version",
+        description: "set protocol version, e.g. 4.1",
+        parse: function(context, arg) {
+            context.protocol.version = getValue(arg);
+            context.protocol.majorVersion = parseInt(
+                context.protocol.version.split(".", 1)[0]
+            );
+        },
+    }, {
+        prefixedFlag: "show-undefined",
+        description: "show undefined results",
+        parse: function(context, arg) {
+            context.flag.hideUndefined = false;
+            context.args.kernel.push("--show-undefined");
+        },
+    }, {
+        prefixedFlag: "spec-path=[none|full]",
+        description: "set whether kernel spec uses full paths",
+        parse: function(context, arg) {
+            context.flag.specPath = getValue(arg);
+            if (context.flag.specPath !== "none" &&
+                context.flag.specPath !== "full") {
+                throw new Error(
+                    util.format("Unknown flag option '%s'\n", arg)
+                );
+            }
+        },
+    }, {
+        prefixedFlag: "startup-script=path",
+        description: "run script on startup (path can be a file or a folder)",
+        parse: function(context, arg) {
+            context.flag.startup = fs.realpathSync(getValue(arg));
+            context.args.kernel.push(
+                "--startup-script=" + context.flag.startup
+            );
+        },
+    }, {
+        prefixedFlag: "working-dir=path",
+        description:
+        "set session working directory (default = current working directory)",
+        parse: function(context, arg) {
+            context.flag.cwd = fs.realpathSync(getValue(arg));
+            context.args.kernel.push(
+                "--session-working-dir=" + context.flag.cwd
+            );
+        },
+    }];
+
+function parseCommandArgs(context, options) {
+    var flagPrefix = options.flagPrefix || '';
+
+    context.args.kernel = [];
+    context.args.frontend = [
+        "jupyter",
+        "notebook",
+    ];
+
+    process.argv.slice(2).forEach(function(arg) {
+        var matched = false;
+
+        for (var i = 0; i < FLAGS.length; i++) {
+            var flagDefinition =  FLAGS[i];
+
+            if (flagDefinition.deprecated && !options.includeDeprecated) {
+                continue;
+            }
+
+            if (flagDefinition.excludeIfInstaller && options.installer) {
+                continue;
+            }
+
+            var fullFlag = getFullFlag(flagDefinition, options);
+            var flag = getFlag(fullFlag);
+            var value = getValue(fullFlag);
+
+            // if arg doesn't match flag definition, continue iterating
+            if (value) {
+                if (arg.lastIndexOf(flag, 0) !== 0) continue;
+            } else {
+                if (arg !== flag) continue;
+            }
+
+            matched = true;
+            flagDefinition.parse(context, arg);
+            if (flagDefinition.showUsage) showUsage(options);
+            if (flagDefinition.exit) process.exit(0);
+            break;
+        }
+
+        if (matched) {
+            return;
+
+        } else if (options.installer) {
+            throw new Error(util.format("Unknown flag '%s'\n", arg));
+
+        } else if (arg.lastIndexOf("--" + flagPrefix + "-", 0) === 0) {
+            throw new Error(util.format("Unknown flag '%s'\n", arg));
+
+        } else if (arg.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
+            console.warn(util.format("Warning: Flag '%s' skipped", arg));
+
+        } else {
+            context.args.frontend.push(arg);
+        }
+    });
+
+    if (context.flag.specPath === "full") {
+        context.args.kernel = [
+            context.path.node,
+            context.path.kernel,
+        ].concat(context.args.kernel);
+    } else {
+        context.args.kernel = [
+            (process.platform === 'win32') ? 'ijskernel.cmd' : 'ijskernel',
+        ].concat(context.args.kernel);
+    }
+
+    if (!context.flag.hasOwnProperty("hideUndefined")) {
+        if (options.showUndefined) {
+            context.args.kernel.push("--show-undefined");
+        } else {
+            context.args.kernel.push("--hide-undefined");
+        }
+    }
+
+    context.args.kernel.push("{connection_file}");
+}
+
+function getFullFlag(flagDefinition, config) {
+    return (flagDefinition.flag) ?
+        "--" + flagDefinition.flag :
+        (config.flagPrefix) ?
+            "--" + config.flagPrefix + "-" + flagDefinition.prefixedFlag :
+            "--" + flagDefinition.prefixedFlag;
+}
+
+function getFlag(arg) {
+    var index = arg.indexOf("=");
+    return (index === -1) ? arg : arg.slice(0, index + 1);
+}
+
+function getValue(arg) {
+    var index = arg.indexOf("=");
+    return (index === -1) ? '' : arg.slice(index + 1);
+}
+
+var PREFIX_RE = /PREFIX/g;
+
+function showUsage(options) {
+    var flagPrefix = options.flagPrefix || '';
+    var usageHeader = options.usageHeader;
+    var usageFooter = options.usageFooter;
+
+    var usage = "";
+
+    if (usageHeader) usage += usageHeader + "\n\n";
+
+    usage += "The recognised options are:\n\n";
+
+    var maxFlagLength = 0;
+    var flags = [];
+    for (var i = 0; i < FLAGS.length; i++) {
+        var flagDefinition = FLAGS[i];
+
+        if (flagDefinition.deprecated && !options.includeDeprecated) {
+            continue;
+        }
+
+        if (flagDefinition.excludeIfInstaller && options.installer) {
+            continue;
+        }
+
+        var fullFlag = getFullFlag(flagDefinition, options);
+
+        if (fullFlag.length > maxFlagLength) {
+            maxFlagLength = fullFlag.length;
+        }
+
+        var description = flagDefinition.description;
+        description = description.replace(PREFIX_RE, flagPrefix);
+
+        flags.push({
+            fullFlag: fullFlag,
+            description: description,
+        });
+    }
+
+    flags.forEach(function(flag) {
+        var fullFlag = flag.fullFlag;
+        var description = flag.description;
+
+        var indent = "    ";
+        var paddingLength = maxFlagLength - fullFlag.length + 2;
+        var padding = (new Array(paddingLength + 1)).join(" ");
+        var line = indent + fullFlag + padding + description + "\n";
+
+        usage += line;
+    });
+
+    if (usageFooter) usage += "\n" + usageFooter;
+
+    console.log(usage);
+}
+
 function setJupyterInfoAsync(context, callback) {
     exec("jupyter --version", function(error, stdout, stderr) {
         if (error) {
@@ -345,35 +628,11 @@ module.exports = {
     installKernelAsync: installKernelAsync,
     log: log,
     makeTmpdir: makeTmpdir,
+    parseCommandArgs: parseCommandArgs,
     readPackageJson: readPackageJson,
     setIPythonInfoAsync: setIPythonInfoAsync,
     setJupyterInfoAsync: setJupyterInfoAsync,
     setPaths: setPaths,
     setProtocol: setProtocol,
     spawnFrontend: spawnFrontend,
-
-    FLAG_IJS_HELP: "--ijs-help",
-    FLAG_IJS_DEBUG: "--ijs-debug",
-    FLAG_IJS_HIDE_EXECUTION_RESULT: "--ijs-hide-execution-result",
-    FLAG_IJS_HIDE_UNDEFINED: "--ijs-hide-undefined",
-    FLAG_IJS_INSTALL: "--ijs-install=",
-    FLAG_IJS_INSTALL_KERNEL: "--ijs-install-kernel",
-    FLAG_IJS_PROTOCOL: "--ijs-protocol=",
-    FLAG_IJS_SHOW_UNDEFINED: "--ijs-show-undefined",
-    FLAG_IJS_SPEC_PATH: "--ijs-spec-path=",
-    FLAG_IJS_STARTUP_SCRIPT: "--ijs-startup-script=",
-    FLAG_IJS_WORKING_DIR: "--ijs-working-dir=",
-
-    FLAG_DEBUG: "--debug",
-    FLAG_HELP: "--help",
-    FLAG_HIDE_EXECUTION_RESULT: "--hide-execution-result",
-    FLAG_HIDE_UNDEFINED: "--hide-undefined",
-    FLAG_INSTALL: "--install=",
-    FLAG_PROTOCOL: "--protocol=",
-    FLAG_SHOW_UNDEFINED: "--show-undefined",
-    FLAG_SPEC_PATH: "--spec-path=",
-    FLAG_STARTUP_SCRIPT: "--startup-script=",
-    FLAG_VERSION: "--version",
-    FLAG_VERSIONS: "--versions",
-    FLAG_WORKING_DIR: "--working-dir=",
 };

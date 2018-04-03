@@ -48,199 +48,39 @@ var installKernelAsync = rc.installKernelAsync;
 var log = rc.log;
 var makeTmpdir = rc.makeTmpdir;
 var readPackageJson = rc.readPackageJson;
+var parseCommandArgs = rc.parseCommandArgs;
 var setIPythonInfoAsync = rc.setIPythonInfoAsync;
 var setJupyterInfoAsync = rc.setJupyterInfoAsync;
 var setPaths = rc.setPaths;
 var setProtocol = rc.setProtocol;
 var spawnFrontend = rc.spawnFrontend;
-var FLAG_HELP = rc.FLAG_HELP;
-var FLAG_IJS_HELP = rc.FLAG_IJS_HELP;
-var FLAG_IJS_DEBUG = rc.FLAG_IJS_DEBUG;
-var FLAG_IJS_HIDE_EXECUTION_RESULT = rc.FLAG_IJS_HIDE_EXECUTION_RESULT;
-var FLAG_IJS_HIDE_UNDEFINED = rc.FLAG_IJS_HIDE_UNDEFINED;
-var FLAG_IJS_INSTALL = rc.FLAG_IJS_INSTALL;
-var FLAG_IJS_INSTALL_KERNEL = rc.FLAG_IJS_INSTALL_KERNEL;
-var FLAG_IJS_PROTOCOL = rc.FLAG_IJS_PROTOCOL;
-var FLAG_IJS_SHOW_UNDEFINED = rc.FLAG_IJS_SHOW_UNDEFINED;
-var FLAG_IJS_SPEC_PATH = rc.FLAG_IJS_SPEC_PATH;
-var FLAG_IJS_STARTUP_SCRIPT = rc.FLAG_IJS_STARTUP_SCRIPT;
-var FLAG_IJS_WORKING_DIR = rc.FLAG_IJS_WORKING_DIR;
-var FLAG_VERSION = rc.FLAG_VERSION;
-var FLAG_VERSIONS = rc.FLAG_VERSIONS;
-
-var usage = [
-    "IJavascript Notebook",
-    "",
-    "Usage:",
-    "",
-    "    ijs <options>",
-    "",
-    "The recognised options are:",
-    "",
-    "    --help                        show IJavascript and notebook help",
-    "    --ijs-debug                   enable debug log level",
-    "    --ijs-help                    show IJavascript help",
-    "    --ijs-hide-execution-result   do not show execution results",
-    "    --ijs-hide-undefined          do not show undefined results",
-    "    --ijs-install=[local|global]  install IJavascript kernel",
-    "    --ijs-install-kernel          same as --ijs-install=local",
-    "                                  (for backwards-compatibility)",
-    "    --ijs-protocol=version        set protocol version, e.g. 4.1",
-    "    --ijs-show-undefined          show undefined results",
-    "    --ijs-spec-path=[none|full]   set whether kernel spec uses full paths",
-    "    --ijs-startup-script=path     run script on startup",
-    "                                  (path can be a file or a folder)",
-    "    --ijs-working-dir=path        set session working directory",
-    "                                  (default = current working directory)",
-    "    --version                     show IJavascript version",
-    "    --versions                    show IJavascript and library versions",
-    "",
-    "and any other options recognised by the Jupyter notebook; run:",
-    "",
-    "    jupyter notebook --help",
-    "",
-    "for a full list.",
-].join("\n");
-
-function parseCommandArgs(context) {
-    context.args.kernel = [];
-    context.args.frontend = [
-        "jupyter",
-        "notebook",
-    ];
-    context.flag.hideExecutionResult = false;
-    context.flag.hideUndefined = false;
-
-    process.argv.slice(2).forEach(function(e) {
-        if (e === FLAG_HELP) {
-            console.log(usage);
-            context.args.frontend.push(e);
-
-        } else if (e === FLAG_IJS_DEBUG) {
-            DEBUG = true;
-            log = doLog;
-
-            context.flag.debug = true;
-            context.args.kernel.push("--debug");
-
-        } else if (e === FLAG_IJS_HELP) {
-            console.log(usage);
-            process.exit(0);
-
-        } else if (e === FLAG_IJS_HIDE_EXECUTION_RESULT) {
-            context.flag.hideExecutionResult = true;
-
-        } else if (e === FLAG_IJS_HIDE_UNDEFINED) {
-            context.flag.hideUndefined = true;
-
-        } else if (e.lastIndexOf(FLAG_IJS_INSTALL, 0) === 0) {
-            context.flag.install = e.slice(FLAG_IJS_INSTALL.length);
-            if (context.flag.install !== "local" &&
-                context.flag.install !== "global") {
-                console.error(
-                    util.format("Error: Unknown flag option '%s'\n", e)
-                );
-                console.error(usage);
-                process.exit(1);
-            }
-
-        } else if (e === FLAG_IJS_INSTALL_KERNEL) {
-            context.flag.install = "local";
-
-        } else if (e.lastIndexOf(FLAG_IJS_PROTOCOL, 0) === 0) {
-            context.protocol.version = e.slice(FLAG_IJS_PROTOCOL.length);
-            context.protocol.majorVersion = parseInt(
-                context.protocol.version.split(".", 1)[0]
-            );
-
-        } else if (e === FLAG_IJS_SHOW_UNDEFINED) {
-            context.flag.hideUndefined = false;
-
-        } else if (e.lastIndexOf(FLAG_IJS_SPEC_PATH, 0) === 0) {
-            context.flag.specPath = e.slice(FLAG_IJS_SPEC_PATH.length);
-            if (context.flag.specPath !== "none" &&
-                context.flag.specPath !== "full") {
-                console.error(
-                    util.format("Error: Unknown flag option '%s'\n", e)
-                );
-                console.error(usage);
-                process.exit(1);
-            }
-
-        } else if (e.lastIndexOf(FLAG_IJS_STARTUP_SCRIPT, 0) === 0) {
-            context.flag.startup = fs.realpathSync(
-                e.slice(FLAG_IJS_STARTUP_SCRIPT.length)
-            );
-
-        } else if (e.lastIndexOf(FLAG_IJS_WORKING_DIR, 0) === 0) {
-            context.flag.cwd = fs.realpathSync(
-                e.slice(FLAG_IJS_WORKING_DIR.length)
-            );
-
-        } else if (e.lastIndexOf("--ijs-", 0) === 0) {
-            console.error(util.format("Error: Unknown flag '%s'\n", e));
-            console.error(usage);
-            process.exit(1);
-
-        } else if (e.lastIndexOf("--KernelManager.kernel_cmd=", 0) === 0) {
-            console.warn(util.format("Warning: Flag '%s' skipped", e));
-
-        } else if (e === FLAG_VERSION) {
-            console.log(context.packageJSON.version);
-            process.exit(0);
-
-        } else if (e === FLAG_VERSIONS) {
-            console.log("ijavascript", context.packageJSON.version);
-            console.log("jmp", getPackageVersion("jmp"));
-            console.log("jp-kernel", getPackageVersion("jp-kernel"));
-            console.log("nel", getPackageVersion("nel"));
-            console.log("uuid", getPackageVersion("uuid"));
-            console.log("zeromq", getPackageVersion("zeromq"));
-            process.exit(0);
-
-        } else {
-            context.args.frontend.push(e);
-        }
-    });
-
-    if (context.flag.specPath === "full") {
-        context.args.kernel = [
-            context.path.node,
-            context.path.kernel,
-        ].concat(context.args.kernel);
-    } else {
-        context.args.kernel = [
-            (process.platform === 'win32') ? 'ijskernel.cmd' : 'ijskernel',
-        ].concat(context.args.kernel);
-    }
-
-    if (context.flag.startup) {
-        context.args.kernel.push("--startup-script=" + context.flag.startup);
-    }
-
-    if (context.flag.cwd) {
-        context.args.kernel.push("--session-working-dir=" + context.flag.cwd);
-    }
-
-    if (context.flag.hideExecutionResult) {
-        context.args.kernel.push("--hide-execution-result");
-    }
-
-    if (context.flag.hideUndefined) {
-        context.args.kernel.push("--hide-undefined");
-    } else {
-        context.args.kernel.push("--show-undefined");
-    }
-
-    context.args.kernel.push("{connection_file}");
-}
-
 
 setPaths(context);
 
 readPackageJson(context);
 
-parseCommandArgs(context);
+parseCommandArgs(context, {
+    showUndefined: true,
+    includeDeprecated: true,
+
+    flagPrefix: "ijs",
+
+    usageHeader: [
+        "IJavascript Notebook",
+        "",
+        "Usage:",
+        "",
+        "    ijs <options>",
+    ].join("\n"),
+
+    usageFooter: [
+        "and any other options recognised by the Jupyter notebook; run:",
+        "",
+        "    jupyter notebook --help",
+        "",
+        "for a full list.",
+    ].join("\n"),
+});
 
 setJupyterInfoAsync(context, function() {
     setProtocol(context);

@@ -43,7 +43,6 @@ var context = rc.context;
 var copyAsync = rc.copyAsync;
 var doLog = rc.doLog;
 var dontLog = rc.dontLog;
-var getPackageVersion = rc.getPackageVersion;
 var installKernelAsync = rc.installKernelAsync;
 var log = rc.log;
 var makeTmpdir = rc.makeTmpdir;

@@ -624,7 +624,6 @@ module.exports = {
     copyAsync: copyAsync,
     doLog: doLog,
     dontLog: dontLog,
-    getPackageVersion: getPackageVersion,
     installKernelAsync: installKernelAsync,
     log: log,
     makeTmpdir: makeTmpdir,

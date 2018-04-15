@@ -35,20 +35,13 @@
  */
 
 var console = require("console");
-var fs = require("fs");
-var util = require("util");
 
 var rc = require("./rc.js");
 var context = rc.context;
-var copyAsync = rc.copyAsync;
-var doLog = rc.doLog;
-var dontLog = rc.dontLog;
 var installKernelAsync = rc.installKernelAsync;
 var log = rc.log;
-var makeTmpdir = rc.makeTmpdir;
 var readPackageJson = rc.readPackageJson;
 var parseCommandArgs = rc.parseCommandArgs;
-var setIPythonInfoAsync = rc.setIPythonInfoAsync;
 var setJupyterInfoAsync = rc.setJupyterInfoAsync;
 var setPaths = rc.setPaths;
 var setProtocol = rc.setProtocol;

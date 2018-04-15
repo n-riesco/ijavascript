@@ -1,0 +1,98 @@
+root: true
+
+extends:
+        - eslint:recommended
+
+parserOptions:
+        ecmaVersion: 5
+
+env:
+        node: true
+        mocha: true
+
+rules:
+        # indent and spacing
+        indent: [error, 4]
+
+        array-bracket-spacing: [error, never]
+        arrow-spacing:
+                - error
+                - before: true
+                  after: true
+        block-spacing: [error, always]
+        comma-spacing:
+                - error
+                - after: true
+        computed-property-spacing: [error, never]
+        func-call-spacing: [error, never]
+        generator-star-spacing:
+                - error
+                - before: true
+                  after: false
+        keyword-spacing:
+                - error
+                - before: true
+                  after: true
+        no-irregular-whitespace: error
+        no-mixed-spaces-and-tabs: error
+        no-multi-spaces:
+                - error
+                - exceptions:
+                        Property: true
+                        VariableDeclarator: true
+                        ImportDeclaration: true
+        no-regex-spaces: error
+        no-tabs: error
+        no-trailing-spaces: error
+        no-whitespace-before-property: error
+        object-curly-spacing: [error, never]
+        rest-spread-spacing: [error, never]
+        semi-spacing:
+                - error
+                - before: false
+                  after: true
+        space-before-blocks: [error, always]
+        space-before-function-paren: [error, never]
+        space-in-parens: [error, never]
+        space-infix-ops:
+                - error
+                - int32Hint: false
+        space-unary-ops:
+                - error
+                - words: true
+                  nonwords: false
+        spaced-comment: [error, always]
+        template-curly-spacing: [error, never]
+        template-tag-spacing: [error, never]
+        yield-star-spacing:
+                - error
+                - before: false
+                  after: true
+
+        # other rules
+        complexity: error
+
+        max-len:
+                - error
+                - code: 80
+                  tabWidth: 8
+                  ignoreUrls: true
+                  ignoreStrings: true
+                  ignoreTemplateLiterals: true
+                  ignoreRegExpLiterals: true
+
+        no-console: off
+
+        no-empty: off
+
+        no-unused-vars:
+                - error
+                - args: none
+
+        no-var: off
+
+        one-var: off
+
+        quotes: [error, double]
+
+        semi: error

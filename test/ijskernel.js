@@ -141,11 +141,11 @@ function testKernelInfoRequest(mte) {
         var ijsVersion;
         var majorVersion = parseInt(mte.version.protocol.split(".")[0]);
         if (majorVersion <= 4) {
-            nodeVersion = process.versions.node.split('.')
+            nodeVersion = process.versions.node.split(".")
                 .map(function(v) {
                     return parseInt(v, 10);
                 });
-            protocolVersion = mte.version.protocol.split('.')
+            protocolVersion = mte.version.protocol.split(".")
                 .map(function(v) {
                     return parseInt(v, 10);
                 });
@@ -158,7 +158,7 @@ function testKernelInfoRequest(mte) {
             nodeVersion = process.versions.node;
             protocolVersion = mte.version.protocol;
             ijsVersion = JSON.parse(
-                fs.readFileSync(path.join(mte.path.root , "package.json"))
+                fs.readFileSync(path.join(mte.path.root, "package.json"))
             ).version;
             kernelInfoReply = {
                 "protocol_version": protocolVersion,

@@ -129,134 +129,134 @@ function getPackageVersion(packageName) {
 }
 
 var FLAGS = [{
-        excludeIfInstaller: true,
-        flag: "help",
-        description: "show IJavascript and Jupyter/IPython help",
-        parse: function(context, arg) {
-            context.args.frontend.push(arg);
-        },
-        showUsage: true,
-    }, {
-        flag: "version",
-        description: "show IJavascript version",
-        parse: function(context, arg) {
-            console.log(context.packageJSON.version);
-        },
-        exit: true,
-    }, {
-        flag: "versions",
-        description: "show IJavascript and library versions",
-        parse: function(context, arg) {
-            console.log("ijavascript", context.packageJSON.version);
-            console.log("jmp", getPackageVersion("jmp"));
-            console.log("jp-kernel", getPackageVersion("jp-kernel"));
-            console.log("nel", getPackageVersion("nel"));
-            console.log("uuid", getPackageVersion("uuid"));
-            console.log("zeromq", getPackageVersion("zeromq"));
-        },
-        exit: true,
-    }, {
-        prefixedFlag: "debug",
-        description: "enable debug log level",
-        parse: function(context, arg) {
-            DEBUG = true;
-            log = doLog;
+    excludeIfInstaller: true,
+    flag: "help",
+    description: "show IJavascript and Jupyter/IPython help",
+    parse: function(context, arg) {
+        context.args.frontend.push(arg);
+    },
+    showUsage: true,
+}, {
+    flag: "version",
+    description: "show IJavascript version",
+    parse: function(context, arg) {
+        console.log(context.packageJSON.version);
+    },
+    exit: true,
+}, {
+    flag: "versions",
+    description: "show IJavascript and library versions",
+    parse: function(context, arg) {
+        console.log("ijavascript", context.packageJSON.version);
+        console.log("jmp", getPackageVersion("jmp"));
+        console.log("jp-kernel", getPackageVersion("jp-kernel"));
+        console.log("nel", getPackageVersion("nel"));
+        console.log("uuid", getPackageVersion("uuid"));
+        console.log("zeromq", getPackageVersion("zeromq"));
+    },
+    exit: true,
+}, {
+    prefixedFlag: "debug",
+    description: "enable debug log level",
+    parse: function(context, arg) {
+        DEBUG = true;
+        log = doLog;
 
-            context.flag.debug = true;
-            context.args.kernel.push(arg);
-        },
-    }, {
-        prefixedFlag: "help",
-        description: "show IJavascript help",
-        parse: function(context, arg) {
-        },
-        showUsage: true,
-        exit: true,
-    }, {
-        prefixedFlag: "hide-execution-result",
-        description: "do not show execution results",
-        parse: function(context, arg) {
-            context.flag.hideExecutionResult = true;
-            context.args.kernel.push("--hide-execution-result");
-        },
-    }, {
-        prefixedFlag: "hide-undefined",
-        description: "do not show undefined results",
-        parse: function(context, arg) {
-            context.flag.hideUndefined = true;
-            context.args.kernel.push("--hide-undefined");
-        },
-    }, {
-        prefixedFlag: "install=[local|global]",
-        description: "install IJavascript kernel",
-        parse: function(context, arg) {
-            context.flag.install = getValue(arg);
-            if (context.flag.install !== "local" &&
-                context.flag.install !== "global") {
-                throw new Error(
-                    util.format("Unknown flag option '%s'\n", arg)
-                );
-            }
-        },
-    }, {
-        deprecated: true,
-        prefixedFlag: "install-kernel",
-        description:
-        "same as --PREFIX-install=local (for backwards-compatibility)",
-        parse: function(context, arg) {
-            context.flag.install = "local";
-        },
-    }, {
-        prefixedFlag: "protocol=version",
-        description: "set protocol version, e.g. 4.1",
-        parse: function(context, arg) {
-            context.protocol.version = getValue(arg);
-            context.protocol.majorVersion = parseInt(
-                context.protocol.version.split(".", 1)[0]
+        context.flag.debug = true;
+        context.args.kernel.push(arg);
+    },
+}, {
+    prefixedFlag: "help",
+    description: "show IJavascript help",
+    parse: function(context, arg) {
+    },
+    showUsage: true,
+    exit: true,
+}, {
+    prefixedFlag: "hide-execution-result",
+    description: "do not show execution results",
+    parse: function(context, arg) {
+        context.flag.hideExecutionResult = true;
+        context.args.kernel.push("--hide-execution-result");
+    },
+}, {
+    prefixedFlag: "hide-undefined",
+    description: "do not show undefined results",
+    parse: function(context, arg) {
+        context.flag.hideUndefined = true;
+        context.args.kernel.push("--hide-undefined");
+    },
+}, {
+    prefixedFlag: "install=[local|global]",
+    description: "install IJavascript kernel",
+    parse: function(context, arg) {
+        context.flag.install = getValue(arg);
+        if (context.flag.install !== "local" &&
+            context.flag.install !== "global") {
+            throw new Error(
+                util.format("Unknown flag option '%s'\n", arg)
             );
-        },
-    }, {
-        prefixedFlag: "show-undefined",
-        description: "show undefined results",
-        parse: function(context, arg) {
-            context.flag.hideUndefined = false;
-            context.args.kernel.push("--show-undefined");
-        },
-    }, {
-        prefixedFlag: "spec-path=[none|full]",
-        description: "set whether kernel spec uses full paths",
-        parse: function(context, arg) {
-            context.flag.specPath = getValue(arg);
-            if (context.flag.specPath !== "none" &&
-                context.flag.specPath !== "full") {
-                throw new Error(
-                    util.format("Unknown flag option '%s'\n", arg)
-                );
-            }
-        },
-    }, {
-        prefixedFlag: "startup-script=path",
-        description: "run script on startup (path can be a file or a folder)",
-        parse: function(context, arg) {
-            context.flag.startup = fs.realpathSync(getValue(arg));
-            context.args.kernel.push(
-                "--startup-script=" + context.flag.startup
+        }
+    },
+}, {
+    deprecated: true,
+    prefixedFlag: "install-kernel",
+    description:
+    "same as --PREFIX-install=local (for backwards-compatibility)",
+    parse: function(context, arg) {
+        context.flag.install = "local";
+    },
+}, {
+    prefixedFlag: "protocol=version",
+    description: "set protocol version, e.g. 4.1",
+    parse: function(context, arg) {
+        context.protocol.version = getValue(arg);
+        context.protocol.majorVersion = parseInt(
+            context.protocol.version.split(".", 1)[0]
+        );
+    },
+}, {
+    prefixedFlag: "show-undefined",
+    description: "show undefined results",
+    parse: function(context, arg) {
+        context.flag.hideUndefined = false;
+        context.args.kernel.push("--show-undefined");
+    },
+}, {
+    prefixedFlag: "spec-path=[none|full]",
+    description: "set whether kernel spec uses full paths",
+    parse: function(context, arg) {
+        context.flag.specPath = getValue(arg);
+        if (context.flag.specPath !== "none" &&
+            context.flag.specPath !== "full") {
+            throw new Error(
+                util.format("Unknown flag option '%s'\n", arg)
             );
-        },
-    }, {
-        prefixedFlag: "working-dir=path",
-        description:
-        "set session working directory (default = current working directory)",
-        parse: function(context, arg) {
-            context.flag.cwd = fs.realpathSync(getValue(arg));
-            context.args.kernel.push(
-                "--session-working-dir=" + context.flag.cwd
-            );
-        },
-    }];
+        }
+    },
+}, {
+    prefixedFlag: "startup-script=path",
+    description: "run script on startup (path can be a file or a folder)",
+    parse: function(context, arg) {
+        context.flag.startup = fs.realpathSync(getValue(arg));
+        context.args.kernel.push(
+            "--startup-script=" + context.flag.startup
+        );
+    },
+}, {
+    prefixedFlag: "working-dir=path",
+    description:
+    "set session working directory (default = current working directory)",
+    parse: function(context, arg) {
+        context.flag.cwd = fs.realpathSync(getValue(arg));
+        context.args.kernel.push(
+            "--session-working-dir=" + context.flag.cwd
+        );
+    },
+}];
 
 function parseCommandArgs(context, options) {
-    var flagPrefix = options.flagPrefix || '';
+    var flagPrefix = options.flagPrefix || "";
 
     context.args.kernel = [];
     context.args.frontend = [
@@ -320,7 +320,7 @@ function parseCommandArgs(context, options) {
         ].concat(context.args.kernel);
     } else {
         context.args.kernel = [
-            (process.platform === 'win32') ? 'ijskernel.cmd' : 'ijskernel',
+            (process.platform === "win32") ? "ijskernel.cmd" : "ijskernel",
         ].concat(context.args.kernel);
     }
 
@@ -350,13 +350,13 @@ function getFlag(arg) {
 
 function getValue(arg) {
     var index = arg.indexOf("=");
-    return (index === -1) ? '' : arg.slice(index + 1);
+    return (index === -1) ? "" : arg.slice(index + 1);
 }
 
 var PREFIX_RE = /PREFIX/g;
 
 function showUsage(options) {
-    var flagPrefix = options.flagPrefix || '';
+    var flagPrefix = options.flagPrefix || "";
     var usageHeader = options.usageHeader;
     var usageFooter = options.usageFooter;
 
@@ -597,7 +597,7 @@ function makeTmpdir(maxAttempts) {
         try {
             tmpdir = path.join(
                 os.tmpdir(),
-                crypto.randomBytes(16).toString('hex')
+                crypto.randomBytes(16).toString("hex")
             );
             fs.mkdirSync(tmpdir);
         } catch (e) {

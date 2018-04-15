@@ -24,7 +24,6 @@ rules:
                 - error
                 - after: true
         computed-property-spacing: [error, never]
-        func-call-spacing: [error, never]
         generator-star-spacing:
                 - error
                 - before: true
@@ -42,7 +41,6 @@ rules:
                         VariableDeclarator: true
                         ImportDeclaration: true
         no-regex-spaces: error
-        no-tabs: error
         no-trailing-spaces: error
         no-whitespace-before-property: error
         object-curly-spacing: [error, never]
@@ -63,23 +61,19 @@ rules:
                   nonwords: false
         spaced-comment: [error, always]
         template-curly-spacing: [error, never]
-        template-tag-spacing: [error, never]
         yield-star-spacing:
                 - error
                 - before: false
                   after: true
 
         # other rules
+        comma-dangle: off
+
         complexity: error
 
         max-len:
                 - error
-                - code: 80
-                  tabWidth: 8
-                  ignoreUrls: true
-                  ignoreStrings: true
-                  ignoreTemplateLiterals: true
-                  ignoreRegExpLiterals: true
+                - 80
 
         no-console: off
 

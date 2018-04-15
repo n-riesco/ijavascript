@@ -34,7 +34,7 @@
     },
     "devDependencies": {
         "debug": "2",
-        "eslint": "4",
+        "eslint": "2",
         "jmp": "1",
         "jsdoc": "3",
         "mocha": "3",

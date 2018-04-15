@@ -264,6 +264,7 @@ function parseCommandArgs(context, options) {
         "notebook",
     ];
 
+    /* eslint-disable complexity */
     process.argv.slice(2).forEach(function(arg) {
         var matched = false;
 
@@ -312,6 +313,7 @@ function parseCommandArgs(context, options) {
             context.args.frontend.push(arg);
         }
     });
+    /* eslint-enable complexity */
 
     if (context.flag.specPath === "full") {
         context.args.kernel = [

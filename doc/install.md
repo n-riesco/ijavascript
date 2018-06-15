@@ -204,7 +204,7 @@ Now use a text editor to make the contents of `<new virtual environment's path>/
 ```
 #!/bin/bash
 export JUPYTER_DATA_DIR=<new virtual environment's path>/etc/jupyter/nbdata
-export JUPYTER_CONFIG_DIR=<>/etc/jupyter/nbconfig
+export JUPYTER_CONFIG_DIR=<new virtual environment's path>/etc/jupyter/nbconfig
 ```
 
 and then use a text editor to make the contents of `<new virtual environment's path>/etc/conda/deactivate.d/env_vars.sh` be the following:
@@ -235,6 +235,14 @@ Now ijavascript should not only be installed in your new virtual environment, bu
 1.  In the above, one should use `#!/bin/bash` only if one's shell is BASH, but `#!/bin/sh` if one's shell is Bourne shell, or `#!/bin/zsh` if one's shell is ZSH, etc.
 2. Setting the value of Jupyter's configuration path (`JUPYTER_CONFIG_DIR`) isn't strictly necessary. However it will allow you to make changes to Jupyter's settings within that virtual environment without those changes propagating outside of the environment.
 3. Exiting and re-entering the new virtual environment ensures that the script `env_vars.sh` actually gets called. Otherwise, there won't be any change to the values of the environment variables, and the kernel spec of ijavascript will be installed somewhere else besides the local Jupyter config folder we created above.
+4. If you don't care about restricting ijavascript to a particular virtual environment, the following will work:
+
+```
+conda install nodejs
+conda install jupyter
+npm install -g ijavascript
+ijsinstall
+```
 
 ## Other platforms
 

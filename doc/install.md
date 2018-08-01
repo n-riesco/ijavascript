@@ -182,7 +182,7 @@ conda activate <name of new virtual environment>
 conda install nodejs jupyter
 ```
 
-For `conda` version 4.5.4. and version 1.0.0 of the `jupyter` conda package, the location of Jupyter in the new virtual environment will be `<new virtual environment's path>/etc/jupyter`. This motivates the following commands:
+For `conda` version 4.5.4. and version 1.0.0 of the `jupyter` conda package, the location of Jupyter in the new virtual environment will be `$CONDA_PREFIX/etc/jupyter`. This motivates the following commands:
 
 ```
 cd $CONDA_PREFIX/etc

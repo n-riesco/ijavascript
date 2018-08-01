@@ -186,11 +186,8 @@ For `conda` version 4.5.4. and version 1.0.0 of the `jupyter` conda package, the
 
 ```
 cd $CONDA_PREFIX/etc
-mkdir ./jupyter/nbdata
-mkdir -p ./conda/activate.d
-mkdir -p ./conda/deactivate.d
-touch ./conda/activate.d/env_vars.sh
-touch ./conda/deactivate.d/env_vars.sh
+mkdir -p ./jupyter/nbdata ./conda/activate.d ./conda/deactivate.d
+touch ./conda/activate.d/env_vars.sh ./conda/deactivate.d/env_vars.sh
 ```
 
 Now use a text editor to make the contents of `$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh` be the following:

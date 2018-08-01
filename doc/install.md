@@ -178,36 +178,27 @@ Note that in what follows, phrases enclosed in `<` and `>` denote places where y
 
 ```
 conda create --name <name of new virtual environment>
-```
-
-As part of the output of the above command, conda should state the path for the directory of this new virtual environment. Take note of it, since the path for that directory will be necessary later.
-
-```
 conda activate <name of new virtual environment>
-conda install nodejs
-conda install jupyter
+conda install nodejs jupyter
 ```
 
-For `conda` version 4.5.4. and version 1.0.0 of the `jupyter` conda package, the location of Jupyter in the new virtual environment will be `<new virtual environment's path>/etc/jupyter`. This motivates the following commands:
+For `conda` version 4.5.4. and version 1.0.0 of the `jupyter` conda package, the location of Jupyter in the new virtual environment will be `$CONDA_PREFIX/etc/jupyter`. This motivates the following commands:
 
 ```
-cd <new virtual environment's path>/etc
-mkdir ./jupyter/nbdata
-mkdir -p ./conda/activate.d
-mkdir -p ./conda/deactivate.d
-touch ./conda/activate.d/env_vars.sh
-touch ./conda/deactivate.d/env_vars.sh
+cd $CONDA_PREFIX/etc
+mkdir -p ./jupyter/nbdata ./conda/activate.d ./conda/deactivate.d
+touch ./conda/activate.d/env_vars.sh ./conda/deactivate.d/env_vars.sh
 ```
 
-Now use a text editor to make the contents of `<new virtual environment's path>/etc/conda/activate.d/env_vars.sh` be the following:
+Now use a text editor to make the contents of `$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh` be the following:
 
 ```
 #!/bin/bash
-export JUPYTER_DATA_DIR=<new virtual environment's path>/etc/jupyter/nbdata
-export JUPYTER_CONFIG_DIR=<new virtual environment's path>/etc/jupyter/nbconfig
+export JUPYTER_DATA_DIR=$CONDA_PREFIX/etc/jupyter/nbdata
+export JUPYTER_CONFIG_DIR=$CONDA_PREFIX/etc/jupyter/nbconfig
 ```
 
-and then use a text editor to make the contents of `<new virtual environment's path>/etc/conda/deactivate.d/env_vars.sh` be the following:
+and then use a text editor to make the contents of `$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh` be the following:
 
 ```
 #!/bin/bash

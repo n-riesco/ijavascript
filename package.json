@@ -1,6 +1,6 @@
 {
     "name": "ijavascript-await",
-    "version": "5.0.20-alpha1",
+    "version": "5.0.20",
     "description": "IJavascript-await is a Javascript kernel (that accepts global await expressions) for the Jupyter notebook",
     "keywords": [
         "await",

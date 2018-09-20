@@ -37,6 +37,7 @@
 var assert = require("assert");
 var fs = require("fs");
 var path = require("path");
+var util = require("util");
 
 var MessagingTestEngine = require("./mte");
 
@@ -205,7 +206,8 @@ function testMessagingProtocol(mte) {
 
     var wait = 0;
     testCases.forEach(function(testCase) {
-        it("replies correctly to " + testCase.description, function(done) {
+        var description = util.inspect(testCase.description);
+        it("replies correctly to " + description, function(done) {
             testCase.done = done;
 
             wait += 0;

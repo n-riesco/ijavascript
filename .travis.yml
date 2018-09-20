@@ -2,8 +2,6 @@ sudo: false
 os: linux
 language: node_js
 node_js:
-  - "0.10"
-  - "4"
-  - "6"
+  - "7.6.0"
   - "8"
   - "10"

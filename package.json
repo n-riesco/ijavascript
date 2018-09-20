@@ -1,8 +1,9 @@
 {
-    "name": "ijavascript",
+    "name": "ijavascript-await",
     "version": "5.0.20",
-    "description": "IJavascript is a Javascript kernel for the Jupyter notebook",
+    "description": "IJavascript-await is a Javascript kernel (that accepts global await expressions) for the Jupyter notebook",
     "keywords": [
+        "await",
         "javascript",
         "kernel",
         "ipython",
@@ -30,7 +31,8 @@
         "ijsnotebook": "bin/ijsnotebook.js"
     },
     "dependencies": {
-        "jp-kernel": "1"
+        "jp-kernel": "1",
+        "jp-parser": "1"
     },
     "devDependencies": {
         "debug": "2",
@@ -39,6 +41,9 @@
         "jsdoc": "3",
         "mocha": "3",
         "uuid": "3"
+    },
+    "engine": {
+        "node": ">=7.6"
     },
     "scripts": {
         "doc": "python scripts/doc-build.py",

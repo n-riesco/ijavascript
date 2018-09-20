@@ -1087,4 +1087,169 @@
             }
         }
     }]
+}, {
+    "description": "execute_request: await 5;",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "await 5;"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "5"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: var x = await 10;",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "var x = await 10;"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "undefined"
+                }
+            }
+        }
+    }]
+}, {
+    "description": "execute_request: var x = await 10;\nconsole.log(x);",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "var x = await 10;\nconsole.log(x);"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "stream"
+            },
+            "content": {
+                "name": "stdout",
+                "text": "10\n"
+            }
+        }
+    }]
+},
+{
+    "description": "execute_request: console.log(await 40);",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "console.log(await 40);"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "stream"
+            },
+            "content": {
+                "name": "stdout",
+                "text": "40\n"
+            }
+        }
+    }]
+},
+{
+    "description": "execute_request: async function func() { return 7; }\nawait func();",
+    "request": {
+        "shell": {
+            "header": {
+                "msg_type": "execute_request"
+            },
+            "content": {
+                "code": "async function func() { return 7; }\nawait func();"
+            }
+        }
+    },
+    "responses": [{
+        "shell": {
+            "header": {
+                "msg_type": "execute_reply"
+            },
+            "content": {
+                "status": "ok"
+            }
+        }
+    }, {
+        "iopub": {
+            "header": {
+                "msg_type": "execute_result"
+            },
+            "content": {
+                "data": {
+                    "text/plain": "7"
+                }
+            }
+        }
+    }]
 }]

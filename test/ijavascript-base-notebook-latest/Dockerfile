@@ -8,21 +8,26 @@ USER root
 RUN apt-get update && apt-get install -y gcc g++ make python
 
 
-# !!! dirty trick!!!
+# !!! dirty trick !!!
 # original PATH is
 # /opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # move conda's path **at the end**
 # so that python resolves in /usr/bin/python(2)
 # but node is still found in conda
 ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/conda/bin"
+
+
 USER jovyan
 RUN npm install -g ijavascript
 RUN ijsinstall
 
 
-# !!! clean up!!!
+# clean up, no need to clobber the image with python2
 USER root
 RUN apt-get autoremove -y python
+
+
+# !!! and restore original PATH !!!
 ENV PATH="/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 

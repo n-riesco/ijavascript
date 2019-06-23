@@ -422,18 +422,33 @@ function setJupyterInfoAsync(context, callback) {
         }
 
         context.args.frontend[0] = "jupyter";
-        context.frontend.version = stdout.toString().trim();
-        context.frontend.majorVersion = parseInt(
-            context.frontend.version.split(".")[0]
-        );
-        if (isNaN(context.frontend.majorVersion)) {
-            console.error(
-                "Error parsing Jupyter version:",
-                context.frontend.version
-            );
-            log("CONTEXT:", context);
-            process.exit(1);
+
+        var version;
+        var majorVersion;
+
+        // Parse version number before Jupyter 4.5.0
+        version = stdout.toString().trim();
+        majorVersion = parseInt(version.split(".")[0]);
+
+        if (isNaN(majorVersion)) {
+            // Parse version number after Jupyter 4.5.0
+            var match = stdout.match(/^jupyter core\s+: (\d+\.\d+\.\d+)/m);
+            if (match) {
+                version = match[1];
+                majorVersion = parseInt(version.split(".")[0]);
+            } else {
+                // Failed to parse the output of "jupyter --version"
+                console.warn(
+                    "Warning: Unable to parse Jupyter version:",
+                    stdout
+                );
+                version = "unknown";
+                majorVersion = Infinity;
+            }
         }
+
+        context.frontend.version = version;
+        context.frontend.majorVersion = majorVersion;
 
         if (callback) {
             callback();

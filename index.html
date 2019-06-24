@@ -151,8 +151,6 @@ MathJax.Hub.Config({
 <p>The IJavascript kernel executes Javascript code inside a <a href="https://nodejs.org/">Node.js</a> session. And thus, it behaves as the Node.js REPL does, providing access to the Node.js standard library and to any installed <a href="https://www.npmjs.com/">npm</a> modules.</p>
 <p>There are kernels available for <a href="http://ipython.org/notebook.html">Python</a>, <a href="https://github.com/JuliaLang/IJulia.jl">Julia</a>, <a href="https://github.com/minad/iruby">Ruby</a>, <a href="https://github.com/gibiansky/IHaskell">Haskell</a> and <a href="https://github.com/jupyter/jupyter/wiki/Jupyter-kernels">many other languages</a>.</p>
 <div style="clear: both;" />
-
-
 <p>Here's a sample notebook that makes use of the IJavascript kernel:</p>
 <p><img src="images/screenshot-notebook-hello.png" alt="Screenshot: Notebook Hello Sample" /></p>
 <h2 id="contents">Contents</h2>
@@ -186,19 +184,34 @@ MathJax.Hub.Config({
 <li><a href="https://www.npmjs.com/">npm</a></li>
 </ul>
 <p>Depending on your use, other <a href="http://jupyter.org/">Jupyter tools</a> will be necessary (e.g. Jupyter notebook). Note that IJavascript has been kept backwards-compatibility with IPython v1, so that it's possible to use the IPython notebook distributed in Ubuntu 14.04 LTS and Ubuntu 16.04 LTS.</p>
+<p>For other platforms not listed below, or if you find any problems with the instructions above, please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/install.md.html">installation notes</a>.</p>
+<h3 id="ubuntu">Ubuntu</h3>
 <p>To install IJavascript in Ubuntu 16.04 LTS, run:</p>
-<pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook
-sudo npm install -g ijavascript
-ijsinstall</code></pre>
-<p>In Windows, <a href="http://continuum.io/downloads">Anaconda</a> offers a convenient distribution to install Python and many other packages, such as Jupyter and IJavascript.</p>
-<p>In macOS, <a href="http://brew.sh/">Homebrew</a> and <a href="https://pip.pypa.io/en/latest/installing">pip</a> can be used to install IJavascript and its prerequisites:</p>
-<pre class="sh"><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
-brew install pkg-config node zeromq
-sudo easy_install pip
-pip install --upgrade pyzmq jupyter
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> apt-get install nodejs-legacy npm ipython ipython-notebook
+<span class="fu">sudo</span> npm install -g ijavascript
+<span class="ex">ijsinstall</span></code></pre></div>
+<h3 id="windows-official-python-distribution">Windows (Official Python Distribution)</h3>
+<p>In the command line:</p>
+<pre><code>pip3 install --upgrade pip
+pip3 install jupyter
+npm install -g ijavascript
+ijsinstall
+# Or run: %appdata%\npm\ijsinstall</code></pre>
+<p>Then you can run <code>jupyter notebook</code> in your terminal to load Jupyter Notebook. When you create a new Jupyter Notebook, you should see the Javascript (Node) kernel available.</p>
+<h3 id="windows-anaconda-distribution">Windows (Anaconda Distribution)</h3>
+<p>Open the <em>Anaconda prompt</em> and run:</p>
+<pre><code>conda install nodejs
 npm install -g ijavascript
 ijsinstall</code></pre>
-<p>For other platforms or if you find any problems with the instructions above, please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/install.md.html">installation notes</a>.</p>
+<p>Then you can run <code>jupyter notebook</code> in your terminal to load Jupyter Notebook. When you create a new Jupyter Notebook, you should see the Javascript (Node) kernel available.</p>
+<h3 id="macos">macOS</h3>
+<p>In macOS, <a href="http://brew.sh/">Homebrew</a> and <a href="https://pip.pypa.io/en/latest/installing">pip</a> can be used to install IJavascript and its prerequisites:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ruby</span> -e <span class="st">&quot;</span><span class="va">$(</span><span class="ex">curl</span> -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="va">)</span><span class="st">&quot;</span>
+<span class="ex">brew</span> install pkg-config node zeromq
+<span class="fu">sudo</span> easy_install pip
+<span class="ex">pip</span> install --upgrade pyzmq jupyter
+<span class="ex">npm</span> install -g ijavascript
+<span class="ex">ijsinstall</span></code></pre></div>
 <h2 id="usage">Usage</h2>
 <p>IJavascript provides 5 executables: <code>ijsinstall</code>, <code>ijsnotebook</code>, <code>ijsconsole</code>, <code>ijskernel</code> and <code>ijs</code>. Their purpose and basic use is described in the sections below. Please, refer to the <a href="http://n-riesco.github.io/ijavascript/doc/usage.md.html">usage notes</a> for further details.</p>
 <h3 id="ijsinstall-ijavascript-kernel-spec-installer"><code>ijsinstall</code>: IJavascript kernel spec installer</h3>

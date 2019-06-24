@@ -157,65 +157,102 @@ MathJax.Hub.Config({
 <li><a href="#macos">macOS</a></li>
 <li><a href="#windows">Windows</a></li>
 <li><a href="#nvm">nvm</a></li>
+<li><a href="#conda">conda</a></li>
 <li><a href="#other-platforms">Other platforms</a></li>
 </ul>
 <h2 id="debian-and-ubuntu">Debian and Ubuntu</h2>
 <p>The Jupyter notebook is not yet available in the Debian 8.3 and Ubuntu 16.04 LTS repositories. Instead, the IPython notebook can be installed:</p>
-<pre class="sh"><code>sudo apt-get install nodejs-legacy npm ipython ipython-notebook</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> apt-get install nodejs-legacy npm ipython ipython-notebook</code></pre></div>
 <p>Alternatively, the Jupyter notebook can be installed via <code>pip</code> or <code>Anaconda</code>.</p>
 <p><code>pip</code> installs the latest Jupyter release from the <a href="https://pypi.python.org/pypi">Python Package Index</a>:</p>
-<pre class="sh"><code>sudo apt-get install nodejs-legacy npm g++ libzmq3-dev python-dev python-pip
-sudo pip install --upgrade jupyter</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> apt-get install nodejs-legacy npm g++ libzmq3-dev python-dev python-pip
+<span class="fu">sudo</span> pip install --upgrade jupyter</code></pre></div>
 <p>And <a href="http://continuum.io/downloads">Anaconda</a> provides a data science platform that distributes both <code>Jupyter</code> (by default) and <code>Node.js</code> (optionally). IJavascript can be installed in an Anaconda setup as follows:</p>
-<pre class="sh"><code>conda install nodejs
-npm install -g ijavascript
-ijsinstall</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">conda</span> install nodejs
+<span class="ex">npm</span> install -g ijavascript
+<span class="ex">ijsinstall</span></code></pre></div>
 <h3 id="global-installation">Global installation</h3>
 <p>IJavascript can be installed globally (i.e. for all users in the system) by running:</p>
-<pre class="sh"><code>sudo npm install -g ijavascript
-sudo ijsinstall --install=global</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> npm install -g ijavascript
+<span class="fu">sudo</span> ijsinstall --install=global</code></pre></div>
 <h3 id="local-installation">Local installation</h3>
 <p>It is also possible to install IJavascript locally, by setting the <code>npm</code> prefix to your home folder:</p>
-<pre class="sh"><code>npm config set prefix ~
-npm install -g ijavascript
-ijsinstall</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">npm</span> config set prefix ~
+<span class="ex">npm</span> install -g ijavascript
+<span class="ex">ijsinstall</span></code></pre></div>
 <p>Note that the above command will install all the IJavascript executables in the folder <code>~/bin/</code> and the ijavascript package in <code>~/lib/node_modules</code>.</p>
 <h3 id="ppa-repository">PPA repository</h3>
 <p>Gordon Ball has set up a <a href="https://launchpad.net/%7Echronitis/+archive/ubuntu/jupyter">PPA repository</a> that builds deb packages for IJavascript and other Jupyter kernels:</p>
-<pre class="sh"><code>sudo add-apt-repository ppa:chronitis/jupyter
-sudo apt update
-sudo apt install ijavascript</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> add-apt-repository ppa:chronitis/jupyter
+<span class="fu">sudo</span> apt update
+<span class="fu">sudo</span> apt install ijavascript</code></pre></div>
 <h3 id="older-versions">Older versions</h3>
 <p>To install IJavascript in older versions of Debian and Ubuntu, <code>Node.js</code> needs upgrading to a recent version. You can do so by running:</p>
-<pre class="sh"><code>sudo apt-get install curl
-curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-sudo apt-get install -y nodejs</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> apt-get install curl
+<span class="ex">curl</span> -sL https://deb.nodesource.com/setup_4.x <span class="kw">|</span> <span class="fu">sudo</span> -E bash -
+<span class="fu">sudo</span> apt-get install -y nodejs</code></pre></div>
 <p>The instructions for upgrading <code>Node.js</code> have been adapted from those found <a href="https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions">here</a>.</p>
 <h2 id="macos">macOS</h2>
 <p><a href="http://brew.sh/">Homebrew</a> and <a href="https://pip.pypa.io/">pip</a> can be used to install the dependencies of IJavascript in macOS:</p>
-<pre class="sh"><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
-brew install pkg-config node zeromq
-sudo easy_install pip
-pip install --upgrade pyzmq jupyter</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ruby</span> -e <span class="st">&quot;</span><span class="va">$(</span><span class="ex">curl</span> -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="va">)</span><span class="st">&quot;</span>
+<span class="ex">brew</span> install pkg-config node zeromq
+<span class="fu">sudo</span> easy_install pip
+<span class="ex">pip</span> install --upgrade pyzmq jupyter</code></pre></div>
 <p>Once the dependencies have been installed, <code>npm</code> can be used to install IJavascript as described above in the section for Ubuntu and Debian.</p>
-<pre class="sh"><code>npm install -g ijavascript
-ijsinstall</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">npm</span> install -g ijavascript
+<span class="ex">ijsinstall</span></code></pre></div>
 <p>Also note that the build tool <code>node-gyp</code> (which is part of Node.js and is used to compile native modules) requires Python 2.</p>
 <h2 id="windows">Windows</h2>
 <p><code>Jupyter</code> could be installed following the instructions <a href="http://jupyter.readthedocs.org/en/latest/install.html">here</a>. I find more convenient to install a Python distribution such as <a href="http://continuum.io/downloads">Anaconda</a>. <code>Anaconda</code> not only installs <code>Jupyter</code> and its requirements, but also a selection of frequently-used Python packages.</p>
 <p><code>Node.js</code> provides a <a href="https://nodejs.org/download/">Windows installer</a>. However, the build tool <code>node-gyp</code> will not be functional unless one of the recognised C++ compilers is installed. See <a href="https://github.com/TooTallNate/node-gyp">here</a> for more details, <a href="http://www.microsoft.com/en-us/download/details.aspx?id=34673">here</a> for Visual Studio Express 2012 or <a href="https://www.visualstudio.com/products/visual-studio-express-vs">here</a> for a link to Visual Studio Express 2013.</p>
 <h2 id="nvm">nvm</h2>
 <p><code>nvm</code> is a popular Node Version Manager for users to install specific versions of Node in their own home folder. These types of installations do not require the use of <code>sudo</code> to install global packages, simply run:</p>
-<pre class="sh"><code>npm install -g ijavascript
-ijsinstall</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">npm</span> install -g ijavascript
+<span class="ex">ijsinstall</span></code></pre></div>
 <p>Another consideration for <code>nvm</code> users is that IJavascript makes use of <a href="https://github.com/zeromq/zeromq.js">zeromq</a>, a native module that provides <a href="http://www.zeromq.org/">ZMQ</a> bindings. Native modules are specific to a Node version, and thus they need reinstalling whenever the Node version changes. To do so, run:</p>
-<pre class="sh"><code>nvm reinstall-packages</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">nvm</span> reinstall-packages</code></pre></div>
+<h2 id="conda">conda</h2>
+<p>Here is a step-by-step outline of how you can install ijavascript within a conda virtual environment. If you want to install with conda, but do not care about whether ijavascript is only available within a given virtual environment, then most of these steps can be skipped.</p>
+<p>Note that in what follows, phrases enclosed in <code>&lt;</code> and <code>&gt;</code> denote places where you should substitute a value appropriate to your specific setup. If you haven't already created your conda virtual environment, do so now:</p>
+<pre><code>conda create --name &lt;name of new virtual environment&gt;
+conda activate &lt;name of new virtual environment&gt;
+conda install nodejs jupyter</code></pre>
+<p>For <code>conda</code> version 4.5.4. and version 1.0.0 of the <code>jupyter</code> conda package, the location of Jupyter in the new virtual environment will be <code>$CONDA_PREFIX/etc/jupyter</code>. This motivates the following commands:</p>
+<pre><code>cd $CONDA_PREFIX/etc
+mkdir -p ./jupyter/nbdata ./conda/activate.d ./conda/deactivate.d
+touch ./conda/activate.d/env_vars.sh ./conda/deactivate.d/env_vars.sh</code></pre>
+<p>Now use a text editor to make the contents of <code>$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh</code> be the following:</p>
+<pre><code>#!/bin/bash
+export JUPYTER_DATA_DIR=$CONDA_PREFIX/etc/jupyter/nbdata
+export JUPYTER_CONFIG_DIR=$CONDA_PREFIX/etc/jupyter/nbconfig</code></pre>
+<p>and then use a text editor to make the contents of <code>$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh</code> be the following:</p>
+<pre><code>#!/bin/bash
+unset JUPYTER_DATA_DIR
+unset JUPYTER_CONFIG_DIR</code></pre>
+<p>Exit and then re-enter the new virtual environment:</p>
+<pre><code>conda deactivate
+conda activate &lt;name of new virtual environment&gt;</code></pre>
+<p>and then finally install ijavascript within the virtual environment:</p>
+<pre><code>npm install -g ijavascript
+ijsinstall</code></pre>
+<p>Now ijavascript should not only be installed in your new virtual environment, but also be accessible <em>only</em> from that virtual environment.</p>
+<p>**<a href="Notes:**" class="uri">Notes:**</a></p>
+<ol>
+<li>In the above, one should use <code>#!/bin/bash</code> only if one's shell is BASH, but <code>#!/bin/sh</code> if one's shell is Bourne shell, or <code>#!/bin/zsh</code> if one's shell is ZSH, etc.</li>
+<li>Setting the value of Jupyter's configuration path (<code>JUPYTER_CONFIG_DIR</code>) isn't strictly necessary. However it will allow you to make changes to Jupyter's settings within that virtual environment without those changes propagating outside of the environment.</li>
+<li>Exiting and re-entering the new virtual environment ensures that the script <code>env_vars.sh</code> actually gets called. Otherwise, there won't be any change to the values of the environment variables, and the kernel spec of ijavascript will be installed somewhere else besides the local Jupyter config folder we created above.</li>
+<li>If you don't care about restricting ijavascript to a particular virtual environment, the following will work:</li>
+</ol>
+<pre><code>conda install nodejs
+conda install jupyter
+npm install -g ijavascript
+ijsinstall</code></pre>
 <h2 id="other-platforms">Other platforms</h2>
 <p>For other platforms, instructions to install the IJavascript dependencies may be found at:</p>
 <ul>
-<li><a href="http://nodejs.org/download/">http://nodejs.org/download/</a></li>
-<li><a href="http://jupyter.readthedocs.org/en/latest/install.html">http://jupyter.readthedocs.org/en/latest/install.html</a></li>
-<li><a href="http://zeromq.org/intro:get-the-software">http://zeromq.org/intro:get-the-software</a></li>
+<li><a href="http://nodejs.org/download/" class="uri">http://nodejs.org/download/</a></li>
+<li><a href="http://jupyter.readthedocs.org/en/latest/install.html" class="uri">http://jupyter.readthedocs.org/en/latest/install.html</a></li>
+<li><a href="http://zeromq.org/intro:get-the-software" class="uri">http://zeromq.org/intro:get-the-software</a></li>
 </ul>
 
   </div>

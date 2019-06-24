@@ -142,28 +142,28 @@ MathJax.Hub.Config({
   <div id="markdown" class="container">
     <h1 id="usage">Usage</h1>
 <p>This documentation illustrates some of the flags supported by the IJavascript executables. To get the full list of command flags, run:</p>
-<pre class="sh"><code>ijsinstall --help</code></pre>
-<pre class="sh"><code>ijsnotebook --help</code></pre>
-<pre class="sh"><code>ijsconsole --help</code></pre>
-<pre class="sh"><code>ijskernel --help</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsinstall</span> --help</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsnotebook</span> --help</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsconsole</span> --help</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijskernel</span> --help</code></pre></div>
 <h2 id="install-the-ijavascript-kernel-globally">Install the IJavascript Kernel Globally</h2>
 <p>By default, the IJavascript kernel is installed locally; i.e. for the current user only. To install the kernel for all users, run:</p>
-<pre class="sh"><code>ijsinstall --install=global</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsinstall</span> --install=global</code></pre></div>
 <h2 id="install-the-ijavascript-kernel-using-full-paths">Install the IJavascript Kernel Using Full Paths</h2>
 <p>By default, <code>ijsinstall</code> creates a kernel spec with no paths. For this kernel spec to work, it is necessary that the executable <code>ijskernel</code> is located in one of the folders listed in the environment variable <code>PATH</code> (this is usually the case when IJavascript was installed by running <code>npm install -g ijavascript</code>).</p>
 <p>Alternatively, <code>ijsinstall</code> can be instructed to create a kernel spec with full paths:</p>
-<pre class="sh"><code>ijsinstall --spec-path=full</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsinstall</span> --spec-path=full</code></pre></div>
 <p>In this case, the full path to <code>node</code> and <code>ijskernel</code> will be included in the kernel spec. Note also that in this case if either <code>node</code> or <code>ijskernel</code> change their location (e.g. when a new version of node is installed), then the command <code>ijsinstall --spec-path=full</code> would have to be rerun (to create a kernel spec with the updated paths).</p>
 <h2 id="set-the-kernel-working-folder">Set the Kernel Working Folder</h2>
 <p>The IJavascript kernel, also by default, runs a <code>Node.js</code> session in the current working folder. To run the <code>Node.js</code> session in a different folder:</p>
-<pre class="sh"><code>ijsinstall --working-dir=/path/to/working/dir</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsinstall</span> --working-dir=/path/to/working/dir</code></pre></div>
 <p><img src="../images/screenshot-notebook-dir.png" alt="Screenshot: Jupyter Notebook --ijs_working-dir" /></p>
 <h2 id="run-startup-scripts">Run Startup Scripts</h2>
 <p>It is possible to run one or more scripts at the startup of an IJavascript session. This can be useful to preload <code>npm</code> packages (e.g. <a href="https://www.npmjs.com/package/d3">d3</a> and <a href="https://www.npmjs.com/package/jsdom">jsdom</a>).</p>
 <p>To preload a script, use the flag <code>--startup-script=/path/to/script.js</code>:</p>
-<pre class="sh"><code>ijsinstall --startup-script=/path/to/script.js</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsinstall</span> --startup-script=/path/to/script.js</code></pre></div>
 <p>For convenience, it is also possible to preload all the Javascript files in a folder. The execution order is determined by the alphabetical order of their filenames; i.e.: <code>50-jsdom.js</code> before <code>60-d3-ijavascript-wrapper.js</code>.</p>
-<pre class="sh"><code>ijsinstall --startup-script=/path/to/folder</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsinstall</span> --startup-script=/path/to/folder</code></pre></div>
 <h2 id="showhide-undefined-results">Show/Hide <code>undefined</code> results</h2>
 <p>The IJavascript kernel offers the option to show or hide the result of an execution request if it is <code>undefined</code>.</p>
 <p>By default, <code>ijsnotebook</code> installs an IJavascript kernel that hides <code>undefined</code> results, whereas <code>ijsconsole</code> installs a kernel that shows <code>undefined</code> results.</p>
@@ -172,7 +172,7 @@ MathJax.Hub.Config({
 <p><code>ijsnotebook</code> and <code>ijsconsole</code> are wrappers around <code>jupyter notebook</code> and <code>jupyter console</code> that install the IJavascript kernel before opening the notebook dashboard or a console.</p>
 <p>Both <code>ijsnotebook</code> and <code>ijsconsole</code> accept the same command flags <code>jupyter notebook</code> and <code>jupyter console</code> accept.</p>
 <p>For example, by default, <code>jupyter notebook</code> opens the notebook dashboard in the current working folder. To open the dashboard in a different folder, run:</p>
-<pre class="sh"><code>ijsnotebook --notebook-dir=/path/to/another/folder</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">ijsnotebook</span> --notebook-dir=/path/to/another/folder</code></pre></div>
 <p><img src="../images/screenshot-dashboard-dir.png" alt="Screenshot: Jupyter Notebook --notebook-dir" /></p>
 
   </div>

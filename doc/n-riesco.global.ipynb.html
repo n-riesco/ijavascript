@@ -142,153 +142,190 @@ MathJax.Hub.Config({
   <div id="notebook" class="border-box-sizing" tabindex="-1">
     <div id="notebook-container" class="container">
       
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="the-global-object">The <code>global</code> object</h1>
-<p>Javascript provides a unique <code>global</code> object accessible to all execution contexts. The <code>global</code> object has a number of properties predefined. Some of this properties are required by the <a href="http://www.ecma-international.org/ecma-262/5.1/">ECMA standard</a> and some are specific to the platform. See <a href="https://nodejs.org/api/globals.html">here</a> the relevant documentation for Node.js and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window">here</a> for the HTML DOM.</p>
+<h1 id="The-global-object">The <code>global</code> object<a class="anchor-link" href="#The-global-object">&#182;</a></h1><p>Javascript provides a unique <code>global</code> object accessible to all execution contexts. The <code>global</code> object has a number of properties predefined. Some of this properties are required by the <a href="http://www.ecma-international.org/ecma-262/5.1/">ECMA standard</a> and some are specific to the platform. See <a href="https://nodejs.org/api/globals.html">here</a> the relevant documentation for Node.js and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window">here</a> for the HTML DOM.</p>
+
 </div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="how-to-access-properties-defined-in-the-global-object">How to access properties defined in the global object</h2>
-<p>Javascript provides two ways to access the properties in the <code>global</code> object: - explicit access - implicit access</p>
+<h2 id="How-to-access-properties-defined-in-the-global-object">How to access properties defined in the global object<a class="anchor-link" href="#How-to-access-properties-defined-in-the-global-object">&#182;</a></h2><p>Javascript provides two ways to access the properties in the <code>global</code> object:</p>
+<ul>
+<li>explicit access</li>
+<li>implicit access</li>
+</ul>
+
 </div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="explicit-access">Explicit access</h3>
-<p>Javascript platforms may include a <code>global</code> property whose value is the <code>global</code> object itself. In the HTML DOM, this property is <code>window</code>; in Node.js, the property is <code>global</code> property. This <code>global</code> property can be used to access properties in the <code>global</code> object from different execution contexts, for example:</p>
+<h3 id="Explicit-access">Explicit access<a class="anchor-link" href="#Explicit-access">&#182;</a></h3><p>Javascript platforms may include a <code>global</code> property whose value is the <code>global</code> object itself. In the HTML DOM, this property is <code>window</code>; in Node.js, the property is <code>global</code> property. This <code>global</code> property can be used to access properties in the <code>global</code> object from different execution contexts, for example:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[1]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">global</span><span class="o">.</span><span class="n">myGlobalProperty</span> <span class="o">=</span> <span class="s">&quot;Hello, World!&quot;</span><span class="p">;</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">global</span><span class="p">.</span><span class="nx">myGlobalProperty</span> <span class="o">=</span> <span class="s2">&quot;Hello, World!&quot;</span><span class="p">;</span>
 <span class="p">})()</span>
-<span class="k">global</span><span class="o">.</span><span class="n">myGlobalProperty</span><span class="p">;</span>
+<span class="nx">global</span><span class="p">.</span><span class="nx">myGlobalProperty</span><span class="p">;</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[1]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
 
-<div class="output_html rendered_html">
+<div class="prompt output_prompt">Out[1]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
 <pre>&#39;Hello, World!&#39;</pre>
 </div>
 
 </div>
-</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="implicit-access">Implicit access</h3>
-<p><code>NaN</code> and <code>isNaN</code> are properties defined in the <code>global</code> object. <code>NaN</code> is set to the &quot;Not-a-Number&quot; value defined by the <a href="http://dx.doi.org/10.1109/IEEESTD.2008.4610935">IEEE 754 standard</a> for floating-point numbers. And <code>isNaN</code> is set to a function that returns whether a number is <code>NaN</code>. Here is an example that illustrates how these properties are implicitly accessible from different execution contexts:</p>
+<h3 id="Implicit-access">Implicit access<a class="anchor-link" href="#Implicit-access">&#182;</a></h3><p><code>NaN</code> and <code>isNaN</code> are properties defined in the <code>global</code> object. <code>NaN</code> is set to the "Not-a-Number" value defined by the <a href="http://dx.doi.org/10.1109/IEEESTD.2008.4610935">IEEE 754 standard</a> for floating-point numbers. And <code>isNaN</code> is set to a function that returns whether a number is <code>NaN</code>. Here is an example that illustrates how these properties are implicitly accessible from different execution contexts:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="p">(</span><span class="n">function</span> <span class="n">f</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">isNaN</span><span class="p">(</span><span class="n">NaN</span><span class="p">);</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="p">(</span><span class="kd">function</span> <span class="nx">f</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">isNaN</span><span class="p">(</span><span class="kc">NaN</span><span class="p">);</span>
 <span class="p">})()</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[2]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
 
-<div class="output_html rendered_html">
+<div class="prompt output_prompt">Out[2]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
 <pre>true</pre>
 </div>
 
 </div>
-</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Note that although accessing <code>global</code> properties in this way is very convenient, it is also riddle with unexpected side effects:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">var</span> <span class="n">isNaN</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="err">!</span><span class="k">global</span><span class="o">.</span><span class="n">isNaN</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nb">isNaN</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">!</span><span class="nx">global</span><span class="p">.</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">number</span><span class="p">);</span>
     <span class="p">};</span>
-    <span class="k">return</span> <span class="n">isNaN</span><span class="p">(</span><span class="n">NaN</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">isNaN</span><span class="p">(</span><span class="kc">NaN</span><span class="p">);</span>
 <span class="p">})()</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[3]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
 
-<div class="output_html rendered_html">
+<div class="prompt output_prompt">Out[3]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
 <pre>false</pre>
 </div>
 
 </div>
-</div>
 
 </div>
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">isNaN</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="err">!</span><span class="k">global</span><span class="o">.</span><span class="n">isNaN</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">isNaN</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">!</span><span class="nx">global</span><span class="p">.</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">number</span><span class="p">);</span>
     <span class="p">};</span>
-    <span class="k">return</span> <span class="n">isNaN</span><span class="p">(</span><span class="n">NaN</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">isNaN</span><span class="p">(</span><span class="kc">NaN</span><span class="p">);</span>
 <span class="p">})()</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_pyerr">
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
 <pre>
-TypeError: Cannot call method &apos;split&apos; of undefined
+TypeError: Cannot call method &#39;split&#39; of undefined
     at formatError ([eval]:174:40)
     at sendError ([eval]:97:14)
     at onMessage ([eval]:74:13)

@@ -142,344 +142,416 @@ MathJax.Hub.Config({
   <div id="notebook" class="border-box-sizing" tabindex="-1">
     <div id="notebook-container" class="container">
       
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="custom-output">Custom Output</h1>
-<p>This tutorial describes the patterns available in IJavascript for customising output.</p>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="types-of-output">Types of output</h2>
-<p>The Jupyter messaging protocol defines three types of output resulting from an execution request:</p>
+<h1 id="Custom-Output">Custom Output<a class="anchor-link" href="#Custom-Output">&#182;</a></h1><p>This tutorial describes the patterns available in IJavascript for customising output.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Types-of-output">Types of output<a class="anchor-link" href="#Types-of-output">&#182;</a></h2><p>The Jupyter messaging protocol defines three types of output resulting from an execution request:</p>
 <ul>
-<li><p><strong>the execution result</strong>, which the notebook shows preceeded by a numbered label (<code>Out[n]:</code>);</p></li>
-<li><p><strong>the standard output stream</strong> (<code>stdout</code>), which is usually shown above the execution result;</p></li>
-<li><p>and <strong>the standard error stream</strong> (<code>stderr</code>), which is usually shown above the execution result in a pink background.</p></li>
+<li><p><strong>the execution result</strong>, which the notebook shows preceeded by a numbered label (<code>Out[n]:</code>);</p>
+</li>
+<li><p><strong>the standard output stream</strong> (<code>stdout</code>), which is usually shown above the execution result;</p>
+</li>
+<li><p>and <strong>the standard error stream</strong> (<code>stderr</code>), which is usually shown above the execution result in a pink background.</p>
+</li>
 </ul>
 <p>Whereas the standard streams are plain text, the execution result admits outputs in a number of MIME formats. The following sections describe how to customise the output of an execution result.</p>
+
 </div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="customising-the-plain-text-output-of-a-class">Customising the plain text output of a class</h2>
-<h3 id="myclass.prototype.inspect">(<code>MyClass.prototype.inspect</code>)</h3>
-<p>IJavascript uses the Node.js function <code>util.inspect()</code> to generate the <code>text/plain</code> output of an execution result, as illustrated in the following example:</p>
+<h2 id="Customising-the-plain-text-output-of-a-class">Customising the plain text output of a class<a class="anchor-link" href="#Customising-the-plain-text-output-of-a-class">&#182;</a></h2><h3 id="(MyClass.prototype.inspect)">(<code>MyClass.prototype.inspect</code>)<a class="anchor-link" href="#(MyClass.prototype.inspect)">&#182;</a></h3><p>IJavascript uses the Node.js function <code>util.inspect()</code> to generate the <code>text/plain</code> output of an execution result, as illustrated in the following example:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[1]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">function</span> <span class="n">Person</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">this</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">;</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="kd">function</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="n">var</span> <span class="n">peter</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Person</span><span class="p">(</span><span class="s">&quot;Peter&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">peter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="s2">&quot;Peter&quot;</span><span class="p">);</span>
 
-<span class="n">var</span> <span class="n">util</span> <span class="o">=</span> <span class="n">require</span><span class="p">(</span><span class="s">&quot;util&quot;</span><span class="p">);</span>
-<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">peter</span><span class="p">));</span>  <span class="o">//</span> <span class="n">shown</span> <span class="n">on</span> <span class="n">stdout</span>
-<span class="n">peter</span><span class="p">;</span>                             <span class="o">//</span> <span class="n">shown</span> <span class="k">as</span> <span class="n">an</span> <span class="n">execution</span> <span class="n">result</span>
+<span class="kd">var</span> <span class="nx">util</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;util&quot;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">util</span><span class="p">.</span><span class="nx">inspect</span><span class="p">(</span><span class="nx">peter</span><span class="p">));</span>  <span class="c1">// shown on stdout</span>
+<span class="nx">peter</span><span class="p">;</span>                             <span class="c1">// shown as an execution result</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-Person { name: &apos;Peter&apos; }
+<div class="output_area">
 
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Person { name: &#39;Peter&#39; }
 </pre>
 </div>
 </div>
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[1]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[1]:</div>
 
 
-<pre>
-Person { name: &apos;Peter&apos; }
-</pre>
 
-</div>
-</div>
 
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>Person { name: &#39;Peter&#39; }</pre>
 </div>
 
 </div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Node.js defines the following pattern to customise the output of <code>util.inspect()</code>:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">Person</span><span class="o">.</span><span class="n">prototype</span><span class="o">.</span><span class="n">inspect</span> <span class="o">=</span> <span class="n">function</span> <span class="n">inspect</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="s">&quot;Person named &quot;</span> <span class="o">+</span> <span class="n">this</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">inspect</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">inspect</span><span class="p">(</span><span class="nx">depth</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&quot;Person named &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="n">peter</span><span class="p">;</span>
+<span class="nx">peter</span><span class="p">;</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[2]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_wrapper">
+<div class="output">
 
 
-<pre>
-Person named Peter
-</pre>
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[2]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Person named Peter</pre>
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="customising-the-mime-output-of-a-class">Customising the MIME output of a class</h2>
-<p>Similarly to the Node.js <code>inspect</code> pattern, IJavascript specifies the following conventions:</p>
-<h3 id="myclass.prototype._tohtml"><code>MyClass.prototype._toHtml()</code></h3>
-<p>If defined, IJavascript expects this method to return a string with the <code>text/html</code> representation of an instance of MyClass.</p>
-<h3 id="myclass.prototype._tosvg"><code>MyClass.prototype._toSvg()</code></h3>
-<p>If defined, IJavascript expects this method to return a string with the <code>image/svg+xml</code> representation of an instance of MyClass.</p>
-<h3 id="myclass.prototype._topng"><code>MyClass.prototype._toPng()</code></h3>
-<p>If defined, IJavascript expects this method to return a <code>base64</code>-encoded string with the <code>image/png</code> representation of an instance of MyClass.</p>
-<h3 id="myclass.prototype._tojpeg"><code>MyClass.prototype._toJpeg()</code></h3>
-<p>If defined, IJavascript expects this method to return a <code>base64</code>-encoded string with the <code>image/jpeg</code> representation of an instance of MyClass.</p>
-<h3 id="myclass.prototype._tomime"><code>MyClass.prototype._toMime()</code></h3>
-<p>If defined, IJavascript expects this method to return an object with the MIME representations of an instance of MyClass, i.e. <code>{ mimeType1: string1, mimeType2: string2, ...}</code>.</p>
+<h2 id="Customising-the-MIME-output-of-a-class">Customising the MIME output of a class<a class="anchor-link" href="#Customising-the-MIME-output-of-a-class">&#182;</a></h2><p>Similarly to the Node.js <code>inspect</code> pattern, IJavascript specifies the following conventions:</p>
+<h3 id="MyClass.prototype._toHtml()"><code>MyClass.prototype._toHtml()</code><a class="anchor-link" href="#MyClass.prototype._toHtml()">&#182;</a></h3><p>If defined, IJavascript expects this method to return a string with the <code>text/html</code> representation of an instance of MyClass.</p>
+<h3 id="MyClass.prototype._toSvg()"><code>MyClass.prototype._toSvg()</code><a class="anchor-link" href="#MyClass.prototype._toSvg()">&#182;</a></h3><p>If defined, IJavascript expects this method to return a string with the <code>image/svg+xml</code> representation of an instance of MyClass.</p>
+<h3 id="MyClass.prototype._toPng()"><code>MyClass.prototype._toPng()</code><a class="anchor-link" href="#MyClass.prototype._toPng()">&#182;</a></h3><p>If defined, IJavascript expects this method to return a <code>base64</code>-encoded string with the <code>image/png</code> representation of an instance of MyClass.</p>
+<h3 id="MyClass.prototype._toJpeg()"><code>MyClass.prototype._toJpeg()</code><a class="anchor-link" href="#MyClass.prototype._toJpeg()">&#182;</a></h3><p>If defined, IJavascript expects this method to return a <code>base64</code>-encoded string with the <code>image/jpeg</code> representation of an instance of MyClass.</p>
+<h3 id="MyClass.prototype._toMime()"><code>MyClass.prototype._toMime()</code><a class="anchor-link" href="#MyClass.prototype._toMime()">&#182;</a></h3><p>If defined, IJavascript expects this method to return an object with the MIME representations of an instance of MyClass, i.e. <code>{ mimeType1: string1, mimeType2: string2, ...}</code>.</p>
 <p>Below is an example for <code>text/html</code>. See the next section, for an example that encodes a binary image into <code>base64</code> string.</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">Person</span><span class="o">.</span><span class="n">prototype</span><span class="o">.</span><span class="n">_toHtml</span> <span class="o">=</span> <span class="n">function</span> <span class="n">_toHtml</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">var</span> <span class="n">style</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s">&quot;display:inline-block;&quot;</span> <span class="o">+</span>
-        <span class="s">&quot;padding:0.25em;&quot;</span> <span class="o">+</span>
-        <span class="s">&quot;background:#ccc;&quot;</span> <span class="o">+</span>
-        <span class="s">&quot;border: 1px solid #888;&quot;</span> <span class="o">+</span>
-        <span class="s">&quot;border-radius:0.25em;&quot;</span> <span class="o">+</span>
-        <span class="s">&quot;box-shadow: 0.8em 0.4em 0.4em black;&quot;</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_toHtml</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">_toHtml</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">style</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;display:inline-block;&quot;</span> <span class="o">+</span>
+        <span class="s2">&quot;padding:0.25em;&quot;</span> <span class="o">+</span>
+        <span class="s2">&quot;background:#ccc;&quot;</span> <span class="o">+</span>
+        <span class="s2">&quot;border: 1px solid #888;&quot;</span> <span class="o">+</span>
+        <span class="s2">&quot;border-radius:0.25em;&quot;</span> <span class="o">+</span>
+        <span class="s2">&quot;box-shadow: 0.8em 0.4em 0.4em black;&quot;</span>
     <span class="p">);</span>
     <span class="k">return</span> <span class="p">(</span>
-        <span class="s">&quot;&lt;div style=&#39;&quot;</span> <span class="o">+</span> <span class="n">style</span> <span class="o">+</span> <span class="s">&quot;&#39;&gt;&quot;</span> <span class="o">+</span>
-        <span class="n">this</span><span class="o">.</span><span class="n">inspect</span><span class="p">()</span> <span class="o">+</span>
-        <span class="s">&quot;&lt;/div&gt;&quot;</span>
+        <span class="s2">&quot;&lt;div style=&#39;&quot;</span> <span class="o">+</span> <span class="nx">style</span> <span class="o">+</span> <span class="s2">&quot;&#39;&gt;&quot;</span> <span class="o">+</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">inspect</span><span class="p">()</span> <span class="o">+</span>
+        <span class="s2">&quot;&lt;/div&gt;&quot;</span>
     <span class="p">);</span>
 <span class="p">};</span>
 
-<span class="n">peter</span><span class="p">;</span>
+<span class="nx">peter</span><span class="p">;</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[3]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
 
-<div class="output_html rendered_html">
+<div class="prompt output_prompt">Out[3]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div style='display:inline-block;padding:0.25em;background:#ccc;border: 1px solid #888;border-radius:0.25em;box-shadow: 0.8em 0.4em 0.4em black;'>Person named Peter</div>
 </div>
 
 </div>
-</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="setting-the-output-using-the-global-object">Setting the output using the global object <code>$$</code></h2>
-<p>IJavascript defines the global object <code>$$</code> to help output results asynchronously. This functionality can also be used in synchronous execution.</p>
+<h2 id="Setting-the-output-using-the-global-object-$$">Setting the output using the global object <code>$$</code><a class="anchor-link" href="#Setting-the-output-using-the-global-object-$$">&#182;</a></h2><p>IJavascript defines the global object <code>$$</code> to help output results asynchronously. This functionality can also be used in synchronous execution.</p>
+
 </div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="htmlhtmlstring"><code>$$.html(htmlString)</code></h3>
+<h3 id="$$.html(htmlString)"><code>$$.html(htmlString)</code><a class="anchor-link" href="#$$.html(htmlString)">&#182;</a></h3>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="err">$$</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="s">&quot;&lt;div style=&#39;background-color:olive;width:50px;height:50px&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">$$</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&lt;div style=&#39;background-color:olive;width:50px;height:50px&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[4]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
 
-<div class="output_html rendered_html">
+<div class="prompt output_prompt">Out[4]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div style='background-color:olive;width:50px;height:50px'></div>
 </div>
 
 </div>
-</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="svgsvgstring"><code>$$.svg(svgString)</code></h3>
+<h3 id="$$.svg(svgString)"><code>$$.svg(svgString)</code><a class="anchor-link" href="#$$.svg(svgString)">&#182;</a></h3>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[5]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="err">$$</span><span class="o">.</span><span class="n">svg</span><span class="p">(</span><span class="s">&quot;&lt;svg&gt;&lt;rect width=80 height=80 style=&#39;fill: orange;&#39;/&gt;&lt;/svg&gt;&quot;</span><span class="p">);</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">$$</span><span class="p">.</span><span class="nx">svg</span><span class="p">(</span><span class="s2">&quot;&lt;svg&gt;&lt;rect width=80 height=80 style=&#39;fill: orange;&#39;/&gt;&lt;/svg&gt;&quot;</span><span class="p">);</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[5]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
 
+<div class="prompt output_prompt">Out[5]:</div>
+
+
+
+<div class="output_svg output_subarea output_execute_result">
 <svg><rect width=80 height=80 style='fill: orange;'/></svg>
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="pngbase64string"><code>$$.png(base64String)</code></h3>
-<p>IJavascript can also output pictures in <code>PNG</code> and <code>JPEG</code> formats. However, this formats are binary and need to be encoded in <code>base64</code>. See below an example with a PNG file:</p>
+<h3 id="$$.png(base64String)"><code>$$.png(base64String)</code><a class="anchor-link" href="#$$.png(base64String)">&#182;</a></h3><p>IJavascript can also output pictures in <code>PNG</code> and <code>JPEG</code> formats. However, this
+formats are binary and need to be encoded in <code>base64</code>. See below an example with a PNG file:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[6]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="err">$$</span><span class="o">.</span><span class="n">png</span><span class="p">(</span><span class="n">require</span><span class="p">(</span><span class="s">&quot;fs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s">&quot;image.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="s">&quot;base64&quot;</span><span class="p">));</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">$$</span><span class="p">.</span><span class="nx">png</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;fs&quot;</span><span class="p">).</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s2">&quot;image.png&quot;</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;base64&quot;</span><span class="p">));</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[6]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_wrapper">
+<div class="output">
 
 
-<img src="data:image/png;base64,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">
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[6]:</div>
+
+
+
+
+<div class="output_png output_subarea output_execute_result">
+<img src="data:image/png;base64,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"
+>
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="jpegbase64string"><code>$$.jpeg(base64String)</code></h3>
-<p>Similarly with <code>JPEG</code> files:</p>
+<h3 id="$$.jpeg(base64String)"><code>$$.jpeg(base64String)</code><a class="anchor-link" href="#$$.jpeg(base64String)">&#182;</a></h3><p>Similarly with <code>JPEG</code> files:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[7]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="err">$$</span><span class="o">.</span><span class="n">jpeg</span><span class="p">(</span><span class="n">require</span><span class="p">(</span><span class="s">&quot;fs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">readFileSync</span><span class="p">(</span><span class="s">&quot;image.jpg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="s">&quot;base64&quot;</span><span class="p">));</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">$$</span><span class="p">.</span><span class="nx">jpeg</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s2">&quot;fs&quot;</span><span class="p">).</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s2">&quot;image.jpg&quot;</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="s2">&quot;base64&quot;</span><span class="p">));</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
-
-
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[7]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_wrapper">
+<div class="output">
 
 
-<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAAwADAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAyADIDASIAAhEBAxEB/8QAGwABAQEBAAMBAAAAAAAAAAAAAAcIBgIDBQn/xAA0EAABAwMDAwMBBAsBAAAAAAABAgMEBQYRAAcSEyExCBQiQRU4drQXGCMkMjNRUmFxhMP/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A/VPXO1/cbb61Kiij3RfdvUee4yJKIs+qMR3lMlRSHAhagopKkqHLGMpI+mui1nbcaNGkepciRHbdAsmHjmkHH77L/roL7SKzR7gpzNXoNVh1KBI5dGVDfS8y5xUUnitBKThQIOD5BGuS3F3u2r2ocjx78vGJTpcviWYTbbkqYtCueHBHYSt3p5bWOpx4chjOSBr3QK9TLJ2tl3TOjuewoUCbUX24yElZaZ6jiwhJIBUQk4BIGfqNZa2ktt25oUO77lnsT7qvF1uROqlRWhJW64QltsK8JSBxQhtIwAEoQnwnQWz9c702omxYEncJ6I7LfajNqmUKpR2wtxYQkrccjpQ2gFQKlrIQlOVKISCRVrauy1bzpv2zZ9y0qu0/qKa91TZrcpnmnGU82yU5GRkZz3GoxXvTxWHmecR+lTiGOa23UlCi5g5QjIII8YUSnz3A12uxFhStvLUn0iZQmKU5KqjkwtMlshfJppPM9MkZPDHfv8R/jQUjTTTQNZ63A+8wr8Ew/wA7M1oXWetwPvMK/BMP87M0FbotFplybfOW7Wook0+qRZUKWyVqT1WXVLQtOUkEZSojIIPfsdYrt+77j2IZhbdb3Ut+3KlS1BiBWGQ6umzggJUFxpRQgL4haO+EqBICkoVlI2Mu5TZe0dUvEQTNNCpc+p+2DnTL/RDrnT5YPHlxxnBxnwdS6xPV5t3ftuR4m6loVCz11xpEdUepRlVClym31LRx902goDfDj1DIQ0kdQj5JSpQD5Nub73AphmTRLpi1mG3yIS8Uvhec/wASxhw4JyPl9APHbV22+v2Df1JdnsRxEkxnS1Iil4OKRnulWcAlKh4JA7hQ74zrIm8Sdhn9xbaRsBCiNVqE+pmurtuMlmiKgForHUU2Aw6/1Fo4qa5EAOpcIKWwLt6a/wCZcv8Ax/8AtoLdpppoPiXleVu2Bbkq7LsnLh0uGppDzyI7r6gp11LSAG2kqWola0Dsk+c+MnUGiTqnfe6tf3Kepb0GjJgsUOie5YUy/IjtKW4p9aFElPN11ziCEq4cOSUq5DVr3Msj9ItnSbT+0/s/3EmFI9x0erx9vKafxx5Jzy6XHOe3LPfGCYsOIHEGZNW82jHwSjhnGPJye3kdsHv50HpjW1GurbOXaNVXJjxq3T5cB9bOEuoafDiCpBUCAeK8gkEeDgjU9j+nWTb1Jg25btXjTKdDaW0lVQyh1CAR0kngkpcPEq5KwjukYT8vjb0IQ2hLbaQlKQAlIGAAPoNeWgzXeG2cHbi3pl5X3c9JoduwOBmzI8d+StvmsNt4abb5LJcWhOB/dn6ao3p6uPba5bDck7Z3E7W4kacuNUZjkKREK5wabU5+xfSlSBwU1gAEYI7qPInot09t6Lu5YlS2+uGdUIcCpqjqcfp7iESG1MvtvIKFLQtI+bSc5Se2f965/YrYqgbF29OptOq0ytVSsyETKrVprTKHpLyWkN8U9NI4spKVKQ2orKS4v5HkSQpmmmmgaaaaBpppoGmmmgaaaaD/2Q==">
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[7]:</div>
+
+
+
+
+<div class="output_jpeg output_subarea output_execute_result">
+<img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAAwADAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAAyADIDASIAAhEBAxEB/8QAGwABAQEBAAMBAAAAAAAAAAAAAAcIBgIDBQn/xAA0EAABAwMDAwMBBAsBAAAAAAABAgMEBQYRAAcSEyExCBQiQRU4drQXGCMkMjNRUmFxhMP/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A/VPXO1/cbb61Kiij3RfdvUee4yJKIs+qMR3lMlRSHAhagopKkqHLGMpI+mui1nbcaNGkepciRHbdAsmHjmkHH77L/roL7SKzR7gpzNXoNVh1KBI5dGVDfS8y5xUUnitBKThQIOD5BGuS3F3u2r2ocjx78vGJTpcviWYTbbkqYtCueHBHYSt3p5bWOpx4chjOSBr3QK9TLJ2tl3TOjuewoUCbUX24yElZaZ6jiwhJIBUQk4BIGfqNZa2ktt25oUO77lnsT7qvF1uROqlRWhJW64QltsK8JSBxQhtIwAEoQnwnQWz9c702omxYEncJ6I7LfajNqmUKpR2wtxYQkrccjpQ2gFQKlrIQlOVKISCRVrauy1bzpv2zZ9y0qu0/qKa91TZrcpnmnGU82yU5GRkZz3GoxXvTxWHmecR+lTiGOa23UlCi5g5QjIII8YUSnz3A12uxFhStvLUn0iZQmKU5KqjkwtMlshfJppPM9MkZPDHfv8R/jQUjTTTQNZ63A+8wr8Ew/wA7M1oXWetwPvMK/BMP87M0FbotFplybfOW7Wook0+qRZUKWyVqT1WXVLQtOUkEZSojIIPfsdYrt+77j2IZhbdb3Ut+3KlS1BiBWGQ6umzggJUFxpRQgL4haO+EqBICkoVlI2Mu5TZe0dUvEQTNNCpc+p+2DnTL/RDrnT5YPHlxxnBxnwdS6xPV5t3ftuR4m6loVCz11xpEdUepRlVClym31LRx902goDfDj1DIQ0kdQj5JSpQD5Nub73AphmTRLpi1mG3yIS8Uvhec/wASxhw4JyPl9APHbV22+v2Df1JdnsRxEkxnS1Iil4OKRnulWcAlKh4JA7hQ74zrIm8Sdhn9xbaRsBCiNVqE+pmurtuMlmiKgForHUU2Aw6/1Fo4qa5EAOpcIKWwLt6a/wCZcv8Ax/8AtoLdpppoPiXleVu2Bbkq7LsnLh0uGppDzyI7r6gp11LSAG2kqWola0Dsk+c+MnUGiTqnfe6tf3Kepb0GjJgsUOie5YUy/IjtKW4p9aFElPN11ziCEq4cOSUq5DVr3Msj9ItnSbT+0/s/3EmFI9x0erx9vKafxx5Jzy6XHOe3LPfGCYsOIHEGZNW82jHwSjhnGPJye3kdsHv50HpjW1GurbOXaNVXJjxq3T5cB9bOEuoafDiCpBUCAeK8gkEeDgjU9j+nWTb1Jg25btXjTKdDaW0lVQyh1CAR0kngkpcPEq5KwjukYT8vjb0IQ2hLbaQlKQAlIGAAPoNeWgzXeG2cHbi3pl5X3c9JoduwOBmzI8d+StvmsNt4abb5LJcWhOB/dn6ao3p6uPba5bDck7Z3E7W4kacuNUZjkKREK5wabU5+xfSlSBwU1gAEYI7qPInot09t6Lu5YlS2+uGdUIcCpqjqcfp7iESG1MvtvIKFLQtI+bSc5Se2f965/YrYqgbF29OptOq0ytVSsyETKrVprTKHpLyWkN8U9NI4spKVKQ2orKS4v5HkSQpmmmmgaaaaBpppoGmmmgaaaaD/2Q=="
+>
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="mimemimebundle"><code>$$.mime(mimeBundle)</code></h3>
-<p>IJavascript also provides the global function <code>$$.mime(mimeBundle)</code> to display an output in any formats understood by the Jupyter frontend:</p>
+<h3 id="$$.mime(mimeBundle)"><code>$$.mime(mimeBundle)</code><a class="anchor-link" href="#$$.mime(mimeBundle)">&#182;</a></h3><p>IJavascript also provides the global function <code>$$.mime(mimeBundle)</code> to display an output in any formats understood by the Jupyter frontend:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[8]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="err">$$</span><span class="o">.</span><span class="n">mime</span><span class="p">({</span>
-    <span class="s">&quot;text/html&quot;</span><span class="p">:</span> <span class="s">&quot;&lt;div style=&#39;background-color:olive;width:50px;height:50px&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">,</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">$$</span><span class="p">.</span><span class="nx">mime</span><span class="p">({</span>
+    <span class="s2">&quot;text/html&quot;</span><span class="o">:</span> <span class="s2">&quot;&lt;div style=&#39;background-color:olive;width:50px;height:50px&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">,</span>
 <span class="p">});</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[8]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
 
-<div class="output_html rendered_html">
+<div class="prompt output_prompt">Out[8]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div style='background-color:olive;width:50px;height:50px'></div>
 </div>
 
-</div>
 </div>
 
 </div>

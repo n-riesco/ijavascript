@@ -142,42 +142,54 @@ MathJax.Hub.Config({
   <div id="notebook" class="border-box-sizing" tabindex="-1">
     <div id="notebook-container" class="container">
       
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="asynchronous-output">Asynchronous output</h1>
-<p>Javascript and Node.JS make heavy use of asynchronous execution. IJavascript lets you exercise these asynchronous capabilities, both:</p>
+<h1 id="Asynchronous-output">Asynchronous output<a class="anchor-link" href="#Asynchronous-output">&#182;</a></h1><p>Javascript and Node.JS make heavy use of asynchronous execution. IJavascript lets you exercise these asynchronous capabilities, both:</p>
 <ul>
 <li>by updating <code>stdout</code> and <code>stderr</code> asynchronously, or</li>
 <li>by providing an execution result asynchronously.</li>
 </ul>
+
 </div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="synchronous-vs-asynchronous-code">Synchronous <em>vs</em> asynchronous code</h2>
-<p>In simple words, this tutorial use the term &quot;asynchronous code&quot; to refer to code that doesn't run immediately (code in callback functions). For example, this is asynchronous code:</p>
+<h2 id="Synchronous-vs-asynchronous-code">Synchronous <em>vs</em> asynchronous code<a class="anchor-link" href="#Synchronous-vs-asynchronous-code">&#182;</a></h2><p>In simple words, this tutorial use the term "asynchronous code" to refer to code that doesn't run immediately (code in callback functions). For example, this is asynchronous code:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[1]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">function</span> <span class="n">sayHello</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="kd">function</span> <span class="nx">sayHello</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="n">var</span> <span class="n">t</span> <span class="o">=</span> <span class="n">setTimeout</span><span class="p">(</span><span class="n">sayHello</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">setTimeout</span><span class="p">(</span><span class="nx">sayHello</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-Hello, World!
+<div class="output_area">
 
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, World!
 </pre>
 </div>
 </div>
@@ -186,33 +198,41 @@ Hello, World!
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>whereas this is not:</p>
+
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
 </div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="n">function</span> <span class="n">sayHello</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="kd">function</span> <span class="nx">sayHello</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
-<span class="n">sayHello</span><span class="p">();</span>
+<span class="nx">sayHello</span><span class="p">();</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-Hello, World!
+<div class="output_area">
 
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, World!
 </pre>
 </div>
 </div>
@@ -221,36 +241,43 @@ Hello, World!
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="async"><code>$$.async()</code></h2>
-<p>By default, IJavascript assumes an execution request is synchronous code. That is, IJavascript will evaluate the execution request, return the result and advertise that is ready to receive more requests.</p>
+<h2 id="$$.async()"><code>$$.async()</code><a class="anchor-link" href="#$$.async()">&#182;</a></h2><p>By default, IJavascript assumes an execution request is synchronous code. That is, IJavascript will evaluate the execution request, return the result and advertise that is ready to receive more requests.</p>
 <p>If an execution request invokes the function <code>$$.async()</code>, IJavascript will treat the execution request as asynchronous code. Unlike synchronous code, asynchronous code should return a result by invoking <code>$$.sendResult(result)</code> or <code>$$.sendError(error)</code>. Or alternatively, invoke <code>$$.done()</code> to indicate that no result will be returned. For example:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="err">$$</span><span class="o">.</span><span class="n">async</span><span class="p">();</span>
 
-<span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">$$</span><span class="p">.</span><span class="nx">async</span><span class="p">();</span>
 
-<span class="n">setTimeout</span><span class="p">(</span><span class="err">$$</span><span class="o">.</span><span class="n">done</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">);</span>
+
+<span class="nx">setTimeout</span><span class="p">(</span><span class="nx">$$</span><span class="p">.</span><span class="nx">done</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-Hello, World!
+<div class="output_area">
 
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, World!
 </pre>
 </div>
 </div>
@@ -259,173 +286,205 @@ Hello, World!
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="accessing-the-global-object-from-asynchronous-code">Accessing the global object <code>$$</code> from asynchronous code</h2>
-<p>Asynchronous code should make a copy of the global object <code>$$</code>, to ensure a result is returned to the appropriate cell. There are several patterns to make this copy, each with their own pros and cons:</p>
+<h2 id="Accessing-the-global-object-$$-from-asynchronous-code">Accessing the global object <code>$$</code> from asynchronous code<a class="anchor-link" href="#Accessing-the-global-object-$$-from-asynchronous-code">&#182;</a></h2><p>Asynchronous code should make a copy of the global object <code>$$</code>, to ensure a result is returned to the appropriate cell. There are several patterns to make this copy, each with their own pros and cons:</p>
 <ul>
-<li><p>using a variable to store a copy the <code>$$</code> linked to the asynchronous cell,</p></li>
-<li><p>using a function environment,</p></li>
-<li><p>or using a block-scoped <code>let</code> (requires ES6).</p></li>
+<li><p>using a variable to store a copy the <code>$$</code> linked to the asynchronous cell,</p>
+</li>
+<li><p>using a function environment,</p>
+</li>
+<li><p>or using a block-scoped <code>let</code> (requires ES6).</p>
+</li>
 </ul>
-</div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="using-a-variable-to-store-a-copy-of-the-linked-to-an-asynchronous-cell">Using a variable to store a copy of the <code>$$</code> linked to an asynchronous cell</h3>
-<p>The main drawback of this pattern is that it requires a new variable per asynchronous cell. See example:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="err">$$</span><span class="o">.</span><span class="n">async</span><span class="p">();</span>
 
-<span class="n">var</span> <span class="n">cell1</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="err">$$</span><span class="p">:</span> <span class="err">$$</span><span class="p">,</span>
-    <span class="n">console</span><span class="p">:</span> <span class="n">console</span><span class="p">,</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Using-a-variable-to-store-a-copy-of-the-$$-linked-to-an-asynchronous-cell">Using a variable to store a copy of the <code>$$</code> linked to an asynchronous cell<a class="anchor-link" href="#Using-a-variable-to-store-a-copy-of-the-$$-linked-to-an-asynchronous-cell">&#182;</a></h3><p>The main drawback of this pattern is that it requires a new variable per asynchronous cell. See example:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">$$</span><span class="p">.</span><span class="nx">async</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">cell1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">$$</span><span class="o">:</span> <span class="nx">$$</span><span class="p">,</span>
+    <span class="nx">console</span><span class="o">:</span> <span class="nx">console</span><span class="p">,</span>
 <span class="p">};</span>
 
-<span class="n">setTimeout</span><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">cell1</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
-    <span class="n">cell1</span><span class="o">.</span><span class="err">$$</span><span class="o">.</span><span class="n">sendResult</span><span class="p">(</span><span class="s">&quot;Bye!&quot;</span><span class="p">);</span>
+<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">cell1</span><span class="p">.</span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">);</span>
+    <span class="nx">cell1</span><span class="p">.</span><span class="nx">$$</span><span class="p">.</span><span class="nx">sendResult</span><span class="p">(</span><span class="s2">&quot;Bye!&quot;</span><span class="p">);</span>
 <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-Hello, world!
+<div class="output_area">
 
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, world!
 </pre>
 </div>
 </div>
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[4]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[4]:</div>
 
 
-<pre>
-&apos;Bye!&apos;
-</pre>
 
-</div>
-</div>
 
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;Bye!&#39;</pre>
 </div>
 
 </div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="using-a-function-environment">Using a function environment</h3>
-<p>A function environment lets you create a copy of a global variable into a local variable with the same name (and thus, it doesn't require the creation of a new variable name for every asynchronous cell). See the example below:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[5]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="err">$$</span><span class="o">.</span><span class="n">async</span><span class="p">();</span>
+<h3 id="Using-a-function-environment">Using a function environment<a class="anchor-link" href="#Using-a-function-environment">&#182;</a></h3><p>A function environment lets you create a copy of a global variable into a local variable with the same name (and thus, it doesn't require the creation of a new variable name for every asynchronous cell). See the example below:</p>
 
-<span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="err">$$</span><span class="p">,</span> <span class="n">console</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">setTimeout</span><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
-        <span class="err">$$</span><span class="o">.</span><span class="n">sendResult</span><span class="p">(</span><span class="s">&quot;Bye!&quot;</span><span class="p">);</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="nx">$$</span><span class="p">.</span><span class="nx">async</span><span class="p">();</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$$</span><span class="p">,</span> <span class="nx">console</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">);</span>
+        <span class="nx">$$</span><span class="p">.</span><span class="nx">sendResult</span><span class="p">(</span><span class="s2">&quot;Bye!&quot;</span><span class="p">);</span>
     <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
-<span class="p">})(</span><span class="err">$$</span><span class="p">,</span> <span class="n">console</span><span class="p">);</span>
+<span class="p">})(</span><span class="nx">$$</span><span class="p">,</span> <span class="nx">console</span><span class="p">);</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-Hello, world!
+<div class="output_area">
 
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, world!
 </pre>
 </div>
 </div>
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[5]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[5]:</div>
 
 
-<pre>
-&apos;Bye!&apos;
-</pre>
 
-</div>
-</div>
 
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;Bye!&#39;</pre>
 </div>
 
 </div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="using-a-block-scoped-let-requires-es6">Using a block-scoped <code>let</code> (requires ES6)</h3>
-<p>If the version of Node.js in your system supports ES6, you can use <code>let</code> to define local variables in a block scope that contains the asynchronous code:</p>
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
-<div class="prompt input_prompt">
-In&nbsp;[6]:
-</div>
-<div class="input_area box-flex1">
-<div class="highlight"><pre><span class="s">&quot;use strict&quot;</span><span class="p">;</span>
+<h3 id="Using-a-block-scoped-let-(requires-ES6)">Using a block-scoped <code>let</code> (requires ES6)<a class="anchor-link" href="#Using-a-block-scoped-let-(requires-ES6)">&#182;</a></h3><p>If the version of Node.js in your system supports ES6, you can use <code>let</code> to define local variables in a block scope that contains the asynchronous code:</p>
 
-<span class="err">$$</span><span class="o">.</span><span class="n">async</span><span class="p">();</span>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-javascript"><pre><span></span><span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+
+<span class="nx">$$</span><span class="p">.</span><span class="nx">async</span><span class="p">();</span>
 
 <span class="p">{</span>
-    <span class="n">let</span> <span class="n">console</span> <span class="o">=</span> <span class="k">global</span><span class="o">.</span><span class="n">console</span><span class="p">;</span>
-    <span class="n">let</span> <span class="err">$$</span> <span class="o">=</span> <span class="k">global</span><span class="o">.</span><span class="err">$$</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">console</span> <span class="o">=</span> <span class="nx">global</span><span class="p">.</span><span class="nx">console</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">$$</span> <span class="o">=</span> <span class="nx">global</span><span class="p">.</span><span class="nx">$$</span><span class="p">;</span>
 
-    <span class="n">setTimeout</span><span class="p">(</span><span class="n">function</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
-        <span class="err">$$</span><span class="o">.</span><span class="n">sendResult</span><span class="p">(</span><span class="s">&quot;Bye!&quot;</span><span class="p">);</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">);</span>
+        <span class="nx">$$</span><span class="p">.</span><span class="nx">sendResult</span><span class="p">(</span><span class="s2">&quot;Bye!&quot;</span><span class="p">);</span>
     <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
-<pre>
-Hello, world!
+<div class="output_area">
 
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Hello, world!
 </pre>
 </div>
 </div>
 
-<div class="hbox output_area"><div class="prompt output_prompt">
-    Out[6]:</div>
-<div class="box-flex1 output_subarea output_pyout">
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[6]:</div>
 
 
-<pre>
-&apos;Bye!&apos;
-</pre>
 
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;Bye!&#39;</pre>
 </div>
+
 </div>
 
 </div>

@@ -51,6 +51,15 @@ Here's a sample notebook that makes use of the IJavascript kernel:
 
 ## Announcements
 
+- SUPPORT NOTICE: IJavascript v5.1 will be the last version supporting
+  Node.js 0.10, Node.js 4, Node.js 6 and Node.js 8.
+- IJavascript v5.1 added new functionality to the API (see
+  [NEL](https://github.com/n-riesco/nel) for preliminary documentation):
+  - `$$.clear({wait})` to send a `clear_output` request.
+  - `$$.display({id})` to send `display_data` and `update_display_data`
+    messages.
+  - `$$.input(options, {callback})` to send a `input_request` and handle
+    `input_reply` messages. 
 - Starting with IJavascript v5.0.11, it is possible to customise the output of
   an object based on its type. See the documentation on [custom
   output](http://n-riesco.github.io/ijavascript/doc/custom.ipynb.html) for
@@ -96,6 +105,7 @@ please, refer to the [installation
 notes](http://n-riesco.github.io/ijavascript/doc/install.md.html).
 
 ### Ubuntu
+
 To install IJavascript in Ubuntu 16.04 LTS, run:
 
 ```sh
@@ -105,8 +115,10 @@ ijsinstall
 ```
 
 ### Windows (Official Python Distribution)
+
 In the command line:
-```
+
+```sh
 pip3 install --upgrade pip
 pip3 install jupyter
 npm install -g ijavascript
@@ -120,8 +132,10 @@ kernel available.
 
 
 ### Windows (Anaconda Distribution)
+
 Open the *Anaconda prompt* and run:
-```
+
+```sh
 conda install nodejs
 npm install -g ijavascript
 ijsinstall
@@ -133,6 +147,7 @@ kernel available.
 
 
 ### macOS
+
 In macOS, [Homebrew](http://brew.sh/) and
 [pip](https://pip.pypa.io/en/latest/installing) can be used to install
 IJavascript and its prerequisites:
@@ -267,4 +282,4 @@ requests, submission of tutorials...
 
 See the [issue tracker](https://github.com/n-riesco/ijavascript/issues) and the
 TODO list in the packages [jp-kernel](https://github.com/n-riesco/jp-kernel) and
-[NEL](https://github.com/n-riesco/jp-kernel) for additional items.
+[NEL](https://github.com/n-riesco/nel) for additional items.

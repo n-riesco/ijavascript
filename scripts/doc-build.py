@@ -42,7 +42,7 @@ import subprocess
 import urllib2
 
 import IPython
-import IPython.nbconvert as nbconvert
+import nbconvert
 import IPython.nbformat.v3 as nbformat
 import jinja2
 

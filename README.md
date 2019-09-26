@@ -51,7 +51,7 @@ Here's a sample notebook that makes use of the IJavascript kernel:
 
 ## Announcements
 
-- SUPPORT NOTICE: IJavascript v5.1 will be the last version supporting
+- SUPPORT NOTICE: IJavascript v5.2 will be the last version supporting
   Node.js 0.10, Node.js 4, Node.js 6 and Node.js 8.
 - IJavascript v5.1 added new functionality to the API (see
   [NEL](https://github.com/n-riesco/nel) for preliminary documentation):

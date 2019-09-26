@@ -30,16 +30,17 @@
         "ijsnotebook": "bin/ijsnotebook.js"
     },
     "dependencies": {
-        "jp-kernel": "1"
+        "jp-kernel": "1 || 2"
     },
     "devDependencies": {
         "debug": "2",
         "eslint": "2",
-        "jmp": "1",
+        "jmp": "1 || 2",
         "jsdoc": "3",
         "mocha": "3",
         "uuid": "3"
     },
+    "engineStrict": true,
     "scripts": {
         "doc": "python scripts/doc-build.py",
         "doc:publish": "node scripts/doc-publish.js gh-pages https://github.com/n-riesco/ijavascript",

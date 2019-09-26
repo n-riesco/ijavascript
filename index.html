@@ -164,6 +164,11 @@ MathJax.Hub.Config({
 </ul>
 <h2 id="announcements">Announcements</h2>
 <ul>
+<li>SUPPORT NOTICE: IJavascript v5.2 will be the last version supporting Node.js 0.10, Node.js 4, Node.js 6 and Node.js 8.</li>
+<li>IJavascript v5.1 added new functionality to the API (see <a href="https://github.com/n-riesco/nel">NEL</a> for preliminary documentation):</li>
+<li><code>$$.clear({wait})</code> to send a <code>clear_output</code> request.</li>
+<li><code>$$.display({id})</code> to send <code>display_data</code> and <code>update_display_data</code> messages.</li>
+<li><code>$$.input(options, {callback})</code> to send a <code>input_request</code> and handle <code>input_reply</code> messages.</li>
 <li>Starting with IJavascript v5.0.11, it is possible to customise the output of an object based on its type. See the documentation on <a href="http://n-riesco.github.io/ijavascript/doc/custom.ipynb.html">custom output</a> for details.</li>
 <li>The use of <code>$$mimer$$</code> and <code>$$defaultMimer$$</code> to customise output is now deprecated.</li>
 <li>To avoid clutter in the global context, the use of <code>$$async$$</code>, <code>$$done$$</code>, <code>$$mime$$</code>, <code>$$html$$</code>, <code>$$svg$$</code>, <code>$$png$$</code> and <code>$$jpeg$$</code> has also been deprecated and replaced with the global object <code>$$</code>.</li>
@@ -192,17 +197,17 @@ MathJax.Hub.Config({
 <span class="ex">ijsinstall</span></code></pre></div>
 <h3 id="windows-official-python-distribution">Windows (Official Python Distribution)</h3>
 <p>In the command line:</p>
-<pre><code>pip3 install --upgrade pip
-pip3 install jupyter
-npm install -g ijavascript
-ijsinstall
-# Or run: %appdata%\npm\ijsinstall</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">pip3</span> install --upgrade pip
+<span class="ex">pip3</span> install jupyter
+<span class="ex">npm</span> install -g ijavascript
+<span class="ex">ijsinstall</span>
+<span class="co"># Or run: %appdata%\npm\ijsinstall</span></code></pre></div>
 <p>Then you can run <code>jupyter notebook</code> in your terminal to load Jupyter Notebook. When you create a new Jupyter Notebook, you should see the Javascript (Node) kernel available.</p>
 <h3 id="windows-anaconda-distribution">Windows (Anaconda Distribution)</h3>
 <p>Open the <em>Anaconda prompt</em> and run:</p>
-<pre><code>conda install nodejs
-npm install -g ijavascript
-ijsinstall</code></pre>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">conda</span> install nodejs
+<span class="ex">npm</span> install -g ijavascript
+<span class="ex">ijsinstall</span></code></pre></div>
 <p>Then you can run <code>jupyter notebook</code> in your terminal to load Jupyter Notebook. When you create a new Jupyter Notebook, you should see the Javascript (Node) kernel available.</p>
 <h3 id="macos">macOS</h3>
 <p>In macOS, <a href="http://brew.sh/">Homebrew</a> and <a href="https://pip.pypa.io/en/latest/installing">pip</a> can be used to install IJavascript and its prerequisites:</p>
@@ -279,7 +284,7 @@ Options:
 <h1 id="contributions">Contributions</h1>
 <p>First of all, thank you for taking the time to contribute. Please, read <a href="http://n-riesco.github.io/ijavascript/contributing.html">CONTRIBUTING</a> and use the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> for any contributions: support requests, bug reports, enhancement requests, pull requests, submission of tutorials...</p>
 <h1 id="todo">TODO</h1>
-<p>See the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> and the TODO list in the packages <a href="https://github.com/n-riesco/jp-kernel">jp-kernel</a> and <a href="https://github.com/n-riesco/jp-kernel">NEL</a> for additional items.</p>
+<p>See the <a href="https://github.com/n-riesco/ijavascript/issues">issue tracker</a> and the TODO list in the packages <a href="https://github.com/n-riesco/jp-kernel">jp-kernel</a> and <a href="https://github.com/n-riesco/nel">NEL</a> for additional items.</p>
 
   </div>
   

@@ -106,12 +106,29 @@ notes](http://n-riesco.github.io/ijavascript/doc/install.md.html).
 
 ### Ubuntu
 
-To install IJavascript in Ubuntu 16.04 LTS, run:
+To install IJavascript in Ubuntu 19.04 for your user only, run:
+
+```
+sudo apt-get install nodejs npm jupyter-notebook
+npm config set prefix $HOME
+npm install -g ijavascript
+ijsinstall
+```
+
+Note: if `~/bin` folder didn't exist before, after running this instructions, you may need to log out and back in for `~/bin` to be added to your `PATH`.
+
+To install IJavascript in Ubuntu 19.04 for all users, run instead:
+
+```
+sudo apt-get install nodejs npm jupyter-notebook
+sudo npm install -g --unsafe-perm ijavascript
+sudo ijsinstall --install=global
+```
+
+Also, note that older versions of Ubuntu (e.g. Ubuntu 16.04 LTS) depend on `nodejs-legacy` and `ipython-notebook` instead:
 
 ```sh
 sudo apt-get install nodejs-legacy npm ipython ipython-notebook
-sudo npm install -g ijavascript
-ijsinstall
 ```
 
 ### Windows (Official Python Distribution)

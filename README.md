@@ -51,6 +51,9 @@ Here's a sample notebook that makes use of the IJavascript kernel:
 
 ## Announcements
 
+- IJavascript v5.2 builds have started to fail in Node.js v0.10, because the
+  installation of `zeromq` depends on `prebuild-install` and they are now
+  using `const` declarations.
 - SUPPORT NOTICE: IJavascript v5.2 will be the last version supporting
   Node.js 0.10, Node.js 4, Node.js 6 and Node.js 8.
 - IJavascript v5.1 added new functionality to the API (see

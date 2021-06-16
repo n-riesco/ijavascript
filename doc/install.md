@@ -27,7 +27,7 @@ determined by the following dependencies:
 The requirements for recent versions of Debian and Ubuntu are:
 
 ```sh
-sudo apt-get install nodejs npm jupyter-notebook
+sudo apt-get install nodejs npm jupyter
 ```
 
 The Jupyter notebook is not yet available in the Debian 8.3 and Ubuntu 16.04 LTS

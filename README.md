@@ -112,7 +112,7 @@ notes](http://n-riesco.github.io/ijavascript/doc/install.md.html).
 To install IJavascript in Ubuntu 18.04 for your user only, run:
 
 ```
-sudo apt-get install nodejs npm jupyter-notebook
+sudo apt-get install nodejs npm jupyter
 npm config set prefix $HOME
 npm install -g ijavascript
 ijsinstall
@@ -123,7 +123,7 @@ Note: if `~/bin` folder didn't exist before, after running this instructions, yo
 To install IJavascript in Ubuntu 18.04 for all users, run instead:
 
 ```
-sudo apt-get install nodejs npm jupyter-notebook
+sudo apt-get install nodejs npm jupyter
 sudo npm install -g --unsafe-perm ijavascript
 sudo ijsinstall --install=global
 ```

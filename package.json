@@ -1,6 +1,6 @@
 {
     "name": "ijavascript",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "description": "IJavascript is a Javascript kernel for the Jupyter notebook",
     "keywords": [
         "javascript",

@@ -432,7 +432,7 @@ function setJupyterInfoAsync(context, callback) {
 
         if (isNaN(majorVersion)) {
             // Parse version number after Jupyter 4.5.0
-            var match = stdout.match(/^jupyter core\s+: (\d+\.\d+\.\d+)/m);
+            var match = stdout.match(/^jupyter.core\s+: (\d+\.\d+\.\d+)/m);
             if (match) {
                 version = match[1];
                 majorVersion = parseInt(version.split(".")[0]);

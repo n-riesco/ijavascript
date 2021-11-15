@@ -1,0 +1,10 @@
+.git/
+.ipynb_checkpoints/
+doc/
+docker/
+gh-pages/
+images/screenshot*
+jsdoc/
+misc/
+node_modules/
+scripts/

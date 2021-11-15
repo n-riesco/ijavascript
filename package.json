@@ -44,14 +44,9 @@
     "scripts": {
         "doc": "python scripts/doc-build.py",
         "doc:publish": "node scripts/doc-publish.js gh-pages https://github.com/n-riesco/ijavascript",
-        "docker:build:node:0.10": "docker build -f test/ijavascript-node-0.10/Dockerfile -t ijs-node-0.10 --no-cache .",
-        "docker:shell:node:0.10": "docker run --rm -ti ijs-node-0.10 /bin/bash",
-        "docker:test:node:0.10": "docker run --rm -ti ijs-node-0.10",
-        "docker:build:node:latest": "docker build -f test/ijavascript-node-latest/Dockerfile -t ijs-node-latest --no-cache .",
-        "docker:shell:node:latest": "docker run --rm -ti ijs-node-latest /bin/bash",
-        "docker:test:node:latest": "docker run --rm -ti ijs-node-latest",
         "lint": "eslint bin lib test",
-        "test:ijskernel": "mocha test/ijskernel.js",
-        "test": "npm run lint && npm run test:ijskernel"
+        "test": "npm run lint && npm run test:ijskernel",
+        "test:docker": "make -C docker test",
+        "test:ijskernel": "mocha test/ijskernel.js"
     }
 }

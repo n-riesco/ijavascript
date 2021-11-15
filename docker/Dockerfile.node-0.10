@@ -10,12 +10,15 @@ RUN apt-get update && \
     apt-get install -yq --no-install-recommends libzmq3-dev ipython-notebook && \
     apt-get clean
 
-RUN mkdir -p ijavascript
+# Workaround: ensure node owns its own home folder
+RUN mkdir -p /home/node && chown node:node /home/node
 
-COPY . ijavascript
+USER node
 
-RUN cd ijavascript && rm -rf node_modules && npm i --production
+WORKDIR /home/node
 
-WORKDIR ijavascript
+COPY --chown=node:node . .
 
-CMD npm install && npm run test
+RUN rm -rf node_modules && npm install --save jp-kernel@1 jmp@1 && npm install
+
+CMD npm run test:ijskernel && bin/ijsinstall.js

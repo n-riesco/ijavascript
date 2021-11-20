@@ -1,7 +1,7 @@
 {
     "name": "ijavascript-await",
-    "version": "5.0.20",
-    "description": "IJavascript-await is a Javascript kernel (that accepts global await expressions) for the Jupyter notebook",
+    "version": "5.2.1",
+    "description": "IJavascript is a Javascript kernel for the Jupyter notebook",
     "keywords": [
         "await",
         "javascript",
@@ -15,7 +15,7 @@
     },
     "license": "BSD-3-Clause",
     "author": {
-        "author": "Nicolas Riesco",
+        "name": "Nicolas Riesco",
         "email": "enquiries@nicolasriesco.net",
         "url": "http://www.nicolasriesco.net/"
     },
@@ -31,13 +31,13 @@
         "ijsnotebook": "bin/ijsnotebook.js"
     },
     "dependencies": {
-        "jp-kernel": "1",
+        "jp-kernel": "1 || 2",
         "jp-parser": "1"
     },
     "devDependencies": {
         "debug": "2",
         "eslint": "2",
-        "jmp": "1",
+        "jmp": "1 || 2",
         "jsdoc": "3",
         "mocha": "3",
         "uuid": "3"
@@ -45,11 +45,13 @@
     "engine": {
         "node": ">=7.6"
     },
+    "engineStrict": true,
     "scripts": {
         "doc": "python scripts/doc-build.py",
         "doc:publish": "node scripts/doc-publish.js gh-pages https://github.com/n-riesco/ijavascript",
         "lint": "eslint bin lib test",
-        "test:ijskernel": "mocha test/ijskernel.js",
-        "test": "npm run lint && npm run test:ijskernel"
+        "test": "npm run lint && npm run test:ijskernel",
+        "test:docker": "make -C docker test",
+        "test:ijskernel": "mocha test/ijskernel.js"
     }
 }

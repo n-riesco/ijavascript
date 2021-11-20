@@ -242,39 +242,6 @@
         }
     }]
 }, {
-    "description": "execute_request: a.a = a",
-    "request": {
-        "shell": {
-            "header": {
-                "msg_type": "execute_request"
-            },
-            "content": {
-                "code": "a.a = a"
-            }
-        }
-    },
-    "responses": [{
-        "shell": {
-            "header": {
-                "msg_type": "execute_reply"
-            },
-            "content": {
-                "status": "ok"
-            }
-        }
-    }, {
-        "iopub": {
-            "header": {
-                "msg_type": "execute_result"
-            },
-            "content": {
-                "data": {
-                    "text/plain": "{ a: [Circular] }"
-                }
-            }
-        }
-    }]
-}, {
     "description": "execute_request: console.log('Hello, World!')",
     "request": {
         "shell": {

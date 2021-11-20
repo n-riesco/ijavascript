@@ -1,7 +1,0 @@
-sudo: false
-os: linux
-language: node_js
-node_js:
-  - "7.6.0"
-  - "8"
-  - "10"

@@ -1,8 +1,4 @@
 LABELS = \
-	node-0.10 \
-	node-0.12 \
-	node-4 \
-	node-6 \
 	node-8 \
 	node-10 \
 	node-12 \

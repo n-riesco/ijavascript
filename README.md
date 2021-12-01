@@ -42,8 +42,9 @@ Here's a sample notebook that makes use of the IJavascript kernel:
 ## Contents
 
 - [Announcements](#announcements)
-- [Main Features](#features)
+- [Main Features](#main-features)
 - [Installation](#installation)
+- [Troubleshooting](https://github.com/n-riesco/ijavascript/issues/260)
 - [Usage](#usage)
 - [Contributions](#contributions)
 - [TODO](#todo)

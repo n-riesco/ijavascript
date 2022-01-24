@@ -193,7 +193,7 @@ details.
 
 ### `ijsinstall`: IJavascript kernel spec installer
 
-'ijsinstall` registers the IJavascript kernel with Jupyter, so that other tools
+`ijsinstall` registers the IJavascript kernel with Jupyter, so that other tools
 (e.g. the Jupyter notebook) can invoke it. The following command flags are
 recognised:
 

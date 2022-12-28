@@ -174,7 +174,7 @@ In macOS, [Homebrew](http://brew.sh/) and
 IJavascript and its prerequisites:
 
 ```sh
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install pkg-config node zeromq
 sudo easy_install pip
 pip install --upgrade pyzmq jupyter

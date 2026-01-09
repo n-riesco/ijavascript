@@ -42,8 +42,9 @@ Here's a sample notebook that makes use of the IJavascript kernel:
 ## Contents
 
 - [Announcements](#announcements)
-- [Main Features](#features)
+- [Main Features](#main-features)
 - [Installation](#installation)
+- [Troubleshooting](https://github.com/n-riesco/ijavascript/issues/260)
 - [Usage](#usage)
 - [Contributions](#contributions)
 - [TODO](#todo)
@@ -173,7 +174,7 @@ In macOS, [Homebrew](http://brew.sh/) and
 IJavascript and its prerequisites:
 
 ```sh
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install pkg-config node zeromq
 sudo easy_install pip
 pip install --upgrade pyzmq jupyter
@@ -192,7 +193,7 @@ details.
 
 ### `ijsinstall`: IJavascript kernel spec installer
 
-'ijsinstall` registers the IJavascript kernel with Jupyter, so that other tools
+`ijsinstall` registers the IJavascript kernel with Jupyter, so that other tools
 (e.g. the Jupyter notebook) can invoke it. The following command flags are
 recognised:
 
